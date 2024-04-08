@@ -7,6 +7,7 @@ function App() {
     <Routes>
       <Route path='/' element={<Cart />} />
       <Route path='*' element={<NotFound />} />
+      <Route path='/cart'  />
     </Routes>
   )
 }

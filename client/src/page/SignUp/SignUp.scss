@@ -1,0 +1,153 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: "Montserrat", sans-serif;
+}
+.mainBody {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+
+    .mainImage {
+        max-width: 695px;
+        height: fit-content;
+
+        .image {
+            width: 695px;
+            height: 956px;
+            background-size: contain;
+            // object-fit: cover;
+        }
+    }
+
+    .mainContent {
+        width: 560px;
+        margin: 0 auto;
+        margin-top: 100px;
+
+        .mainTitle {
+            font-size: 32px;
+            line-height: 25%;
+            font-weight: 600;
+        }
+
+        .mainButton {
+            margin-top: 40px;
+            width: 560px;
+            height: 48px;
+            text-align: center;
+            // margin: 0 auto;
+            position: relative;
+
+            .mainButton2 {
+                margin-top: 20px;
+            }
+
+            .mainButtonImage {
+                position: absolute;
+                display: inline;
+                left: 150px;
+                top: 13px;
+            }
+
+            .mainButtonImage1 {
+                position: absolute;
+                display: inline;
+                left: 150px;
+                top: 80px;
+            }
+
+            button {
+                border-radius: 8px;
+                padding: 16px 20px;
+                width: 560px;
+                height: 45px;
+                font-size: 18px;
+                color: #8a33fd;
+                background-color: #fff;
+                font-weight: 500;
+                border: 1px solid #3c4242;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+            }
+        }
+
+        .divider {
+            margin-top: 100px;
+        }
+
+        .mainInput1 {
+            width: 560px;
+            height: 48px;
+            margin-top: 100px;
+
+            input {
+                width: 560px;
+                height: 48px;
+                border-radius: 8px;
+                padding: 16px 20px;
+                border: 1px solid #3c4242;
+                font-size: 16px;
+                margin-top: 10px;
+            }
+
+            .error-content{
+                font-size: 14px;
+                margin-top: 10px;
+                color: red;
+            }
+        }
+
+        .mainInput2-sign-up {
+            width: 560px;
+            height: 48px;
+            margin-top: 90px;
+            display: flex;
+        }
+
+        .mainInput3-sign-up {
+            width: 560px;
+            height: 48px;
+
+            input {
+                width: 560px;
+                height: 48px;
+                border-radius: 8px;
+                padding: 16px 20px;
+                border: 1px solid #3c4242;
+                font-size: 16px;
+            }
+        }
+
+        .main-checkbox-content-signup{
+            margin-top: 45px;
+        }
+
+        .main-button-sign-up {
+            margin-top: 50px;
+
+            .main-button-signin {
+                width: 156px;
+                height: 46px;
+                border-radius: 8px;
+                border: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 16px 20px;
+                font-size: 16px;
+                font-weight: 500;
+                color: #ffffff;
+                background-color: #8a33fd;
+                cursor: pointer;
+            }
+        }
+
+        .main-content-end {
+            margin-top: 10px;
+        }
+    }
+}
