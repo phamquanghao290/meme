@@ -22,7 +22,7 @@ export default function Verification() {
                     <button className='main-button-reset'>Verify Code</button>
                 </div>
                 <div>
-                    dminh push code
+                    dminh push code lên git
                 </div>
             </div>
         </div>
