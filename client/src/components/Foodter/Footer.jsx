@@ -1,10 +1,10 @@
 import { MdPhoneIphone } from "react-icons/md";
 import React from "react";
 import "./Footer.scss";
-import instargram from "../../../public/image/instargram.png";
-import facebook from "../../../public/image/Facebook.png";
-import twitter from "../../../public/image/telegram.png";
-import CHplay from "../../../public/image/chplay.png";
+import instargram from "../../../public/images/instargram.png";
+import facebook from "../../../public/images/Facebook.png";
+import twitter from "../../../public/images/telegram.png";
+import CHplay from "../../../public/images/chplay.png";
 export default function Footer() {
   return (
     <>
