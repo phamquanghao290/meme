@@ -11,12 +11,6 @@ import ProductWomen from './page/product/ProductWomen'
 import ProductMen from './page/product/ProductMen'
 import CheckoutForBill from './page/checkout/CheckoutForBill'
 import Wishlist from "./page/wishlist/Wishlist";
-import Heatder from "./components/Heatder/Heatder";
-import Footer from "./components/Foodter/Footer";
-import Index from "./page/home/Index";
-import SignIn from "./page/SignIn/SignInPage";
-import ProductWomen from "./page/product/ProductWomen";
-import ProductMen from "./page/product/ProductMen";
 import Productdetail from './page/Productdetail/Productdetail'
 
 function App() {

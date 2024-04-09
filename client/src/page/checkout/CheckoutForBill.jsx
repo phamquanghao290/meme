@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import './checkout.scss'
 function CheckoutForBill() {
     const [dataCity, setDataCity] = useState([])
@@ -13,14 +14,15 @@ function CheckoutForBill() {
     }
     const handleCity = async(e) => {
         let idCity = +e.target.value
-        const nameCity = dataCity.find(item => item.province_id === idCity)
+        const nameCity = dataCity.find(item => item.province_id == idCity)
         let data = await axios.get(`https://vapi.vnappmob.com/api/province/district/${idCity}`)
+        console.log(nameCity);
         setCity(nameCity.province_name)
         setDataDistrict(data.data.results)
     }
     const handleDistrict = async(e) => {
         let idDistrict = +e.target.value
-        const nameDistrict = dataDistrict.find(item => item.district_id === idDistrict)
+        const nameDistrict = dataDistrict.find(item => item.district_id == idDistrict)
         let data = await axios.get(`https://vapi.vnappmob.com/api/province/ward/${idDistrict}`)
         setDistrict(nameDistrict.district_name)
         setDataWard(data.data.results)
@@ -66,6 +68,49 @@ function CheckoutForBill() {
                           <label>Address *</label>
                           <br />
                           <input type="text" placeholder="Address" />
+                      </div>
+                      <div style={{ display: "block" }}>
+                          <select
+                              onChange={handleCity}
+                              name=""
+                              id=""
+                              style={{ display: "block" }}
+                          >
+                              <option value="">Chọn thành phố</option>
+                              {dataCity.map((item, index) => (
+                                  <option key={index} value={item.province_id}>
+                                      {item.province_name}
+                                  </option>
+                              ))}
+                          </select>
+                          <br />
+                          <select
+                              onChange={handleDistrict}
+                              name=""
+                              id=""
+                              style={{ display: "block" }}
+                          >
+                              <option>Chọn Quận/Huyện</option>
+                              {dataDistrict.map((item, index) => (
+                                  <option key={index} value={item.district_id}>
+                                      {item.district_name}
+                                  </option>
+                              ))}
+                          </select>
+                          <br />
+                          <select
+                              onChange={(e) => setWard(e.target.value)}
+                              name=""
+                              id=""
+                              style={{ display: "block" }}
+                          >
+                              <option value="">Chọn Phường/Xã</option>
+                              {dataWard.map((item, index) => (
+                                  <option key={index} value={item.ward_id}>
+                                      {item.ward_name}
+                                  </option>
+                              ))}
+                          </select>
                       </div>
                   </div>
               </div>

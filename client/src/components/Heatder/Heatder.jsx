@@ -2,11 +2,6 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { BsCart } from "react-icons/bs";
 import { AiOutlineUser } from "react-icons/ai";
 import { AiFillHeart } from "react-icons/ai";
-
-
-
-import { Link } from "react-router-dom";
-
 import logo from "../../../public/images/Logo.png";
 import search from "../../../public/images/search.png";
 import React from "react";

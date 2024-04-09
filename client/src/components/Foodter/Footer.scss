@@ -1,5 +1,4 @@
-.footer {
-  
+.footer { 
   background-color: #3c4242;
   color: #f6f6f6;
   font-size: 20px;
@@ -9,23 +8,25 @@
     margin-top: 80px;
     margin-left: 10px;
     .icon_footer {
-      width: 37%;
+      width: 50px;
       height: 50px;
       background-color: #f6f6f6;
       color: #3c4242;
-      padding: 13px;
+      padding: 16px 17px 15px 17px;
       border-radius: 10px;
     }
   }
 
   .container2 {
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
     display: flex;
-    justify-content: space-around;
-    margin-left: 150px;
+    justify-content: space-between;
     p{
       margin-top: 20px;
     }
-    padding: 50px 70px;
+    padding: 50px 0 50px 0;
     font-size: 18px;
     .download {
       margin-top: 80px;
@@ -37,7 +38,7 @@
     }
 
     .appstore {
-      width: 400px;
+      width: 250px;
       height: 51px;
       display: flex;
       gap: 20px;
@@ -58,6 +59,21 @@
       
         right: 125px;
       }
+    }
+  }
+  .footer2 {
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
+    h2 {
+      margin: 15px 0 15px 0;
+    }
+    h4 {
+      padding: 20px 0 20px 0;
+      text-align: center;
+    }
+    hr {
+      border: 1px solid #f6f6f6;
     }
   }
 }
