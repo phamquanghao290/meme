@@ -17,7 +17,7 @@ export default function ResetPassword() {
 
                 <div className='mainInput-resetpass'>
                     <p style={{ marginBottom: '10px', fontSize: '18px', fontWeight: '400', color: '#3C4242' }}>Email </p>
-                    <input type="text" placeholder='focus001@gmail.com' />
+                    <input className='input-resetpass' type="text" placeholder='focus001@gmail.com' />
                     <p className='error-content-resetpass'>We can not find your email.</p>
                 </div>
 
@@ -26,7 +26,7 @@ export default function ResetPassword() {
                 </div>
 
                 <div className='content-end-resetpass'>
-                    <p >Back to <span style={{ textDecoration: 'underline' }}>Login</span></p>
+                    <p style={{ fontSize: '16px', fontWeight: '500', color: '#3C4242' }} >Back to <span style={{ textDecoration: 'underline' }}>Login</span></p>
                 </div>
 
             </div>
