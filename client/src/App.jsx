@@ -10,6 +10,14 @@ import SignIn from './page/SignIn/SignInPage'
 import ProductWomen from './page/product/ProductWomen'
 import ProductMen from './page/product/ProductMen'
 import CheckoutForBill from './page/checkout/CheckoutForBill'
+import Wishlist from "./page/wishlist/Wishlist";
+import Heatder from "./components/Heatder/Heatder";
+import Footer from "./components/Foodter/Footer";
+import Index from "./page/home/Index";
+import SignIn from "./page/SignIn/SignInPage";
+import ProductWomen from "./page/product/ProductWomen";
+import ProductMen from "./page/product/ProductMen";
+import Productdetail from './page/Productdetail/Productdetail'
 
 function App() {
   return (
@@ -21,12 +29,14 @@ function App() {
         <Route path='/cart' element={<Cart />} />
         <Route path='/checkout' element={<CheckoutForBill />} />
         <Route path='*' element={<NotFound />} />
+        <Route path="/Productdetail" element={<Productdetail />} />
       </Route>
       
       <Route path='/signUp' element={<SignUp />} />
       <Route path='/signIn' element={<SignIn />} />
+      <Route path="/wishlist" element={<Wishlist />} />
     </Routes>
-  )
+  );
 }
 
-export default App
+export default App;

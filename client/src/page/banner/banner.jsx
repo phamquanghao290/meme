@@ -20,7 +20,7 @@ const Banner = () => (
           position: "relative",
           zIndex: 90000,
           height: "10px",
-          top: "-640px",
+          top: "-580px",
           fontSize: "60px",
           color: "white",
         }}
@@ -28,26 +28,26 @@ const Banner = () => (
         <p
           style={{
             fontWeight: "normal",
-            marginLeft: "120px",
+            marginLeft: "200px",
             fontSize: "40px",
           }}
         >
           T-shirt / Tops
         </p>
-        <p style={{ fontWeight: "bold", marginLeft: "120px" }}>
+        <p style={{ fontWeight: "bold", marginLeft: "200px" }}>
           {" "}
           Summer <br /> Value Pack
         </p>
         <p
           style={{
             fontWeight: "normal",
-            marginLeft: "120px",
+            marginLeft: "200px",
             fontSize: "40px",
           }}
         >
           cool / colorful / comfy
         </p>
-        <button style={{ marginLeft: "140px" }} className="buttonbaner">
+        <button style={{ marginLeft: "200px" }} className="buttonbaner">
           Shop Now
         </button>
       </div>
@@ -64,7 +64,7 @@ const Banner = () => (
           position: "relative",
           zIndex: 90000,
           height: "10px",
-          top: "-640px",
+          top: "-580px",
           fontSize: "60px",
           color: "white",
         }}
@@ -72,26 +72,26 @@ const Banner = () => (
         <p
           style={{
             fontWeight: "normal",
-            marginLeft: "120px",
+            marginLeft: "200px",
             fontSize: "40px",
           }}
         >
           T-shirt / Tops
         </p>
-        <p style={{ fontWeight: "bold", marginLeft: "120px" }}>
+        <p style={{ fontWeight: "bold", marginLeft: "200px" }}>
           Summer <br /> Value Pack
         </p>
         <p
           style={{
             fontWeight: "normal",
-            marginLeft: "120px",
+            marginLeft: "200px",
             fontSize: "40px",
             color: "#ffff",
           }}
         >
           cool / colorful / comfy
         </p>
-        <button className="buttonbaner" style={{ marginLeft: "140px" }}>
+        <button className="buttonbaner" style={{ marginLeft: "200px" }}>
           Shop Now
         </button>
       </div>
