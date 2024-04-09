@@ -9,6 +9,7 @@ import Footer from './components/Foodter/Footer'
 import SignIn from './page/SignIn/SignInPage'
 import ProductWomen from './page/product/ProductWomen'
 import ProductMen from './page/product/ProductMen'
+import CheckoutForBill from './page/checkout/CheckoutForBill'
 
 function App() {
   return (
@@ -18,11 +19,12 @@ function App() {
         <Route path='/productWomen' element={<ProductWomen />} />
         <Route path='/productMen' element={<ProductMen />} />
         <Route path='/cart' element={<Cart />} />
+        <Route path='/checkout' element={<CheckoutForBill />} />
         <Route path='*' element={<NotFound />} />
       </Route>
       
-      <Route path='/signup' element={<SignUp />} />
-      <Route path='/signin' element={<SignIn />} />
+      <Route path='/signUp' element={<SignUp />} />
+      <Route path='/signIn' element={<SignIn />} />
     </Routes>
   )
 }

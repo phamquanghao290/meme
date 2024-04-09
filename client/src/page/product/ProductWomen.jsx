@@ -114,8 +114,24 @@ function ProductWomen() {
                 </div>
                 <div className="Product_Women_Layout">
                     <div style={{ display: "flex", alignItems: "center" }}>
-                        <div style={{ height: "30px", backgroundColor: "#8A33FD", width: "7px", borderRadius: "5px", marginTop: "5px" }}></div>
-                        <p style={{ marginLeft: "10px", fontWeight: "bold", fontSize: "20px" }}>Women's Clothing</p>
+                        <div
+                            style={{
+                                height: "30px",
+                                backgroundColor: "#8A33FD",
+                                width: "7px",
+                                borderRadius: "5px",
+                                marginTop: "5px",
+                            }}
+                        ></div>
+                        <p
+                            style={{
+                                marginLeft: "10px",
+                                fontWeight: "bold",
+                                fontSize: "20px",
+                            }}
+                        >
+                            Women's Clothing
+                        </p>
                     </div>
                     <br />
                     <br />
