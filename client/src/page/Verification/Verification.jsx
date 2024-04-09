@@ -15,7 +15,7 @@ export default function Verification() {
 
                 <div className='mainInput-verifi'>
                     <p style={{ marginBottom: '10px', fontSize: '18px', fontWeight: '400', color: '#3C4242' }}>Verification Code </p>
-                    <input type="text" placeholder='' />
+                    <input className='input-verifi' type="text" placeholder='' />
                 </div>
 
                 <div className='main-button-reset'>
