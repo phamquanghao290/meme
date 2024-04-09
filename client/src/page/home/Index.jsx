@@ -49,7 +49,7 @@ export default function Index() {
   return (
     <>
       <Banner></Banner>
-      <div style={{ width: "100%" }}>
+      <div>
         <div className="bannertitle">
           <div>
             <img src={Banner4} alt="" />
@@ -62,7 +62,7 @@ export default function Index() {
         <div className="NewArrival">
           <h2>New Arrival</h2>
           <div className="productsNewArrival">
-            <GrLinkPrevious style={{ fontSize: "30px", marginTop: "120px" }} />
+            <GrLinkPrevious style={{ fontSize: "30px", marginTop: "150px" }} />
             <div>
               <img src={img1} alt="" />
               <p>Knitted Joggers</p>
@@ -79,7 +79,7 @@ export default function Index() {
               <img src={img4} alt="" />
               <p>Urban Shirts</p>
             </div>
-            <GrLinkNext style={{ fontSize: "30px", marginTop: "120px" }} />
+            <GrLinkNext style={{ fontSize: "30px", marginTop: "150px" }} />
           </div>
         </div>
         <div className="NewArrivals">
@@ -139,7 +139,7 @@ export default function Index() {
           <div className="BigSavingZone">
             <div>
               <div>
-                <img src={img9} alt="" />
+                <img src={img9} alt="" className="img_shownow1" />
               </div>
               <div className="textimg4">
                 <h3>
@@ -156,7 +156,7 @@ export default function Index() {
             </div>
             <div>
               <div>
-                <img src={img8} alt="" />
+                <img src={img8} alt="" className="img_shownow2"/>
               </div>
               <div className="textimg4">
                 <h3>

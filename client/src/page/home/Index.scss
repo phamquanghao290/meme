@@ -1,29 +1,26 @@
 .bannertitle {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
   display: flex;
-
   justify-content: space-around;
-  margin-right: 180px;
-  margin-left: 180px;
   margin-top: 70px;
   img {
-    width: 800px;
-    height: 450px;
+    width: 700px;
+    height: 400px;
   }
 }
 .NewArrival {
+  max-width: 1440px;
   width: 100%;
+  margin: 0 auto;
   h2 {
-    margin-left: 200px;
+    text-align: left;
   }
-
   .productsNewArrival {
-    
-    width: 82%;
-    
     margin-top: 70px;
     display: flex;
-    margin-left:190px;
-    gap: 46px;
+    gap: 20px;
     p {
       margin-top: 30px;
       font-size: 20px;
@@ -41,15 +38,15 @@
   }
 }
 .NewArrivals {
+  max-width: 1440px;
   width: 100%;
+  margin: 0 auto;
   h2 {
-    margin-left: 200px;
+    text-align: left;
   }
   .productsNewArrivals {
-    width: 80%;
-    margin: 0 auto;
     display: flex;
-    gap: 30px;
+    justify-content: space-between;
     margin-top: 70px;
   }
   h2 {
@@ -59,35 +56,39 @@
     font-size: 35px;
   }
   img {
-    width: 500px;
+    width: 440px;
   }
 }
 .BigSavingZone {
-  
+  max-width: 1440px;
+  width: 100%;
   display: flex;
-  width: 80%;
+  justify-content: space-between;
   margin: 0 auto;
- 
-  gap: 52px;
-  img {
-    margin: 0 auto;
-    width: 753px;
-  }
+  margin-top: 40px;
+  .img_shownow1 {
+    width: 700px;
+    max-height: 400px;
+  };
+  .img_shownow2 {
+    width: 700px;
+    max-height: 400px;
+  };
 }
 .NewArrivalProducts {
+  max-width: 1440px;
   width:100%;
+  margin: 0 auto;
   h2 {
-    margin-left: 200px;
+    text-align: left;
   }
   .productshome {
-    margin: 0 auto;
     margin-top: 70px;
-    width: 1520px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 20px;
     img {
-      width: 350px;
+      width: 340px;
     }
     .titleProducts {
       display: flex;
@@ -127,7 +128,7 @@
   z-index: 90;
   height: 10px;
   top: -380px;
-  margin-left: 280px;
+  margin-left: 210px;
   color: rgb(255, 255, 255);
   h3 {
     font-size: 40px;
@@ -149,7 +150,7 @@
   z-index: 90;
   height: 10px;
   top: -380px;
-  margin-left: 280px;
+  margin-left: 210px;
   color: rgb(0, 0, 0);
   h3 {
     font-size: 40px;
@@ -172,7 +173,7 @@
   z-index: 90;
   height: 10px;
   top: -380px;
-  margin-left: 480px;
+  margin-left: 330px;
   color: rgb(0, 0, 0);
   h3 {
     font-size: 50px;
@@ -191,21 +192,20 @@
   }
 }
 .feedback {
+  max-width: 1440px;
   width: 100%;
+  margin: 0 auto;
   .feedbacktitle {
-    margin-left: 200px;
     margin-top: 70px;
     border-left: 6px solid #8a33fd;
   }
-
   margin-bottom: 200px;
   h2 {
-    margin-left: 30px;
-
+    text-align: start;
+    margin-left: 20px;
     font-size: 35px;
   }
   .feedbackpeople {
-    width: 80%;
     margin: 0 auto;
     display: flex;
     gap: 40px;
