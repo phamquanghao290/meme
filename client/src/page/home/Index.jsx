@@ -388,6 +388,7 @@ export default function Index() {
           marginLeft: "200px",
           borderRadius: "10px",
           color: "white",
+          marginTop: "70px",
         }}
       >
         <h2
@@ -464,11 +465,11 @@ export default function Index() {
               <div
                 style={{
                   marginLeft: "40px",
-                  marginTop: "40px",
+                  marginTop: "20px",
                   backgroundColor: "#F6F6F6",
                   padding: "10px",
                   borderRadius: "5px",
-                  height: "20px",
+                  height: "40px",
                 }}
               >
                 $123.00
@@ -485,11 +486,11 @@ export default function Index() {
               <div
                 style={{
                   marginLeft: "70px",
-                  marginTop: "40px",
+                  marginTop: "20px",
                   backgroundColor: "#F6F6F6",
                   padding: "10px",
                   borderRadius: "5px",
-                  height: "20px",
+                  height: "40px",
                 }}
               >
                 $37.00
@@ -505,11 +506,11 @@ export default function Index() {
               <div
                 style={{
                   marginLeft: "130px",
-                  marginTop: "40px",
+                  marginTop: "20px",
                   backgroundColor: "#F6F6F6",
                   padding: "10px",
                   borderRadius: "5px",
-                  height: "20px",
+                  height: "40px",
                 }}
               >
                 $37.00
@@ -525,11 +526,11 @@ export default function Index() {
               <div
                 style={{
                   marginLeft: "40px",
-                  marginTop: "40px",
+                  marginTop: "20px",
                   backgroundColor: "#F6F6F6",
                   padding: "10px",
                   borderRadius: "5px",
-                  height: "20px",
+                  height: "40px",
                 }}
               >
                 $119.00

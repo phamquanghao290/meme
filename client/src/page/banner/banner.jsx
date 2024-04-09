@@ -1,7 +1,7 @@
 import React from "react";
 import { Carousel } from "antd";
 import banner from "../../../public/images/banner.jpg";
-import "../banner/banner.scss";
+import "./banner.scss";
 const contentStyle = {
   color: "black",
   height: "716px",
