@@ -5,11 +5,11 @@ import NotFound from './page/notfound/NotFound'
 import SignUp from './page/SignUp/SignUp'
 import Index from './page/home/Index'
 import Heatder from './components/Heatder/Heatder'
-import Footer from './components/Footer/Footer'
-import Index from "./page/home/Index";
+import Footer from './components/Foodter/Footer'
 import SignIn from './page/SignIn/SignInPage'
 import ProductWomen from './page/product/ProductWomen'
 import ProductMen from './page/product/ProductMen'
+
 function App() {
   return (
     <Routes>
@@ -19,7 +19,6 @@ function App() {
         <Route path='/productMen' element={<ProductMen />} />
         <Route path='/cart' element={<Cart />} />
         <Route path='*' element={<NotFound />} />
-        
       </Route>
       
       <Route path='/signup' element={<SignUp />} />

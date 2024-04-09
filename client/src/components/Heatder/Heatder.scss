@@ -4,7 +4,11 @@
   height: 108px;
   justify-content: space-around;
   align-items: center;
-
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+  position: sticky;
+  top: 0;
+  z-index: 100000;
+  background-color: white;
   .Menu_Heatder {
     display: flex;
     gap: 40px;
@@ -14,6 +18,7 @@
       font-weight: 400;
       font-family: "Montserrat", sans-serif;
       color: #636262;
+      text-decoration: none;
     }
     h3:hover {
       color: #000000;
