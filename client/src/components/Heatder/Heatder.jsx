@@ -35,7 +35,7 @@ export default function Heatder() {
             <AiOutlineUser className="icon" />
           </div>
           <div className="component">
-            <BsCart className="icon" />
+            <Link to="/cart"><BsCart className="icon" /></Link>
           </div>
         </div>
       </div>
