@@ -4,6 +4,7 @@ import Cart from "./page/cart/Cart";
 import NotFound from "./page/notfound/NotFound";
 import SignUp from "./page/SignUp/SignUp";
 
+
 import Wishlist from "./page/wishlist/Wishlist";
 import Heatder from "./components/Heatder/Heatder";
 import Footer from "./components/Foodter/Footer";
@@ -13,24 +14,20 @@ import ProductWomen from "./page/product/ProductWomen";
 import ProductMen from "./page/product/ProductMen";
 import Productdetail from './page/Productdetail/Productdetail'
 
+
+
 function App() {
   return (
     <Routes>
-      <Route
-        path="/"
-        element={
-          <>
-            <Heatder />
-            <Outlet />
-            <Footer />
-          </>
-        }
-      >
-        <Route path="/" element={<Index />} />
-        <Route path="/productWomen" element={<ProductWomen />} />
-        <Route path="/productMen" element={<ProductMen />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="*" element={<NotFound />} />
+
+
+      <Route path='/' element={<><Heatder /><Outlet /><Footer /></>}>
+        <Route path='/' element={<Index />} />
+        <Route path='/productWomen' element={<ProductWomen />} />
+        <Route path='/productMen' element={<ProductMen />} />
+        <Route path='/cart' element={<Cart />} />
+        <Route path='*' element={<NotFound />} />
+
       </Route>
       <Route path="/Productdetail" element={<Productdetail />} />
       <Route path="/signup" element={<SignUp />} />
