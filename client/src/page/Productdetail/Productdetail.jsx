@@ -47,7 +47,6 @@ export default function Productdetail() {
   ];
   return (
     <>
-      <Heatder></Heatder>
       <div className="Product_detail">
         <div className="content_Detail">
           <div className="details">
@@ -124,7 +123,10 @@ export default function Productdetail() {
             </div>
             <div className="addtocart">
               <button className="buttonaddtocart">
-                <BsCart style={{ color: "white" }} /> Add to cart
+                <div className="flex items-center px-5 py-2 bg-[#8a33fd] rounded-lg gap-3 text-white">
+                  <BsCart style={{ color: "white" }} />
+                  <h6 className="border-1 font-bold">Add to cart</h6>
+                </div>
               </button>
               <p>$63.00</p>
             </div>
@@ -442,8 +444,6 @@ export default function Productdetail() {
           </div>
         </div>
       </div>
-
-      <Footer></Footer>
     </>
   );
 }

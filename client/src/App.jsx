@@ -14,6 +14,7 @@ import Wishlist from "./page/wishlist/Wishlist";
 import Productdetail from './page/Productdetail/Productdetail'
 import MyInfo from './page/myinfo/MyInfo'
 import DeliveryAddress from './page/DeliveryAddress/DeliveryAddress'
+import Order from './page/Order/Order'
 
 function App() {
   return (
@@ -24,12 +25,14 @@ function App() {
         <Route path='/productMen' element={<ProductMen />} />
         <Route path='/cart' element={<Cart />} />
         <Route path='/checkout' element={<CheckoutForBill />} />
+        <Route path='/order' element={<Order />} />
         <Route path='*' element={<NotFound />} />
-        <Route path="/Productdetail" element={<Productdetail />} />
+        <Route path="/product-detail" element={<Productdetail />} />
         <Route path="/wishlist" element={<Wishlist />} />
+        <Route path="/myinfo" element={<MyInfo />} />
+        <Route path="/delivery-address" element={<DeliveryAddress />} />
       </Route>
-      <Route path="/myinfo" element={<MyInfo />} />
-      <Route path="/delivery-address" element={<DeliveryAddress />} />
+      
 
       <Route path='/signUp' element={<SignUp />} />
       <Route path='/signIn' element={<SignIn />} />
