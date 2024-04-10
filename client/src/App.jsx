@@ -12,6 +12,8 @@ import ProductMen from './page/product/ProductMen'
 import CheckoutForBill from './page/checkout/CheckoutForBill'
 import Wishlist from "./page/wishlist/Wishlist";
 import Productdetail from './page/Productdetail/Productdetail'
+import MyInfo from './page/myinfo/MyInfo'
+import DeliveryAddress from './page/DeliveryAddress/DeliveryAddress'
 
 function App() {
   return (
@@ -24,11 +26,13 @@ function App() {
         <Route path='/checkout' element={<CheckoutForBill />} />
         <Route path='*' element={<NotFound />} />
         <Route path="/Productdetail" element={<Productdetail />} />
+        <Route path="/wishlist" element={<Wishlist />} />
       </Route>
-      
+      <Route path="/myinfo" element={<MyInfo />} />
+      <Route path="/delivery-address" element={<DeliveryAddress />} />
+
       <Route path='/signUp' element={<SignUp />} />
       <Route path='/signIn' element={<SignIn />} />
-      <Route path="/wishlist" element={<Wishlist />} />
     </Routes>
   );
 }
