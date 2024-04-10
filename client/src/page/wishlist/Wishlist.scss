@@ -5,17 +5,103 @@
     font-family: 'Montserrat', sans-serif;
 }
 .main-body-wishlist{
+    max-width: 1440px;
     width: 100%;
     height: fit-content;
-    margin-left: 100px;
+    margin: 0 auto;
+    // margin-left: 10%;
     .main-nav-wishlist{
         
     }
     .main-content-wishlist{
+        // width: 100%;
         display: flex;
-        margin-top: 30px;
+        margin-top: 60px;
         gap: 20px;
 
-        
+        .main-content-wishlist-left{
+            width: 25%;
+            .main-content-wishlist-left-option{
+                display: flex;
+                gap: 15px;
+                align-items: center;
+                margin-top: 20px;
+                margin-left: 20px;
+            }
+        }
+        .main-content-wishlist-right{
+            width: 80%;
+            
+
+            .image-wishlist{
+                width: 180px;
+                height: 110px;
+                object-fit: fill;
+                background-size: cover;
+                border-radius: 4px;
+            }
+
+            .main-content-wishlist-right-image{
+                width: 20%;
+            }
+
+            .main-content-wishlist-right-item{
+                display: flex;
+                justify-content: space-around;
+                gap: 30px;
+                margin-top: 40px;
+            }
+
+            .main-content-wishlist-right-info{
+                width: 60%;
+                line-height: 35px;
+                font-size: 18px;
+                font-weight: 700;
+            }
+
+            .main-content-wishlist-right-button{
+                width: 145px;
+                height: 50px;
+                border-radius: 8px;
+                padding: 14px 28px;
+                background-color: #8A33FD;
+                color: #FFFFFF;
+                border: none;
+                cursor: pointer;
+            }
+
+            .main-content-wishlist-right-button:hover{
+                background-color: #7d27f7;
+                cursor: pointer;
+                transition: all 0.5s ease-in-out;
+            }
+        }
     }
+
+    .main-content-wishlist-bottom{
+        width: 100%;
+        max-width: 1440px;
+        margin-top: 50px;
+
+        .main-content-wishlist-bottom-item{
+            margin-top: 30px;
+            
+            .image-wishlist-recently{
+                width: 280px;
+                height: 370px;
+                border-radius: 12px;
+                object-fit: cover;
+            }
+
+            .main-content-wishlist-bottom-info{
+                display: flex;
+
+                .main-content-wishlist-bottom-info-text{
+                    width: 15%;
+                }
+            }
+        }
+    }
+
+
 }
