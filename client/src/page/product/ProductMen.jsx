@@ -97,10 +97,10 @@ function ProductMen() {
         }
     };
     return (
-        <div style={{ marginTop: "50px" }}>
-            <div className="Product">
-                <div className="ProductWomen">
-                    <p>Fillter</p>
+        <div style={{ marginTop: "50px", fontFamily: "Montserrat" }}>
+            <div className="flex items-start justify-between gap-11 max-w-[1440px] w-full mx-auto px-4 mb-10 sm:px-6 lg:px-8">
+                <div>
+                    <p className="font-bold text-xl ml-6">Fillter</p>
                     <Menu
                         mode="inline"
                         defaultSelectedKeys={["231"]}
@@ -112,272 +112,98 @@ function ProductMen() {
                         items={items}
                     />
                 </div>
-                <div className="Product_Women_Layout">
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                        <div
-                            style={{
-                                height: "30px",
-                                backgroundColor: "#8A33FD",
-                                width: "7px",
-                                borderRadius: "5px",
-                                marginTop: "5px",
-                            }}
-                        ></div>
-                        <p
-                            style={{
-                                marginLeft: "10px",
-                                fontWeight: "bold",
-                                fontSize: "20px",
-                            }}
-                        >
+                <div>
+                    <div className="flex items-center mt-10">
+                        <div className="bg-[#8A33FD] w-2 h-8 rounded-lg"></div>
+                        <p className="ml-6 font-bold text-xl">
                             Men's Clothing
                         </p>
                     </div>
-                    <br />
-                    <br />
-                    <div
-                        style={{
-                            display: "grid",
-                            gridTemplateColumns: "1fr 1fr 1fr 1fr",
-                        }}
-                        className="Product_Women_grid"
-                    >
-                        <div className="Product_Women_item">
+                    <div className="grid grid-cols-4 mt-10 gap-10">
+                        <div>
                             <img src={anh1} alt="" />
                             <br />
-                            <br />
-                            <div
-                                style={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                }}
-                                className="Product_Women_info"
-                            >
-                                <div>
-                                    <p>Product Name</p>
-                                    <p>Price</p>
-                                </div>
-                                <button
-                                    style={{
-                                        cursor: "pointer",
-                                        backgroundColor: "#8A33FD",
-                                        color: "white",
-                                        width: "100px",
-                                        height: "30px",
-                                        borderRadius: "7px",
-                                        border: "none",
-                                    }}
-                                >
+                            <p className="text-lg font-bold">ProducName</p>
+                            <div className="flex items-end justify-between">
+                                <p className="text-lg font-bold">Price</p>
+                                <button className="bg-[#8A33FD] text-white rounded-lg px-4 py-2">
                                     Add to cart
                                 </button>
                             </div>
                         </div>
-                        <div className="Product_Women_item">
+                        <div>
                             <img src={anh1} alt="" />
                             <br />
-                            <br />
-                            <div
-                                style={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                }}
-                                className="Product_Women_info"
-                            >
-                                <div>
-                                    <p>Product Name</p>
-                                    <p>Price</p>
-                                </div>
-                                <button
-                                    style={{
-                                        cursor: "pointer",
-                                        backgroundColor: "#8A33FD",
-                                        color: "white",
-                                        width: "100px",
-                                        height: "30px",
-                                        borderRadius: "7px",
-                                        border: "none",
-                                    }}
-                                >
+                            <p className="text-lg font-bold">ProducName</p>
+                            <div className="flex items-end justify-between">
+                                <p className="text-lg font-bold">Price</p>
+                                <button className="bg-[#8A33FD] text-white rounded-lg px-4 py-2">
                                     Add to cart
                                 </button>
                             </div>
                         </div>
-                        <div className="Product_Women_item">
+                        <div>
                             <img src={anh1} alt="" />
                             <br />
-                            <br />
-                            <div
-                                style={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                }}
-                                className="Product_Women_info"
-                            >
-                                <div>
-                                    <p>Product Name</p>
-                                    <p>Price</p>
-                                </div>
-                                <button
-                                    style={{
-                                        cursor: "pointer",
-                                        backgroundColor: "#8A33FD",
-                                        color: "white",
-                                        width: "100px",
-                                        height: "30px",
-                                        borderRadius: "7px",
-                                        border: "none",
-                                    }}
-                                >
+                            <p className="text-lg font-bold">ProducName</p>
+                            <div className="flex items-end justify-between">
+                                <p className="text-lg font-bold">Price</p>
+                                <button className="bg-[#8A33FD] text-white rounded-lg px-4 py-2">
                                     Add to cart
                                 </button>
                             </div>
                         </div>
-                        <div className="Product_Women_item">
+                        <div>
                             <img src={anh1} alt="" />
                             <br />
-                            <br />
-                            <div
-                                style={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                }}
-                                className="Product_Women_info"
-                            >
-                                <div>
-                                    <p>Product Name</p>
-                                    <p>Price</p>
-                                </div>
-                                <button
-                                    style={{
-                                        cursor: "pointer",
-                                        backgroundColor: "#8A33FD",
-                                        color: "white",
-                                        width: "100px",
-                                        height: "30px",
-                                        borderRadius: "7px",
-                                        border: "none",
-                                    }}
-                                >
+                            <p className="text-lg font-bold">ProducName</p>
+                            <div className="flex items-end justify-between">
+                                <p className="text-lg font-bold">Price</p>
+                                <button className="bg-[#8A33FD] text-white rounded-lg px-4 py-2">
                                     Add to cart
                                 </button>
                             </div>
                         </div>
-                        <div className="Product_Women_item">
+                        <div>
                             <img src={anh1} alt="" />
                             <br />
-                            <br />
-                            <div
-                                style={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                }}
-                                className="Product_Women_info"
-                            >
-                                <div>
-                                    <p>Product Name</p>
-                                    <p>Price</p>
-                                </div>
-                                <button
-                                    style={{
-                                        cursor: "pointer",
-                                        backgroundColor: "#8A33FD",
-                                        color: "white",
-                                        width: "100px",
-                                        height: "30px",
-                                        borderRadius: "7px",
-                                        border: "none",
-                                    }}
-                                >
+                            <p className="text-lg font-bold">ProducName</p>
+                            <div className="flex items-end justify-between">
+                                <p className="text-lg font-bold">Price</p>
+                                <button className="bg-[#8A33FD] text-white rounded-lg px-4 py-2">
                                     Add to cart
                                 </button>
                             </div>
                         </div>
-                        <div className="Product_Women_item">
+                        <div>
                             <img src={anh1} alt="" />
                             <br />
-                            <br />
-                            <div
-                                style={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                }}
-                                className="Product_Women_info"
-                            >
-                                <div>
-                                    <p>Product Name</p>
-                                    <p>Price</p>
-                                </div>
-                                <button
-                                    style={{
-                                        cursor: "pointer",
-                                        backgroundColor: "#8A33FD",
-                                        color: "white",
-                                        width: "100px",
-                                        height: "30px",
-                                        borderRadius: "7px",
-                                        border: "none",
-                                    }}
-                                >
+                            <p className="text-lg font-bold">ProducName</p>
+                            <div className="flex items-end justify-between">
+                                <p className="text-lg font-bold">Price</p>
+                                <button className="bg-[#8A33FD] text-white rounded-lg px-4 py-2">
                                     Add to cart
                                 </button>
                             </div>
                         </div>
-                        <div className="Product_Women_item">
+                        <div>
                             <img src={anh1} alt="" />
                             <br />
-                            <br />
-                            <div
-                                style={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                }}
-                                className="Product_Women_info"
-                            >
-                                <div>
-                                    <p>Product Name</p>
-                                    <p>Price</p>
-                                </div>
-                                <button
-                                    style={{
-                                        cursor: "pointer",
-                                        backgroundColor: "#8A33FD",
-                                        color: "white",
-                                        width: "100px",
-                                        height: "30px",
-                                        borderRadius: "7px",
-                                        border: "none",
-                                    }}
-                                >
+                            <p className="text-lg font-bold">ProducName</p>
+                            <div className="flex items-end justify-between">
+                                <p className="text-lg font-bold">Price</p>
+                                <button className="bg-[#8A33FD] text-white rounded-lg px-4 py-2">
                                     Add to cart
                                 </button>
                             </div>
                         </div>
-                        <div className="Product_Women_item">
+                        <div>
                             <img src={anh1} alt="" />
                             <br />
-                            <br />
-                            <div
-                                style={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                }}
-                                className="Product_Women_info"
-                            >
-                                <div>
-                                    <p>Product Name</p>
-                                    <p>Price</p>
-                                </div>
-                                <button
-                                    style={{
-                                        cursor: "pointer",
-                                        backgroundColor: "#8A33FD",
-                                        color: "white",
-                                        width: "100px",
-                                        height: "30px",
-                                        borderRadius: "7px",
-                                        border: "none",
-                                    }}
-                                >
+                            <p className="text-lg font-bold">ProducName</p>
+                            <div className="flex items-end justify-between">
+                                <p className="text-lg font-bold">Price</p>
+                                <button className="bg-[#8A33FD] text-white rounded-lg px-4 py-2">
                                     Add to cart
                                 </button>
                             </div>

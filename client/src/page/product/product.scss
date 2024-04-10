@@ -4,37 +4,6 @@
     box-sizing: border-box;
 }
 
-.Product {
-    width: 100%;
-    max-width: 1440px;
-    margin: 0 auto;
-    height: 100%;
-    display: flex;
-    justify-content: space-between;
-    gap: 50px;
-    margin-bottom: 30px;
-    .ProductWomen {
-        p {
-            font-family: "Montserrat", sans-serif;
-            font-size: 26px;
-            height: 50px;
-            background-color: aquamarine;
-            padding: 15px;
-            font-weight: bold;
-        }
-    }
-    .Product_Women_Layout {
-        .Product_Women_grid {
-            .Product_Women_item {
-                img {
-                    width: 100%;
-                }
-                padding: 20px;
-            }
-        }
-    }
-}
-
 .Product_Content {
     max-width: 1440px;
     width: 100%;
