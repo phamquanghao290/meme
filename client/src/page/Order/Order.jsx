@@ -229,7 +229,7 @@ function Order() {
                           <h3 className="text-lg font-semibold">
                               Order No. #3C4242
                           </h3>
-                          <button
+                          <button   
                               className="text-white bg-[#8A33FD] rounded-lg px-4 py-2"
                               onClick={showModal}
                           >

@@ -17,8 +17,8 @@ function Cart() {
                 <p>Already register ?</p>{" "}
                 <Link to="/login"> Please login here</Link>
             </div>
-            <div className="table">
-                <table>
+            <div className="table_cart">
+                <table className="table_cart_info">
                     <thead>
                         <tr>
                             <th className="one">PRODUCT DETAILS</th>
