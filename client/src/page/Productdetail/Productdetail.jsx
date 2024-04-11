@@ -9,7 +9,7 @@ import { BiCommentDetail } from "react-icons/bi";
 import { GrNext } from "react-icons/gr";
 import { AiFillDownCircle } from "react-icons/ai";
 import { AiFillUpCircle } from "react-icons/ai";
-import React from "react";
+import React, { useEffect } from "react";
 import products14 from "../../../public/images/product14.png";
 import products15 from "../../../public/images/product15.png";
 import products16 from "../../../public/images/product16.png";
@@ -24,6 +24,9 @@ import Star from "../home/star/star";
 import Heatder from "../../components/Heatder/Heatder";
 import Footer from "../../components/Foodter/Footer";
 export default function Productdetail() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const onChange = (key) => {
     console.log(key);
   };

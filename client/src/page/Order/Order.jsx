@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     AppstoreOutlined,
     MailOutlined,
@@ -34,7 +34,9 @@ const items = [
 function Order() {
     const [current, setCurrent] = useState("mail");
     const [isModalOpen, setIsModalOpen] = useState(false);
-    
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
     const onClick = (e) => {
         console.log("click ", e);
         setCurrent(e.key);

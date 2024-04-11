@@ -1,7 +1,7 @@
 import { BiDownArrowAlt } from "react-icons/bi";
 import { GrLinkNext } from "react-icons/gr";
 import { GrLinkPrevious } from "react-icons/gr";
-import React from "react";
+import React, { useEffect } from "react";
 import Banner from "../banner/banner";
 import Banner3 from "../../../public/images/banner3.png";
 import Banner4 from "../../../public/images/banner4.png";
@@ -46,6 +46,9 @@ import Logo5 from "../../../public/images/Logo5.png";
 import "../home/Index.scss";
 import Star from "./star/star";
 export default function Index() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       <Banner></Banner>
@@ -416,7 +419,7 @@ export default function Index() {
             Up To <span style={{ color: "#FBD103" }}>60%</span> off on brands
           </p>
           <div
-            style={{ margin: "0 auto", marginLeft: "230px", marginTop: "50px" }}
+            style={{ margin: "0 auto", marginTop: "50px" ,display:"flex",justifyContent:"center",alignItems:"center" }}
           >
             <img src={Logo1} alt="" style={{ width: "155px" }} />
             <img

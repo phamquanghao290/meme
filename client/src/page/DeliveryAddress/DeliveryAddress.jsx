@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './DeliveryAddress.scss'
 export default function DeliveryAddress() {
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
     return (
         <div className='main-body-delivery' >
             <div className='main-nav-delivery'  >
