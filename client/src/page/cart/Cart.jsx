@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Cart.scss";
 import p1 from "../../../public/images/Rectangle 734.png";
@@ -6,6 +6,9 @@ import deletecon from "../../../public/images/deletecon.png";
 import { Input } from "antd";
 
 function Cart() {
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
     return (
         <div>
             <div className="container">

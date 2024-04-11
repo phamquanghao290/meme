@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Slider, Switch } from "antd";
 import {
     AppstoreOutlined,
@@ -10,6 +10,9 @@ import "./product.scss";
 import anh1 from "../../../public/images/product13.png";
 
 function ProductMen() {
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
     function getItem(label, key, icon, children, type) {
         return {
             key,
@@ -211,7 +214,7 @@ function ProductMen() {
                     </div>
                 </div>
             </div>
-            <div className="Product_Content">
+            <div className="Product_Content" style={{paddingBottom:"100px"}}>
                 <div
                     style={{
                         display: "flex",
