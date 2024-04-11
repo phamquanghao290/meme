@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ImageSu from '../../../public/images/Imagesu.png'
 import Google from '../../../public/images/Google.png'
 import Twitter from '../../../public/images/twitter.png'
@@ -6,6 +6,9 @@ import Divider from '../../../public/images/divider.png'
 import './SignUp.scss'
 
 export default function SignUp() {
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
     return (
         <div className='mainBody'>
             <div className='mainImage'>

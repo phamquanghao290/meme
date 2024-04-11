@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Checkmail from '../../../public/images/Checkmail.png'
 import './CheckEmail.scss'
 export default function CheckEmail() {
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
     return (
         <div className='mainBody-checkmail'>
             <div className='mainImage-checkmail'>

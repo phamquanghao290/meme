@@ -10,10 +10,16 @@
     .icon_footer {
       width: 50px;
       height: 50px;
+      cursor: pointer;
       background-color: #f6f6f6;
       color: #3c4242;
-      padding: 16px 17px 15px 17px;
+      padding: 16px;
       border-radius: 10px;
+    }
+    .icon_footer:hover {
+      background-color: #c6c4c4;
+    
+      transition: 0.5s;
     }
   }
 

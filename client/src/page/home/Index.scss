@@ -116,7 +116,15 @@
     outline: none;
     width: 111px;
     height: 34px;
+      border: 1px solid rgb(76, 76, 76);
     opacity: 40%;
+  }
+   button:hover{
+ background-color: black;
+   color: #ffffff;
+   transition: 0.5s;
+    border: 1px solid rgb(0, 0, 0);
+
   }
   .icon {
     font-size: 30px;
@@ -139,6 +147,14 @@
     width: 111px;
     height: 34px;
     opacity: 40%;
+    border: 1px solid rgb(104, 104, 104);
+  }
+  button:hover{
+ background-color: black;
+    border: 1px solid rgb(0, 0, 0);
+
+   color: #ffffff;
+   transition: 0.5s;
   }
   .icon {
     font-size: 30px;
@@ -163,6 +179,11 @@
     font-weight: bold;
     border: 1px solid black;
   }
+   button:hover{
+ background-color: rgb(2, 2, 2);
+   color: #ffffff;
+   transition: 0.5s;
+  }
   .icon {
     font-size: 30px;
     margin-left: 40px;
@@ -185,6 +206,11 @@
     opacity: 40%;
     font-weight: bold;
     border: 1px solid black;
+  }
+    button:hover{
+ background-color: rgb(2, 2, 2);
+   color: #ffffff;
+   transition: 0.5s;
   }
   .icon {
     font-size: 30px;
@@ -263,7 +289,16 @@
       height: 34px;
       margin-top: 30px;
       font-weight: bold;
-      border: 1px solid black;
+      border: 1px solid rgb(255, 255, 255);
+    }
+    button:hover{
+ background-color: rgb(255, 255, 255);
+   color: #000000;
+   transition: 0.5s;
+  }
+    .icon {
+      font-size: 30px;
+      margin-left: 40px;
     }
   }
 }

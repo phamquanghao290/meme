@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './CreateNewPass.scss'
 import CreatePass from '../../../public/images/CreateNewPass.png'
 export default function CreateNewPass() {
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
     return (
         <div className='mainBody-create'>
             <div className='mainImage-create'>

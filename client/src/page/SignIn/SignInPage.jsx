@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Image from '../../../public/images/image1.png'
 import Google from '../../../public/images/Google.png'
 import Twitter from '../../../public/images/twitter.png'
 import Divider from '../../../public/images/divider.png'
 import './SignInPage.scss'
 export default function SignInPage() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className='mainBody'>
       <div className='mainImage'>
