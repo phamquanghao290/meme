@@ -278,7 +278,7 @@ export default function Productdetail() {
           </div>
         </div>
         <div className="NewArrivalProducts">
-          <h2>In The Limelight</h2>
+          <h2 >In The Limelight</h2>
           <div className="productshome">
             <div>
               <img src={products16} alt="" />

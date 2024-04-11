@@ -114,6 +114,7 @@
   .table_description_detail{
  display: flex;
  .description_detail{
+  
   width: 800px;
 
  }
@@ -126,6 +127,7 @@
      border-left: 6px solid #8a33fd;
      h2{
         margin-left: 20px;
+        font-size: 30px;
     
      }
   }
@@ -145,4 +147,7 @@
  
   
 
+}
+.NewArrivalProducts{
+  margin-top: 150px;
 }
