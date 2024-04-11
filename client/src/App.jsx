@@ -15,6 +15,12 @@ import Productdetail from './page/Productdetail/Productdetail'
 import MyInfo from './page/myinfo/MyInfo'
 import DeliveryAddress from './page/DeliveryAddress/DeliveryAddress'
 import Order from './page/Order/Order'
+import Admin from './admin/Admin'
+import AdminCategory from './admin/AdminCategory'
+import AdminProduct from './admin/AdminProduct'
+import AdminUser from './admin/AdminUser'
+import AdminBanner from './admin/AdminBanner'
+import AdminBill from './admin/AdminBill'
 
 function App() {
   return (
@@ -36,6 +42,14 @@ function App() {
 
       <Route path='/signUp' element={<SignUp />} />
       <Route path='/signIn' element={<SignIn />} />
+
+      <Route path='/admin' element={<div style={{ display: 'flex' }}><Admin /><div style={{ width: '100%' }}><Outlet /></div></div>}>
+          <Route path="/admin" element={<AdminUser />} />
+          <Route path="adminProduct" element={<AdminProduct />} />
+          <Route path="adminCategory" element={<AdminCategory />} />
+          <Route path="adminBill" element={<AdminBill />} />
+          <Route path="adminBanner" element={<AdminBanner />} />
+        </Route>
     </Routes>
   );
 }
