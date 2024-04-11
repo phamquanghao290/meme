@@ -113,12 +113,23 @@ export default function DeliveryAddress() {
                         </div>
                     </div>
 
-                    <div>
+                    <div style={{ marginTop: '20px' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                             <input style={{ width: '15px', height: '15px' }} type="checkbox" />
-                            <p style={{ fontSize: '16px', fontWeight: '500', color: '#666666' }}>Agree to our <span style={{ color: '#3c4242', textDecoration: 'underline' }}>Terms of use</span> and <span style={{ color: '#3c4242', textDecoration: 'underline' }}>Privacy Policy</span> </p>
+                            <p style={{ fontSize: '16px', fontWeight: '500', color: '#666666' }}>Set as default shipping address </p>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '10px' }}>
+                            <input style={{ width: '15px', height: '15px' }} type="checkbox" />
+                            <p style={{ fontSize: '16px', fontWeight: '500', color: '#666666' }}>Set as default billing address </p>
                         </div>
                     </div>
+
+                    <div className='main-button-delivery'>
+                        <button className='button-delivery1'>Save </button>
+                        <button className='button-delivery2'>Cancel </button>
+                    </div>
+
+                    
 
                 </div>
 
