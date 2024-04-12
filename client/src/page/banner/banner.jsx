@@ -12,42 +12,16 @@ const Banner = () => (
   <Carousel autoplay>
     <div>
       <div style={contentStyle}>
-        <img src={banner} alt="" style={{ width: "100%", height: "100%" }} />
+        <img src={banner} alt="" className="img_banner" />
       </div>
-      <div
-        style={{
-          width: "100%",
-          position: "relative",
-          zIndex: 90000,
-          height: "10px",
-          top: "-580px",
-          fontSize: "60px",
-          color: "white",
-        }}
-      >
-        <p
-          style={{
-            fontWeight: "normal",
-            marginLeft: "200px",
-            fontSize: "40px",
-          }}
-        >
-          T-shirt / Tops
-        </p>
-        <p style={{ fontWeight: "bold", marginLeft: "200px" }}>
+      <div className="textBanner_css">
+        <p>T-shirt / Tops</p>
+        <h4>
           {" "}
           Summer <br /> Value Pack
-        </p>
-        <p
-          style={{
-            fontWeight: "normal",
-            marginLeft: "200px",
-            fontSize: "40px",
-          }}
-        >
-          cool / colorful / comfy
-        </p>
-        <button style={{ marginLeft: "200px" }} className="buttonbaner">
+        </h4>
+        <p>cool / colorful / comfy</p>
+        <button  className="buttonbaner">
           Shop Now
         </button>
       </div>
@@ -58,42 +32,13 @@ const Banner = () => (
         <img src={banner} alt="" style={{ width: "100%", height: "100%" }} />
       </div>
 
-      <div
-        style={{
-          width: "100%",
-          position: "relative",
-          zIndex: 90000,
-          height: "10px",
-          top: "-580px",
-          fontSize: "60px",
-          color: "white",
-        }}
-      >
-        <p
-          style={{
-            fontWeight: "normal",
-            marginLeft: "200px",
-            fontSize: "40px",
-          }}
-        >
-          T-shirt / Tops
-        </p>
-        <p style={{ fontWeight: "bold", marginLeft: "200px" }}>
+      <div className="textBanner_css">
+        <p>T-shirt / Tops</p>
+        <h4>
           Summer <br /> Value Pack
-        </p>
-        <p
-          style={{
-            fontWeight: "normal",
-            marginLeft: "200px",
-            fontSize: "40px",
-            color: "#ffff",
-          }}
-        >
-          cool / colorful / comfy
-        </p>
-        <button className="buttonbaner" style={{ marginLeft: "200px" }}>
-          Shop Now
-        </button>
+        </h4>
+        <p>cool / colorful / comfy</p>
+        <button className="buttonbaner">Shop Now</button>
       </div>
     </div>
   </Carousel>
