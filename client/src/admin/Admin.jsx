@@ -45,7 +45,7 @@ function Admin() {
                     </button>
                     {/* Brand */}
                     <a
-                        className="navbar-brand py-lg-2 mb-lg-5 px-lg-6 me-0 w-[300px]"
+                        className="navbar-brand py-lg-2 mb-lg-5 px-lg-6 me-0 w-[250px]"
                         href="#"
                     >
                         <img src={logo} alt="" />
