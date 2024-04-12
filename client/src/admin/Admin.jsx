@@ -41,65 +41,98 @@ function Admin() {
               aria-expanded="false"
               aria-label="Toggle navigation"
             >
+
+                <div className=" container-fluid">
+                    {/* Toggler */}
+                    <button
+                        className="navbar-toggler ms-n2"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#sidebarCollapse"
+                        aria-controls="sidebarCollapse"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation"
+                    >
+                        <span className="navbar-toggler-icon" />
+                    </button>
+                    {/* Brand */}
+                    <a
+                        className="navbar-brand py-lg-2 mb-lg-5 px-lg-6 me-0 w-[300px]"
+                        href="#"
+                    >
+                        <img src={logo} alt="" />
+                    </a>
+                    {/* Collapse */}
+                    <div className="navbar-collapse" id="sidebarCollapse">
+                        {/* Navigation */}
+                        <ul className="navbar-nav">
+                            <li className="nav-item">
+                                <Link to="/admin">
+                                    <i className="bi bi-house px-lg-6" /> User
+                                </Link>
+                            </li>
+                            <li className="nav-item" id="addProduct">
+                                <Link to="adminProduct">
+                                    <i className="bi bi-bar-chart px-lg-6" />{" "}
+                                    Product
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link to="adminBill">
+                                    <i className="bi bi-people px-lg-6" /> List
+                                    Order
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link to="adminCategory">
+                                    <i className="bi bi-people px-lg-6" />{" "}
+                                    Category
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link to="adminCategory">
+                                    <i className="bi bi-people px-lg-6" />{" "}
+                                    Banner
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link to="adminBrand">
+                                    <i className="bi bi-people px-lg-6" />{" "}
+                                    Brand
+                                </Link>
+                            </li>
+                        </ul>
+                        {/* Divider */}
+                        <hr className="navbar-divider my-5 opacity-20" />
+                        <div className="mt-auto" />
+                        {/* User (md) */}
+                        <ul className="navbar-nav">
+                            <li className="nav-item">
+                                <a className="nav-link" href="#">
+                                    <i className="bi bi-person-square" />{" "}
+                                    Account
+                                </a>
+                            </li>
+                            <li
+                                className="nav-item"
+                                onClick={() => handleLogout()}
+                            >
+                                <Link to="/login" className="nav-link">
+                                    <i className="bi bi-box-arrow-left" />{" "}
+                                    Logout
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
               <span className="navbar-toggler-icon" />
             </button>
-            {/* Brand */}
-            <a
-              className="navbar-brand py-lg-2 mb-lg-5 px-lg-6 me-0 w-[300px]"
-              href="#"
-            >
-              <img src={logo} alt="" />
-            </a>
-            {/* Collapse */}
-            <div className="navbar-collapse" id="sidebarCollapse">
-              {/* Navigation */}
-              <ul className="navbar-nav">
-                <li className="nav-item">
-                  <Link to="/admin">
-                    <i className="bi bi-house px-lg-6" /> User
-                  </Link>
-                </li>
-                <li className="nav-item" id="addProduct">
-                  <Link to="adminProduct">
-                    <i className="bi bi-bar-chart px-lg-6" /> Product
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="adminBill">
-                    <i className="bi bi-people px-lg-6" /> List Order
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="adminCategory">
-                    <i className="bi bi-people px-lg-6" /> Category
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="adminBanner">
-                    <i className="bi bi-people px-lg-6" /> Banner
-                  </Link>
-                </li>
-              </ul>
-              {/* Divider */}
-              <hr className="navbar-divider my-5 opacity-20" />
-              <div className="mt-auto" />
-              {/* User (md) */}
-              <ul className="navbar-nav">
-                <li className="nav-item">
-                  <a className="nav-link" href="#">
-                    <i className="bi bi-person-square" /> Account
-                  </a>
-                </li>
-                <li className="nav-item" onClick={() => handleLogout()}>
-                  <Link to="/login" className="nav-link">
-                    <i className="bi bi-box-arrow-left" /> Logout
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
-      </div>
+            </nav>
+        </div>
+
+
+           
+      
     );
 }
 

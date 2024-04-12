@@ -71,7 +71,7 @@ function AdminBill() {
     };
     return (
         <div>
-            <div className="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary">
+            <div className="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary ">
                 <div className="h-screen flex-grow-1 overflow-y-lg-auto">
                     {/* Header */}
                     <header className="bg-surface-primary border-bottom pt-6">
@@ -259,7 +259,7 @@ function AdminBill() {
                                                 <th scope="col">Price</th>
                                                 <th scope="col">Status</th>
                                                 <th scope="col">View</th>
-                                                <th scope="col"></th>
+                                                {/* <th scope="col"></th> */}
                                             </tr>
                                         </thead>
                                         <tbody>
