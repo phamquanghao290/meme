@@ -159,7 +159,7 @@ export default function Index() {
             </div>
             <div>
               <div>
-                <img src={img8} alt="" className="img_shownow2"/>
+                <img src={img8} alt="" className="img_shownow2" />
               </div>
               <div className="textimg4">
                 <h3>
@@ -187,7 +187,7 @@ export default function Index() {
                 <img src={img10} alt="" height="100%" width="100%" />
               </div>
               <div className="textimgshownow">
-                <h3>
+                <h3 style={{ color: "white" }}>
                   WE MADE YOUR EVERYDAY <br /> FASHION BETTER!
                 </h3>
                 <p>
@@ -411,6 +411,7 @@ export default function Index() {
               paddingTop: "40px",
               fontSize: "60px",
               textAlign: "center",
+              color:"white"
             }}
           >
             Top Brands Deal
@@ -419,7 +420,13 @@ export default function Index() {
             Up To <span style={{ color: "#FBD103" }}>60%</span> off on brands
           </p>
           <div
-            style={{ margin: "0 auto", marginTop: "50px" ,display:"flex",justifyContent:"center",alignItems:"center" }}
+            style={{
+              margin: "0 auto",
+              marginTop: "50px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
             <img src={Logo1} alt="" style={{ width: "155px" }} />
             <img
@@ -608,7 +615,6 @@ export default function Index() {
                   display: "flex",
                   gap: "160px",
                   marginTop: "20px",
-                
                 }}
               >
                 <img src={people3} alt="" />

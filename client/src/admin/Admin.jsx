@@ -25,11 +25,23 @@ function Admin() {
         }
     };
     return (
-        <div>
-            <nav
-                className="navbar show navbar-vertical h-lg-screen navbar-expand-lg px-0 py-3 navbar-light bg-white border-bottom border-bottom-lg-0 border-end-lg"
-                id="navbarVertical"
+      <div>
+        <nav
+          className="navbar show navbar-vertical h-lg-screen navbar-expand-lg px-0 py-3 navbar-light bg-white border-bottom border-bottom-lg-0 border-end-lg"
+          id="navbarVertical"
+        >
+          <div className=" container-fluid">
+            {/* Toggler */}
+            <button
+              className="navbar-toggler ms-n2"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#sidebarCollapse"
+              aria-controls="sidebarCollapse"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
             >
+
                 <div className=" container-fluid">
                     {/* Toggler */}
                     <button
@@ -113,8 +125,14 @@ function Admin() {
                         </ul>
                     </div>
                 </div>
+              <span className="navbar-toggler-icon" />
+            </button>
             </nav>
         </div>
+
+
+           
+      
     );
 }
 
