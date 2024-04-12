@@ -25,23 +25,11 @@ function Admin() {
         }
     };
     return (
-      <div>
-        <nav
-          className="navbar show navbar-vertical h-lg-screen navbar-expand-lg px-0 py-3 navbar-light bg-white border-bottom border-bottom-lg-0 border-end-lg"
-          id="navbarVertical"
-        >
-          <div className=" container-fluid">
-            {/* Toggler */}
-            <button
-              className="navbar-toggler ms-n2"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#sidebarCollapse"
-              aria-controls="sidebarCollapse"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
+        <div>
+            <nav
+                className="navbar show navbar-vertical h-lg-screen navbar-expand-lg px-0 py-3 navbar-light bg-white border-bottom border-bottom-lg-0 border-end-lg"
+                id="navbarVertical"
             >
-
                 <div className=" container-fluid">
                     {/* Toggler */}
                     <button
@@ -89,18 +77,6 @@ function Admin() {
                                     Category
                                 </Link>
                             </li>
-                            <li className="nav-item">
-                                <Link to="adminCategory">
-                                    <i className="bi bi-people px-lg-6" />{" "}
-                                    Banner
-                                </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link to="adminBrand">
-                                    <i className="bi bi-people px-lg-6" />{" "}
-                                    Brand
-                                </Link>
-                            </li>
                         </ul>
                         {/* Divider */}
                         <hr className="navbar-divider my-5 opacity-20" />
@@ -125,14 +101,8 @@ function Admin() {
                         </ul>
                     </div>
                 </div>
-              <span className="navbar-toggler-icon" />
-            </button>
             </nav>
         </div>
-
-
-           
-      
     );
 }
 
