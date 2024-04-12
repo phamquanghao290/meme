@@ -4,42 +4,31 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../../public/images/Logo.png";
 
 function Admin() {
-    const userLogin = JSON.parse(localStorage.getItem("userLogin") || "{}");
-    const navigate = useNavigate();
-    React.useEffect(() => {
-        document.title = "admin";
-        if (userLogin.active == 0) {
-            navigate("/");
-        } else {
-            if (userLogin.email != "admin@gmail.com") {
-                navigate("/admin");
-            }
-        }
-    }, []);
+    // const userLogin = JSON.parse(localStorage.getItem("userLogin") || "{}");
+    // const navigate = useNavigate();
+    // React.useEffect(() => {
+    //     document.title = "admin";
+    //     if (userLogin.active == 0) {
+    //         navigate("/");
+    //     } else {
+    //         if (userLogin.email != "admin@gmail.com") {
+    //             navigate("/admin");
+    //         }
+    //     }
+    // }, []);
 
-    const handleLogout = () => {
-        if (window.confirm("Admin muốn đăng xuất?")) {
-            localStorage.removeItem("userLogin");
-            navigate("/");
-            return;
-        }
-    };
+    // const handleLogout = () => {
+    //     if (window.confirm("Admin muốn đăng xuất?")) {
+    //         localStorage.removeItem("userLogin");
+    //         navigate("/");
+    //         return;
+    //     }
+    // };
     return (
-      <div>
-        <nav
-          className="navbar show navbar-vertical h-lg-screen navbar-expand-lg px-0 py-3 navbar-light bg-white border-bottom border-bottom-lg-0 border-end-lg"
-          id="navbarVertical"
-        >
-          <div className=" container-fluid">
-            {/* Toggler */}
-            <button
-              className="navbar-toggler ms-n2"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#sidebarCollapse"
-              aria-controls="sidebarCollapse"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
+        <div>
+            <nav
+                className="navbar show navbar-vertical h-lg-screen navbar-expand-lg px-0 py-3 navbar-light bg-white border-bottom border-bottom-lg-0 border-end-lg"
+                id="navbarVertical"
             >
                 <div className=" container-fluid">
                     {/* Toggler */}
@@ -90,8 +79,7 @@ function Admin() {
                             </li>
                             <li className="nav-item">
                                 <Link to="admin-brand">
-                                    <i className="bi bi-people px-lg-6" />{" "}
-                                    Brand
+                                    <i className="bi bi-people px-lg-6" /> Brand
                                 </Link>
                             </li>
                             <li className="nav-item">
@@ -114,7 +102,7 @@ function Admin() {
                             </li>
                             <li
                                 className="nav-item"
-                                onClick={() => handleLogout()}
+                                // onClick={() => handleLogout()}
                             >
                                 <Link to="/login" className="nav-link">
                                     <i className="bi bi-box-arrow-left" />{" "}
