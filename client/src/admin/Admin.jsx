@@ -4,26 +4,26 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../../public/images/Logo.png";
 
 function Admin() {
-    // const userLogin = JSON.parse(localStorage.getItem("userLogin") || "{}");
-    // const navigate = useNavigate();
-    // React.useEffect(() => {
-    //     document.title = "admin";
-    //     if (userLogin.active == 0) {
-    //         navigate("/");
-    //     } else {
-    //         if (userLogin.email != "admin@gmail.com") {
-    //             navigate("/admin");
-    //         }
-    //     }
-    // }, []);
+    const userLogin = JSON.parse(localStorage.getItem("userLogin") || "{}");
+    const navigate = useNavigate();
+    React.useEffect(() => {
+        document.title = "admin";
+        if (userLogin.active == 0) {
+            navigate("/");
+        } else {
+            if (userLogin.email != "admin@gmail.com") {
+                navigate("/admin");
+            }
+        }
+    }, []);
 
-    // const handleLogout = () => {
-    //     if (window.confirm("Admin muốn đăng xuất?")) {
-    //         localStorage.removeItem("userLogin");
-    //         navigate("/");
-    //         return;
-    //     }
-    // };
+    const handleLogout = () => {
+        if (window.confirm("Admin muốn đăng xuất?")) {
+            localStorage.removeItem("userLogin");
+            navigate("/");
+            return;
+        }
+    };
     return (
         <div>
             <nav
