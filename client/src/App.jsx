@@ -28,8 +28,8 @@ function App() {
     <Routes>
       <Route path='/' element={<><Heatder /><Outlet /><Footer /></>}>
         <Route path='/' element={<Index />} />
-        <Route path='/productWomen' element={<ProductWomen />} />
-        <Route path='/productMen' element={<ProductMen />} />
+        <Route path='/product-women' element={<ProductWomen />} />
+        <Route path='/product-men' element={<ProductMen />} />
         <Route path='/cart' element={<Cart />} />
         <Route path='/checkout' element={<CheckoutForBill />} />
         <Route path='/order' element={<Order />} />
@@ -41,16 +41,16 @@ function App() {
       </Route>
       
 
-      <Route path='/signUp' element={<SignUp />} />
-      <Route path='/signIn' element={<SignIn />} />
+      <Route path='/sign-up' element={<SignUp />} />
+      <Route path='/sign-in' element={<SignIn />} />
 
       <Route path='/admin' element={<div style={{ display: 'flex' }}><Admin /><div style={{ width: '100%' }}><Outlet /></div></div>}>
           <Route path="/admin" element={<AdminUser />} />
-          <Route path="adminProduct" element={<AdminProduct />} />
-          <Route path="adminCategory" element={<AdminCategory />} />
-          <Route path="adminBill" element={<AdminBill />} />
-          <Route path="adminBanner" element={<AdminBanner />} />
-          <Route path="adminBrand" element={<AdminBrand />} />
+          <Route path="admin-product" element={<AdminProduct />} />
+          <Route path="admin-category" element={<AdminCategory />} />
+          <Route path="admin-bill" element={<AdminBill />} />
+          <Route path="admin-banner" element={<AdminBanner />} />
+          <Route path="admin-brand" element={<AdminBrand />} />
         </Route>
     </Routes>
   );
