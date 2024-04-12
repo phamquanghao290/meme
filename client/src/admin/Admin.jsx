@@ -60,21 +60,33 @@ function Admin() {
                                 </Link>
                             </li>
                             <li className="nav-item" id="addProduct">
-                                <Link to="adminProduct">
+                                <Link to="admin-product">
                                     <i className="bi bi-bar-chart px-lg-6" />{" "}
                                     Product
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link to="adminBill">
+                                <Link to="admin-bill">
                                     <i className="bi bi-people px-lg-6" /> List
                                     Order
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link to="adminCategory">
+                                <Link to="admin-category">
                                     <i className="bi bi-people px-lg-6" />{" "}
                                     Category
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link to="admin-brand">
+                                    <i className="bi bi-people px-lg-6" />{" "}
+                                    Brand
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link to="admin-banner">
+                                    <i className="bi bi-people px-lg-6" />{" "}
+                                    Banner
                                 </Link>
                             </li>
                         </ul>
