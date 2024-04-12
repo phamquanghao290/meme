@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Image from '../../../public/images/image1.png'
 import Google from '../../../public/images/Google.png'
 import Twitter from '../../../public/images/twitter.png'
 import Divider from '../../../public/images/divider.png'
 import './SignInPage.scss'
 export default function SignInPage() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className='mainBody'>
       <div className='mainImage'>
@@ -20,7 +23,7 @@ export default function SignInPage() {
 
           <div className='mainButton2' >
             <img className='mainButtonImage1' src={Twitter} alt="" />
-            <button>Continue With Twitter</button>
+            <button className='continue-button-signin'>Continue With Twitter</button>
           </div>
         </div>
 
@@ -30,7 +33,7 @@ export default function SignInPage() {
 
         <div className='mainInput-sign-in'>
           <p style={{ marginBottom: '10px', fontSize: '16px', fontWeight: '400', color: '#3c4242' }}>User name or email address</p>
-          <input type="text" />
+          <input className='input-sign-in' type="text" />
         </div>
 
         <div>
@@ -46,7 +49,7 @@ export default function SignInPage() {
           </div>
 
           <div className='mainInput3'>
-            <input type="text" />
+            <input className='input3-sign-in' type="text" />
           </div>
 
           <div>

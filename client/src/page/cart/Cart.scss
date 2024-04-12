@@ -17,12 +17,12 @@
     }
 }
 
-.table {
+.table_cart {
     font-family: "Montserrat", sans-serif;
     width: 100%;
     margin-top: 50px;
     min-height: 76px;
-    table {
+    .table_cart_info {
         width: 100%;
         border-collapse: collapse;
     }
@@ -76,8 +76,6 @@
     .discount {
         padding: 50px 0px 0px 100px;
         .input_discount {
-            display: flex;
-            gap: 10px;
             button {
                 cursor: pointer;
                 background-color: #8A33FD;
@@ -86,6 +84,7 @@
                 padding: 10px 20px 10px 20px;
                 border-radius: 7px;
                 font-size: 16px;
+                margin-left: 20px;
             }
         }
         .continue {

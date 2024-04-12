@@ -2,10 +2,10 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { BsCart } from "react-icons/bs";
 import { AiOutlineUser } from "react-icons/ai";
 import { AiFillHeart } from "react-icons/ai";
-
-import logo from "../../../public/image/Logo.png";
-import search from "../../../public/image/search.png";
+import logo from "../../../public/images/Logo.png";
+import search from "../../../public/images/search.png";
 import React from "react";
+import { Link } from "react-router-dom";
 import "./Heatder.scss";
 export default function Heatder() {
   return (
@@ -15,9 +15,9 @@ export default function Heatder() {
           <img src={logo} alt="" />
         </div>
         <div className="Menu_Heatder">
-          <h3>Shop</h3>
-          <h3>Men</h3>
-          <h3>Women</h3>
+          <Link to="/"><h3>Home</h3></Link>
+          <Link to="/productMen"><h3>Men</h3></Link>
+          <Link to="/productWomen"><h3>Women</h3></Link>
           <h3>Combos</h3>
           <h3>Joggers</h3>
         </div>
@@ -25,7 +25,7 @@ export default function Heatder() {
           <div>
             <img src={search} alt="" />
           </div>
-          <input type="text" placeholder="Search" />
+          <input type="text" placeholder="Search" /> 
         </div>
         <div className="Icon_Heatder">
           <div className="component">

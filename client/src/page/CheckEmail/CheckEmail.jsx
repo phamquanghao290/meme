@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Checkmail from '../../../public/images/Checkmail.png'
 import './CheckEmail.scss'
 export default function CheckEmail() {
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
     return (
         <div className='mainBody-checkmail'>
             <div className='mainImage-checkmail'>
@@ -16,7 +19,7 @@ export default function CheckEmail() {
 
                 <div className='content-end-checkmail'>
                     <i class="fa-solid fa-chevron-left" style={{ color: '#807D7E', fontWeight: '700', fontSize: '12px' }}></i>
-                    <p >Back to <span style={{textDecoration:'underline'}}>Login</span></p>
+                    <p style={{ fontSize: '16px', fontWeight: '500', color: '#807D7E' }}>Back to <span style={{ textDecoration: 'underline' }}>Login</span></p>
                 </div>
 
             </div>

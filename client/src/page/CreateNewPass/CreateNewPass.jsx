@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './CreateNewPass.scss'
 import CreatePass from '../../../public/images/CreateNewPass.png'
 export default function CreateNewPass() {
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
     return (
         <div className='mainBody-create'>
             <div className='mainImage-create'>
@@ -15,13 +18,13 @@ export default function CreateNewPass() {
 
                 <div className='mainInput-create'>
                     <p style={{ marginBottom: '10px', fontSize: '18px', fontWeight: '400', color: '#3C4242' }}>Password </p>
-                    <input type="password" placeholder='' />
+                    <input className='input-create' type="password" placeholder='' />
                     <p style={{ fontSize: '14px', fontWeight: '500', color: '#666666', marginTop: '10px' }}>Must be at least 8 characters.</p>
                 </div>
 
                 <div className='mainInput-confirm'>
                     <p style={{ marginBottom: '10px', fontSize: '18px', fontWeight: '400', color: '#3C4242' }}>Confirm Password </p>
-                    <input type="password" placeholder='' />
+                    <input className='input-confirm' type="password" placeholder='' />
                     <p style={{ fontSize: '14px', fontWeight: '500', color: '#FF0000', marginTop: '10px' }}>New password and comfirm new password do not match</p>
                 </div>
 
