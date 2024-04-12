@@ -83,6 +83,12 @@ function Admin() {
                                     Banner
                                 </Link>
                             </li>
+                            <li className="nav-item">
+                                <Link to="adminBrand">
+                                    <i className="bi bi-people px-lg-6" />{" "}
+                                    Brand
+                                </Link>
+                            </li>
                         </ul>
                         {/* Divider */}
                         <hr className="navbar-divider my-5 opacity-20" />

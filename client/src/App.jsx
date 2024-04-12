@@ -21,6 +21,7 @@ import AdminProduct from './admin/AdminProduct'
 import AdminUser from './admin/AdminUser'
 import AdminBanner from './admin/AdminBanner'
 import AdminBill from './admin/AdminBill'
+import AdminBrand from './admin/AdminBrand'
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
           <Route path="adminCategory" element={<AdminCategory />} />
           <Route path="adminBill" element={<AdminBill />} />
           <Route path="adminBanner" element={<AdminBanner />} />
+          <Route path="adminBrand" element={<AdminBrand />} />
         </Route>
     </Routes>
   );
