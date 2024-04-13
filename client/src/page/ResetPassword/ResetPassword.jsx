@@ -1,6 +1,7 @@
 import React from 'react'
 import ResetPass from '../../../public/images/ResetPass.png'
 import './ResetPassword.scss'
+import { Link } from 'react-router-dom'
 export default function ResetPassword() {
     return (
         <div className='mainBody-resetpass'>
@@ -26,7 +27,7 @@ export default function ResetPassword() {
                 </div>
 
                 <div className='content-end-resetpass'>
-                    <p style={{ fontSize: '16px', fontWeight: '500', color: '#3C4242' }} >Back to <span style={{ textDecoration: 'underline' }}>Login</span></p>
+                    <p style={{ fontSize: '16px', fontWeight: '500', color: '#3C4242' }} >Back to <Link to="/"><span style={{ textDecoration: 'underline' }}>Home</span></Link></p>
                 </div>
 
             </div>
