@@ -22,6 +22,7 @@ import AdminUser from './admin/AdminUser'
 import AdminBanner from './admin/AdminBanner'
 import AdminBill from './admin/AdminBill'
 import AdminBrand from './admin/AdminBrand'
+import CheckEmail from './page/CheckEmail/CheckEmail'
 
 function App() {
   return (
@@ -43,6 +44,8 @@ function App() {
 
       <Route path='/signUp' element={<SignUp />} />
       <Route path='/signIn' element={<SignIn />} />
+      <Route path='/check-email' element={<CheckEmail />} />
+
 
       <Route path='/admin' element={<div style={{ display: 'flex' }}><Admin /><div style={{ width: '100%' }}><Outlet /></div></div>}>
           <Route path="/admin" element={<AdminUser />} />

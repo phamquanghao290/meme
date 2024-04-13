@@ -19,7 +19,7 @@ export default function SignInPage() {
 
         <div className='mainButton'>
           <img className='mainButtonImage' src={Google} alt="" />
-          <button>Continue With Google</button>
+          <button className='google-button-signin'>Continue With Google</button>
 
           <div className='mainButton2' >
             <img className='mainButtonImage1' src={Twitter} alt="" />
@@ -53,7 +53,7 @@ export default function SignInPage() {
           </div>
 
           <div>
-            <p style={{textAlign: 'right', fontSize: '16px', fontWeight: '400', color: '#3c4242',marginTop: '10px',textDecoration: 'underline'}}>Forgot your password</p>
+            <p className='forgot-pass-signin' >Forgot your password</p>
           </div>
         </div>
 

@@ -10,22 +10,22 @@ export default function SignUp() {
       window.scrollTo(0, 0);
     }, []);
     return (
-        <div className='mainBody'>
-            <div className='mainImage'>
-                <img src={ImageSu} className='image' alt="" />
+        <div className='main-body-signup'>
+            <div className='main-image-signup'>
+                <img src={ImageSu} className='image-signup' alt="" />
             </div>
 
-            <div className='mainContent'>
-                <div className='mainTitle'>Sign Up
+            <div className='main-content-signup'>
+                <div className='main-title-signup'>Sign Up
                 </div>
                 <p style={{ marginTop: '20px', fontSize: '16px', fontWeight: '400', color: '#3c4242' }}>Sign up for free to access to in any of our products </p>
 
-                <div className='mainButton'>
-                    <img className='mainButtonImage' src={Google} alt="" />
+                <div className='main-button-signup'>
+                    <img className='main-button-image-signup' src={Google} alt="" />
                     <button>Continue With Google</button>
 
-                    <div className='mainButton2' >
-                        <img className='mainButtonImage1' src={Twitter} alt="" />
+                    <div className='main-button-signup2' >
+                        <img className='main-button-image-signup2' src={Twitter} alt="" />
                         <button>Continue With Twitter</button>
                     </div>
                 </div>
@@ -34,7 +34,7 @@ export default function SignUp() {
                     <img src={Divider} alt="" />
                 </div> */}
 
-                <div className='mainInput1'>
+                <div className='mainInput1-signup'>
                     <p style={{ marginBottom: '10px', fontSize: '16px', fontWeight: '400', color: '#3c4242' }}>Email Address</p>
                     <input type="text" placeholder='designer@gmail.com' />
                     <p className='error-content'>Error Message</p>
@@ -54,7 +54,7 @@ export default function SignUp() {
 
                     <div className='mainInput3-sign-up'>
                         <input type="text" />
-                        <p style={{ fontSize: '14px', fontWeight: '500', color: '#666666', marginTop: '10px' }}>Use 8 or more characters with a mix of letters, numbers & symbols</p>
+                        <p className='notice-sign-up'>Use 8 or more characters with a mix of letters, numbers & symbols</p>
                     </div>
 
                 </div>
