@@ -3,6 +3,33 @@
     margin-bottom: 100px;
   }
 }
+.img_banner{
+  width: 100%;
+  height: 100%;
+}
+.textBanner_css{
+ width: 100%;
+          position: relative;
+          z-index: 90;
+         height: 10px;
+          top: -580px;
+         font-size: 60px;
+          color: rgb(255, 255, 255);
+     p{
+     font-weight: normal;
+           margin-left: 200px;
+            font-size: 40px;
+     }
+     h4{
+       margin-left: 200px;
+       font-size: 50px;
+       font-weight: bold;
+       color: #ffffff;
+     }
+     button{
+       margin-left: 200px;
+     }
+}
 .buttonbaner {
   background-color: #ffffff;
   border: none;
@@ -15,10 +42,62 @@
   bottom: 50px;
   font-size: 20px;
   color: black;
+  margin-left: 200px;
   font-weight: bold;
 }
 .buttonbaner:hover{
    background-color: black;
    color: #ffffff;
    transition: 0.5s;
+}
+@media (max-width: 1024px) {
+  .textBanner_css{
+ width: 100%;
+          position: relative;
+          z-index: 90;
+         height: 10px;
+          top: -580px;
+         font-size: 60px;
+          color: rgb(255, 255, 255);
+     p{
+     font-weight: normal;
+           margin-left: 100px;
+            font-size: 40px;
+     }
+        h4{
+       margin-left: 100px;
+       font-size: 50px;
+       font-weight: bold;
+       color: #ffffff;
+     }
+    .buttonbaner {
+ margin-left: 100px;
+}
+}
+}
+@media (max-width: 768px) {
+   .textBanner_css{
+ width: 100%;
+          position: relative;
+          z-index: 90;
+         height: 10px;
+          top: -500px;
+         font-size: 60px;
+          color: rgb(255, 255, 255);
+     p{
+     font-weight: normal;
+           margin-left: 100px;
+            font-size: 20px;
+     }
+        h4{
+       margin-left: 100px;
+       font-size: 40px;
+       font-weight: bold;
+       color: #ffffff;
+     }
+    .buttonbaner {
+ margin-left: 100px;
+  width: 200px;
+}
+}
 }
