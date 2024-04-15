@@ -24,6 +24,7 @@ import AdminBill from './admin/AdminBill'
 import AdminBrand from './admin/AdminBrand'
 import Verification from './page/Verification/Verification'
 import ResetPassword from './page/ResetPassword/ResetPassword'
+import AdminColorSize from './admin/AdminColorSize'
 
 function App() {
   return (
@@ -54,6 +55,7 @@ function App() {
           <Route path="admin-bill" element={<AdminBill />} />
           <Route path="admin-banner" element={<AdminBanner />} />
           <Route path="admin-brand" element={<AdminBrand />} />
+          <Route path='admin-color-size' element={<AdminColorSize />} />
         </Route>
     </Routes>
   );

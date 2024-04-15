@@ -3,16 +3,79 @@ import Image from "../../../public/images/image1.png";
 import Google from "../../../public/images/Google.png";
 import Twitter from "../../../public/images/twitter.png";
 import Divider from "../../../public/images/divider.png";
-import publicAxios from "../../config/PublicAxios"
+import publicAxios from "../../config/PublicAxios";
 import { success, failed } from "../../components/Modal/NotificationModal";
 import "./SignInPage.scss";
 import { Link } from "react-router-dom";
+import { signInWithFacebook, signInWithGoogle } from "../../firebase/firebase";
 export default function SignInPage() {
     const [user, setUser] = React.useState({
         email: "",
         password: "",
     });
+    const handleLoginGoogle = async () => {
+        const authGoogle = await signInWithGoogle();
+        console.log(authGoogle);
+        const user = authGoogle.user;
+        let data = {
+            email: user.email,
+            name: user.displayName,
+            password: user.uid,
+            phone: "0987654321",
+            role: 0,
+            status: 0,
+        };
+        console.log(data);
+        try {
+            const res = await publicAxios.post("/api/login-google", data);
+            console.log(res);
+            if (res.data.data) {
+                localStorage.setItem("token", res.data.data.token);
+                localStorage.setItem(
+                    "userLogin",
+                    JSON.stringify(res.data.data.user)
+                );
+                success(res.data.message);
+                setTimeout(() => {
+                    window.location.href = "/";
+                }, 1500);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    const handleLoginFacebook = async () => {
+        const authFacebook = await signInWithFacebook();
+        console.log(authFacebook);
 
+        const user = authFacebook.user;
+        let data1 = {
+            email: user.email,
+            name: user.displayName,
+            password: user.uid,
+            phone: "0987654321",
+            role: 0,
+            status: 0,
+        }
+        console.log("data1",data1);
+        try {
+            const res = await publicAxios.post("/api/login-facebook", data1);
+            console.log(res);
+            if (res.data.data) {
+                localStorage.setItem("token", res.data.data.token);
+                localStorage.setItem(
+                    "userLogin",
+                    JSON.stringify(res.data.data.user)
+                );
+                success(res.data.message);
+                setTimeout(() => {
+                    window.location.href = "/";
+                }, 1500);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
     const handleGetValueLogin = (e) => {
         setUser({ ...user, [e.target.name]: e.target.value });
     };
@@ -75,7 +138,9 @@ export default function SignInPage() {
 
                 <div className="mainButton">
                     <img className="mainButtonImage" src={Google} alt="" />
-                    <button>Continue With Google</button>
+                    <button onClick={handleLoginGoogle}>
+                        Continue With Google
+                    </button>
 
                     <div className="mainButton2">
                         <img
@@ -83,8 +148,11 @@ export default function SignInPage() {
                             src={Twitter}
                             alt=""
                         />
-                        <button className="continue-button-signin">
-                            Continue With Twitter
+                        <button
+                            onClick={handleLoginFacebook}
+                            className="continue-button-signin"
+                        >
+                            Continue With Facebook
                         </button>
                     </div>
                 </div>
@@ -104,12 +172,12 @@ export default function SignInPage() {
                     >
                         User name or email address
                     </p>
-                    <input 
-                      className="input-sign-in" 
-                      type="text" 
-                      name="email"
-                      onChange={handleGetValueLogin}
-                      value={user.email}
+                    <input
+                        className="input-sign-in"
+                        type="text"
+                        name="email"
+                        onChange={handleGetValueLogin}
+                        value={user.email}
                     />
                 </div>
 
@@ -164,36 +232,40 @@ export default function SignInPage() {
                     </div>
 
                     <div className="mainInput3">
-                        <input 
-                          className="input3-sign-in" 
-                          type="text" 
-                          name="password"
-                          onChange={handleGetValueLogin}
-                          value={user.password}
+                        <input
+                            className="input3-sign-in"
+                            type="text"
+                            name="password"
+                            onChange={handleGetValueLogin}
+                            value={user.password}
                         />
                     </div>
 
                     <div>
-                      <Link to='/forgot-password'>
-                        <p
-                            style={{
-                                textAlign: "right",
-                                fontSize: "16px",
-                                fontWeight: "400",
-                                color: "#3c4242",
-                                marginTop: "10px",
-                                textDecoration: "underline",
-                            }}
-                        >
-                            Forgot your password
-                        </p>
-                      </Link>
-                        
+                        <Link to="/forgot-password">
+                            <p
+                                style={{
+                                    textAlign: "right",
+                                    fontSize: "16px",
+                                    fontWeight: "400",
+                                    color: "#3c4242",
+                                    marginTop: "10px",
+                                    textDecoration: "underline",
+                                }}
+                            >
+                                Forgot your password
+                            </p>
+                        </Link>
                     </div>
                 </div>
 
                 <div className="main-button">
-                    <button onClick={handleLogin} className="main-button-signin">Sign In</button>
+                    <button
+                        onClick={handleLogin}
+                        className="main-button-signin"
+                    >
+                        Sign In
+                    </button>
                 </div>
 
                 <div className="main-content-end">

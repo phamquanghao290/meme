@@ -11,12 +11,20 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Heatder.scss";
 export default function Heatder() {
-  const userLogin = JSON.parse(localStorage.getItem("userLogin") || "{}");
+  const userLogin = JSON.parse(localStorage.getItem("userLogin"));
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
   };
+
+  const handleLogout = () => {
+      if (window.confirm("Bạn muốn đăng xuất?")) {
+          localStorage.removeItem("userLogin");
+          window.location.reload();
+          return;
+      }
+  }
   const handleClose = () => {
       setAnchorEl(null);
   };
@@ -82,7 +90,7 @@ export default function Heatder() {
                               <MenuItem onClick={handleClose}>
                                   My account
                               </MenuItem>
-                              <MenuItem onClick={handleClose}>Logout</MenuItem>
+                              <MenuItem onClick={handleLogout}>Logout</MenuItem>
                           </Menu>
                       </div>
                       {/* ******* */}
@@ -93,7 +101,7 @@ export default function Heatder() {
                       </div>
                   </div>
               ) : (
-                  <div className="flex ">
+                  <div className="flex gap-4">
                       <Link to="/sign-in">
                           <button className="bg-[#8A33FD] text-white rounded-lg px-4 py-2">
                               Login

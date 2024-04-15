@@ -1,75 +1,66 @@
-import React from 'react'
-import { Button } from '@mui/material'
-import publicAxios from '../config/PublicAxios'
-import { success, failed } from '../components/Modal/NotificationModal'
-import './admin.css'
+import React from "react";
+import { Button } from "@mui/material";
+import publicAxios from "../config/PublicAxios";
+import { success, failed } from "../components/Modal/NotificationModal";
+import "./admin.css";
 
-function AdminCategory() {
-    const [newCate, setNewCate] = React.useState({
-        nameCategory: "",
-    })
-    const [categories, setCategories] = React.useState([])
-    const handleGetAllCate = async () => {
-        try {
-            const response = await publicAxios.get("/api/category")
-            console.log(response.data);
-            setCategories(response.data)
-        } catch (error) {
-            console.log(error)
-        }
+function AdminColorSize() {
+    const [newColor, setNewColor] = React.useState({nameColor: ""})
+    const [colors, setColors] = React.useState([])
+    const [newSize, setNewSize] = React.useState({nameSize: ""})
+    const [sizes, setSizes] = React.useState([])
+    const [flag, setFlag] = React.useState(false)
+
+    const handleGetAllColor = async () => {
+        const response = await publicAxios.get("/api/color")
+        setColors(response.data)
     }
 
-    React.useEffect(() => {
-        document.title = "Danh mục"
-        handleGetAllCate()
-    }, [])
+    const handleGetAllSize = async () => {
+        const response = await publicAxios.get("/api/size")
+        setSizes(response.data)
+    }
 
-    const handleAdd = async () => {
-        // const check = categories.find((item) => item.nameCategory === newCate.nameCategory)
-        // console.log(newCate)
-        // console.log(check)
-        // if (check) {
-        //     failed("Tên danh mục đã tồn tại")
-        // } else {
-            try {
-                const response = await publicAxios.post("/api/category", newCate)
-                console.log(response.data);
-                await handleGetAllCate()
-                setCategories(response.data.data)
-                success(response.data.message)
-                setNewCate({ nameCategory: "" })
-            } catch (error) {
-                failed(error.response.data.message)
-            }
+    const handleGetValueColor = (e) => {
+        setNewColor({nameColor: e.target.value})
+    }
+
+    const handleGetValueSize = (e) => {
+        setNewSize({nameSize: e.target.value})
+    }
+
+    const handleAddSize = async () => {
+        const response = await publicAxios.post("/api/size", newSize)
+        setFlag(!flag)
+        setNewSize({nameSize: ""})
+        success("Thêm thành công")
+    }
+
+    const handleDeleteSize = async (id) => {
+        const response = await publicAxios.delete(`/api/size/${id}`)
+        setFlag(!flag)
+        success("Xóa thành công")
+    }
+
+    const handleAddColor = async () => {
+        const response = await publicAxios.post("/api/color", newColor)
+        setFlag(!flag)
+        setNewColor({nameColor: ""})
+        success("Thêm thành công")
+    }
+
+    const handleDeleteColor = async (id) => {
+        const response = await publicAxios.delete(`/api/color/${id}`)
+        setFlag(!flag)
+        success("Xóa thành công")
+    }
         
-
-    }
-
-    const handleEdit = (item) => {
-        console.log(item)
-        setNewCate(item)
-    }
-
-    const handleSave = async () => {
-        try {
-            const response = await publicAxios.patch(`/api/category/${newCate.categoryId}`, newCate)
-            await handleGetAllCate()
-            setCategories(response.data.data)
-            success(response.data.message)
-            setNewCate({ nameCategory: "" })
-        } catch (error) {
-            failed("Sửa thất bại")
-        }
-    }
-
-    const handleDelete = async (id) => {
-            if (window.confirm("Bạn có chắc muốn xóa?")) {
-                const response = await publicAxios.delete(`/api/category/${id}`)
-                console.log(response.data);
-                setCategories(response.data.data)
-                success(response.data.message)
-            }
-    }
+    React.useEffect(() => {
+        document.title = "Size and Color"
+        handleGetAllColor()
+        handleGetAllSize()
+    }, [flag])
+    
     return (
         <>
             <div className="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary">
@@ -83,9 +74,9 @@ function AdminCategory() {
                                     <div className="col-sm-6 col-12 mb-4 mb-sm-0 flex gap-16 items-center">
                                         {/* Title */}
                                         <h1 className="text-xl mb-0 ls-tight font-bold">
-                                            Category
+                                            Size and Color
                                         </h1>
-                                        <input
+                                        {/* <input
                                             onChange={(e) =>
                                                 setNewCate({
                                                     ...newCate,
@@ -101,13 +92,17 @@ function AdminCategory() {
                                         ></input>
                                         <Button
                                             variant="contained"
-                                            onClick={newCate.categoryId ? handleSave : handleAdd}
+                                            onClick={
+                                                newCate.id
+                                                    ? handleSave
+                                                    : handleAdd
+                                            }
                                             className="w-full max-w-[100px] h-[40px] p-[12px] rounded-lg ml-16 border-2 border-blue-600"
                                         >
-                                            {newCate.categoryId
+                                            {newCate.id
                                                 ? "Lưu"
                                                 : "Thêm"}
-                                        </Button>
+                                        </Button> */}
                                     </div>
                                     {/* Actions */}
                                     <div className="col-sm-6 col-12 text-sm-end"></div>
@@ -249,55 +244,73 @@ function AdminCategory() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="card shadow border-0 mb-7 text-xl">
-                                <div className="card-header text-xl">
-                                    <h5 className="mb-0">List Category</h5>
-                                </div>
-                                <div className="table-responsive">
-                                    <table className="table table-hover table-nowrap font-bold">
-                                        <thead className="thead-light text-xl">
-                                            <tr>
-                                                <th scope="col">Id </th>
-                                                <th scope="col">
-                                                    Name Category
-                                                </th>
-                                                <th scope="col">Acction</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody className="text-xl" style={{ marginLeft: '100px' }}>
-                                            {categories.map((item, index) => (
-                                                <tr key={index}>
-                                                    <td scope="col">
-                                                        {index + 1}
-                                                    </td>
-                                                    <td scope="col">
-                                                        {item.nameCategory}
-                                                    </td>
-                                                    <td className="flex gap-8 justify-center">
-                                                        <Button
-                                                            variant="contained"
-                                                            onClick={() =>
-                                                                handleEdit(item)
-                                                            }
-                                                        >
-                                                            Sửa
-                                                        </Button>
-                                                        <Button
-                                                            variant="contained"
-                                                            onClick={() =>
-                                                                handleDelete(Number(
-                                                                    item.id
-                                                                )
-                                                                )
-                                                            }
-                                                        >
-                                                            Xóa
-                                                        </Button>
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
+                            <div className="mt-5 mx-3">
+                                <div className="row grid gap-3">
+                                    <div className="g-col-6 card shadow border-0">
+                                        <div className="card-header">
+                                            <h5 className=" text-lg font-bold">
+                                                Add Size
+                                            </h5>
+                                        </div>
+                                        <div className="card-body">
+                                            <label htmlFor="name" className="form-label text-lg">
+                                                Name size
+                                            </label>
+                                            <div className="input-group mb-3">
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="nameSize"
+                                                    placeholder="Enter name size"
+                                                    name="nameSize"
+                                                    onChange={handleGetValueSize}
+                                                    value={newSize.nameSize}
+                                                />
+                                                <Button variant="contained" onClick={handleAddSize}>Add</Button>
+                                            </div><br />
+                                            {
+                                                sizes.map((size, index) => (
+                                                    <div className="flex justify-between items-start" key={index}>
+                                                        <p className="text-lg font-bold border border-black px-4 py-[5px] rounded-md mb-5">{size.nameSize}</p>
+                                                        <Button className="h-10" variant="contained" onClick={() => handleDeleteSize(Number(size.sizeId))}>Delete</Button>
+                                                    </div>
+                                                ))
+                                            }
+                                            
+                                        </div>
+                                    </div>
+                                    <div className="g-col-6 card shadow border-0">
+                                        <div className="card-header">
+                                            <h5 className=" text-lg font-bold">
+                                                Add Color
+                                            </h5>
+                                        </div>
+                                        <div className="card-body">
+                                            <label htmlFor="name" className="form-label text-lg">
+                                                Name Color
+                                            </label>
+                                            <div className="input-group mb-3">
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="nameColor"
+                                                    placeholder="Enter name Color"
+                                                    name="nameColor"
+                                                    onChange={handleGetValueColor}
+                                                    value={newColor.nameColor}
+                                                />
+                                                <Button variant="contained" onClick={handleAddColor}>Add</Button>
+                                            </div><br />
+                                            {
+                                                colors.map((color, index) => (
+                                                    <div className="flex justify-between items-start" key={index}>
+                                                        <p style={{ backgroundColor: color.nameColor, width: '80px', height: '40px'}}  className="text-lg font-bold rounded-md mb-5"></p>
+                                                        <Button className="h-10" variant="contained" onClick={() => handleDeleteColor(Number(color.colorId))}>Delete</Button>
+                                                    </div>
+                                                ))
+                                            }
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -305,7 +318,7 @@ function AdminCategory() {
                 </div>
             </div>
         </>
-    )
+    );
 }
 
-export default AdminCategory
+export default AdminColorSize;

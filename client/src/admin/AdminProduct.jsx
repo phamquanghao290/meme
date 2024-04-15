@@ -3,6 +3,7 @@ import { Button } from "@mui/material";
 import publicAxios from "../config/PublicAxios";
 import { success, failed } from "../components/Modal/NotificationModal";
 import axios from "axios";
+import { Modal } from "antd";
 import { Pagination } from "antd";
 import "./admin.css";
 
@@ -14,16 +15,19 @@ function AdminProduct() {
     const [preview, setPreview] = React.useState("");
     const [selectedMedia, setSelectedMedia] = React.useState(null);
     const [categories, setCategories] = React.useState([]);
+    const [brands, setBrands] = React.useState([]);
     const [products, setProducts] = React.useState([]);
     const [oneProduct, setOneProduct] = React.useState([]);
     const [edit, setEdit] = React.useState(false);
+    const [flag, setFlag] = React.useState(false);
     const [newProduct, setNewProduct] = React.useState({
-        productName: "",
+        nameProduct: "",
         price: 0,
         image: "",
-        description: "",
-        categoryId: 0,
+        category_id: 0,
+        brand_id: 0,
         stock: 0,
+        rate: 5
     });
 
     const handleGetCategories = async () => {
@@ -31,23 +35,23 @@ function AdminProduct() {
         setCategories(response.data);
     };
 
+    const handleGetAllBrand = async () => {
+        const response = await publicAxios.get("/api/brand");
+        setBrands(response.data);
+    }
+
     const handleGetOneProduct = async (id) => {
         const response = await publicAxios.get(
-            `/api/product/${products[id - 1].productId}`
+            `/api/product/${products[id - 1].id}`
         );
+        console.log(response.data);
         setOneProduct(response.data);
     };
 
     const handleGetProducts = async () => {
         const response = await publicAxios.get("/api/product");
-        setProducts(response.data.data);
+        setProducts(response.data);
     };
-    React.useEffect(() => {
-        handleGetCategories();
-        handleGetProducts();
-        handleGetOneProduct(1);
-        document.title = "Admin - Product";
-    }, []);
 
     const handleGetValue = (e) => {
         setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
@@ -77,19 +81,22 @@ function AdminProduct() {
             const response = await publicAxios.post("/api/product", {
                 ...newProduct,
                 image: media,
+                category_id: categories[0].id,
             });
-            setOneProduct(response.data.data);
+            console.log(response.data.data);
             setProducts(response.data.data);
+            setOneProduct(response.data.data);
             success(response.data.message);
             setEdit(false);
             setPreview("");
             setNewProduct({
-                productName: "",
+                nameProduct: "",
                 price: 0,
                 image: "",
-                description: "",
-                categoryId: 0,
+                category_id: 0,
+                brand_id: 0,
                 stock: 0,
+                rate: 5
             });
         } catch (error) {
             failed("Vui lòng điền đầy đủ thông tin");
@@ -100,7 +107,7 @@ function AdminProduct() {
         try {
             if (!selectedMedia) {
                 const response = await publicAxios.put(
-                    `/api/product/${oneProduct.productId}`,
+                    `/api/product/${oneProduct.id}`,
                     { ...oneProduct, image: preview }
                 );
                 setProducts(response.data.data);
@@ -117,7 +124,7 @@ function AdminProduct() {
             ]);
             const media = uploadMedia.data.secure_url;
             const response = await publicAxios.put(
-                `/api/product/${oneProduct.productId}`,
+                `/api/product/${oneProduct.id}`,
                 {
                     ...oneProduct,
                     image: media,
@@ -126,12 +133,13 @@ function AdminProduct() {
             setProducts(response.data.data);
             success(response.data.message);
             setNewProduct({
-                productName: "",
+                nameProduct: "",
                 price: 0,
                 image: "",
-                description: "",
-                categoryId: 0,
+                brand_id: 0,
+                category_id: 0,
                 stock: 0,
+                rate: 5
             });
         } catch (error) {
             failed("Sửa thất bại");
@@ -143,9 +151,10 @@ function AdminProduct() {
             ...newProduct,
             productName: item.productName,
             price: item.price,
-            description: item.description,
-            categoryId: item.categoryId,
+            category_id: item.category_id,
+            brand_id: item.brand_id,
             stock: item.stock,
+            rate: item.rate,
         });
         setPreview(item.image);
         setEdit(true);
@@ -178,10 +187,10 @@ function AdminProduct() {
 
     const filterProduct = () => {
         if (searchProduct === "") {
-            return products;
+            return products
         } else {
             const result = products.filter((item) => {
-                return item.productName.toLowerCase().includes(searchProduct);
+                return item.nameProduct.toLowerCase().includes(searchProduct);
             });
             return result;
         }
@@ -197,6 +206,28 @@ function AdminProduct() {
         setCurrentPage(page);
     };
 
+    React.useEffect(() => {
+        handleGetCategories();
+        handleGetAllBrand();
+        handleGetProducts();
+        handleGetOneProduct(1);
+        document.title = "Admin - Product";
+    }, []);
+
+
+    const [isModalOpen, setIsModalOpen] = React.useState(false);
+    const showModal = () => {
+        setIsModalOpen(!isModalOpen);
+    };
+    const handleAddInfor = async () => {
+        const response = await publicAxios.post(`/api/product/${id}`);
+        setFlag(!flag);
+        success(response.data.message);
+        setIsModalOpen(false);
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
     return (
         <>
             {/* Dashboard */}
@@ -234,10 +265,10 @@ function AdminProduct() {
                         </div>
                     </header>
                     {/* Main */}
-                    <main className="py-6 bg-surface-secondary">
+                    <main className="pt-3 bg-surface-secondary">
                         <div className="container-fluid">
                             {/* Card stats */}
-                            <div className="row g-6 mb-6">
+                            <div className="row g-6">
                                 <div className="col-xl-3 col-sm-6 col-12">
                                     <div className="card shadow border-0">
                                         <div className="card-body">
@@ -359,9 +390,9 @@ function AdminProduct() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="container">
+                            <div className="mt-5 mx-3">
                                 <div className="row grid gap-3 ">
-                                    <div className="p-1 g-col-3 card shadow border-0 px-2 ">
+                                    <div className="g-col-3 card shadow border-0 ">
                                         <div className="card-header">
                                             <h5 className="mb-0 title">
                                                 Add Product
@@ -380,9 +411,9 @@ function AdminProduct() {
                                                     className="form-control"
                                                     id="name-product"
                                                     aria-describedby="emailHelp"
-                                                    name="productName"
+                                                    name="nameProduct"
                                                     value={
-                                                        newProduct.productName
+                                                        newProduct.nameProduct
                                                     }
                                                     onChange={handleGetValue}
                                                 />
@@ -410,10 +441,10 @@ function AdminProduct() {
                                                 <select
                                                     className="form-select form-select-lg "
                                                     aria-label="Large select example"
-                                                    id="categoryId"
-                                                    name="categoryId"
+                                                    id="category_id"
+                                                    name="category_id"
                                                     value={
-                                                        newProduct.categoryId
+                                                        newProduct.category_id
                                                     }
                                                     onChange={handleGetValue}
                                                 >
@@ -421,12 +452,10 @@ function AdminProduct() {
                                                         -- Loại sản phẩm --
                                                     </option>
                                                     {categories.map(
-                                                        (
-                                                            category
-                                                        ) => (
+                                                        (category) => (
                                                             <option
                                                                 value={
-                                                                    category.categoryId
+                                                                    category.category_id
                                                                 }
                                                             >
                                                                 {
@@ -435,6 +464,30 @@ function AdminProduct() {
                                                             </option>
                                                         )
                                                     )}
+                                                </select>
+                                            </div>
+                                            <div className="mb-3 ">
+                                                <label className="form-label">
+                                                    Brand
+                                                </label>
+                                                <select
+                                                    className="form-select form-select-lg "
+                                                    aria-label="Large select example"
+                                                    id="brand_id"
+                                                    name="brand_id"
+                                                    value={newProduct.brand_id}
+                                                    onChange={handleGetValue}
+                                                >
+                                                    <option>
+                                                        -- Chọn Brand --
+                                                    </option>
+                                                    {brands.map((brand) => (
+                                                        <option
+                                                            value={brand.id}
+                                                        >
+                                                            {brand.nameBrand}
+                                                        </option>
+                                                    ))}
                                                 </select>
                                             </div>
                                             <div className="mb-3">
@@ -463,23 +516,6 @@ function AdminProduct() {
                                                 />
                                             </div>
                                             {/* * */}
-                                            <div className="mb-3 ">
-                                                <label
-                                                    htmlFor="exampleInputPassword1"
-                                                    className="form-label"
-                                                >
-                                                    Description
-                                                </label>
-                                                <textarea
-                                                    className="form-control h-16"
-                                                    id="description"
-                                                    name="description"
-                                                    value={
-                                                        newProduct.description
-                                                    }
-                                                    onChange={handleGetValue}
-                                                />
-                                            </div>
                                             <br />
                                             <div className="mb-3 ">
                                                 <label
@@ -512,7 +548,7 @@ function AdminProduct() {
                                         </div>
                                     </div>
                                     <div
-                                        className="card p-0 g-col-9 shadow border-0 "
+                                        className="card g-col-9 shadow border-0 "
                                         id="a"
                                     >
                                         <div className="card-header">
@@ -548,77 +584,68 @@ function AdminProduct() {
                                                 <tbody>
                                                     {displayedProducts
                                                         .filter((item) =>
-                                                            item.productName
+                                                            item.nameProduct
                                                                 .toLowerCase()
                                                                 .includes(
                                                                     searchProduct
                                                                 )
                                                         )
-                                                        .map(
-                                                            (
-                                                                item,
-                                                                index
-                                                            ) => (
-                                                                <tr
-                                                                    key={index}
-                                                                    className=""
-                                                                >
-                                                                    <td>
-                                                                        {
-                                                                            item.productId
+                                                        .map((item, index) => (
+                                                            <tr
+                                                                key={index}
+                                                                className=""
+                                                            >
+                                                                <td>
+                                                                    {item.id}
+                                                                </td>
+                                                                <td>
+                                                                    <img
+                                                                        src={
+                                                                            item.image
                                                                         }
-                                                                    </td>
-                                                                    <td>
-                                                                        <img
-                                                                            src={
-                                                                                item.image
-                                                                            }
-                                                                            alt=""
-                                                                            className="w-[100px] max-h-[150px]"
-                                                                        />
-                                                                    </td>
-                                                                    <td className="max-w-[200px] text-wrap">
-                                                                        {
-                                                                            item.productName
+                                                                        alt=""
+                                                                        className="w-[100px] max-h-[150px] m-auto"
+                                                                    />
+                                                                </td>
+                                                                <td className="max-w-[200px] text-wrap">
+                                                                    {
+                                                                        item.nameProduct
+                                                                    }
+                                                                </td>
+                                                                <td>
+                                                                    {USDollar.format(
+                                                                        item.price
+                                                                    )}
+                                                                </td>
+                                                                <td>
+                                                                    <Button variant="contained" onClick={showModal}>Infor</Button>
+                                                                </td>
+                                                                <td className="">
+                                                                    <Button
+                                                                        variant="contained"
+                                                                        onClick={() =>
+                                                                            handleEditProduct(
+                                                                                item
+                                                                            )
                                                                         }
-                                                                    </td>
-                                                                    <td>
-                                                                        {USDollar.format(
-                                                                            item.price
-                                                                        )}
-                                                                    </td>
-                                                                    <td>
-                                                                        {
-                                                                            item.stock
+                                                                    >
+                                                                        Sửa
+                                                                    </Button>
+                                                                    <br />
+                                                                    <br />
+                                                                    <Button
+                                                                        variant="contained"
+                                                                        onClick={() =>
+                                                                            handleDeleteProduct(
+                                                                                item.id
+                                                                            )
                                                                         }
-                                                                    </td>
-                                                                    <td className="">
-                                                                        <Button
-                                                                            variant="contained"
-                                                                            onClick={() =>
-                                                                                handleEditProduct(
-                                                                                    item
-                                                                                )
-                                                                            }
-                                                                        >
-                                                                            Sửa
-                                                                        </Button>
-                                                                        <br />
-                                                                        <br />
-                                                                        <Button
-                                                                            variant="contained"
-                                                                            onClick={() =>
-                                                                                handleDeleteProduct(
-                                                                                    item.productId
-                                                                                )
-                                                                            }
-                                                                        >
-                                                                            Xóa
-                                                                        </Button>
-                                                                    </td>
-                                                                </tr>
-                                                            )
-                                                        )}
+                                                                    >
+                                                                        Xóa
+                                                                    </Button>
+                                                                </td>
+                                                            </tr>
+                                                        ))}
                                                 </tbody>
                                             </table>
                                         </div>
@@ -637,6 +664,24 @@ function AdminProduct() {
                     </main>
                 </div>
             </div>
+            <Modal
+                title="Add Information Product" 
+                open={isModalOpen}
+                // onOk={handlaAddInfor}
+                onCancel={handleCancel}
+            >
+                <div className="flex justify-center">
+                    <div className="bg-[#D64D22] w-[80px] h-[80px] rounded-full flex justify-center items-center shadow-lg">
+                        <i className="fa-regular fa-trash-can text-white text-[40px] shadow-lg"></i>
+                    </div>
+                </div>
+                <p className="text-[#575757] text-[18px] font-[700] text-center mt-3">
+                    Are you sure you want to delete this brand?
+                </p>
+                <p className="text-[#575757] text-[14px] font-[400] text-center ">
+                    This action cannot be undo.
+                </p>
+            </Modal>
         </>
     );
 }

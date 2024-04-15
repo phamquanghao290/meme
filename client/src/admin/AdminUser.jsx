@@ -12,22 +12,22 @@ function AdminUser() {
         const response = await publicAxios.get("/api/user");
         setDataUser(response.data);
     };
-
-    React.useEffect(() => {
-        handleGetUsers();
-        document.title = "Admin - User";
-    }, []);
-
     const handleChangeStatus = async (user) => {
         if (user.status === 1) {
             user.status = 0;
         } else {
             user.status = 1;
         }
-        await publicAxios.patch(`/api/user/status/${user.userId}`, user);
+        await publicAxios.patch(`/api/user/status/${user.id}`, user);
         success("Thay đổi trạng thái thành công");
         handleGetUsers();
     };
+
+
+    React.useEffect(() => {
+        handleGetUsers();
+        document.title = "Admin - User";
+    }, []);
     return (
         <>
             <div className="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary">
@@ -206,10 +206,10 @@ function AdminUser() {
                                                 (user, index) => (
                                                     <tr key={index}>
                                                         <th scope="col">
-                                                            {user.userId}
+                                                            {user.id}
                                                         </th>
                                                         <th scope="col">
-                                                            {user.userName}
+                                                            {user.name}
                                                         </th>
                                                         <th scope="col">
                                                             {user.phone}
