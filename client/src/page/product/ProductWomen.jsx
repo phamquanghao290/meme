@@ -249,13 +249,13 @@ const handleChange = (value) => {
               <p className="ml-6 font-bold text-xl">Women's Clothing</p>
             </div>
             <div className="grid grid-cols-4 mt-10 gap-10">
-              <div>
+              <div className="rounded-xl p-3 border">
                 <img src={anh1} alt="" />
                 <br />
                 <p className="text-lg font-bold">ProducName</p>
                 <div className="flex items-end justify-between">
                   <p className="text-lg font-bold">Price</p>
-                  <Rate disabled defaultValue={2} />
+                  <Rate disabled defaultValue={5} />
                 </div>
               </div>
             </div>

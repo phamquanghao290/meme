@@ -110,7 +110,7 @@ function Admin() {
                                 className="nav-item"
                                 // onClick={() => handleLogout()}
                             >
-                                <Link to="/login" className="nav-link">
+                                <Link to="/sign-in" className="nav-link">
                                     <i className="bi bi-box-arrow-left" />{" "}
                                     Logout
                                 </Link>
