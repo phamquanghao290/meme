@@ -175,16 +175,18 @@ export default function Index() {
               </div>
             </div>
           </div>
-          <div className="img_shownow" style={{ height: "700px" }}>
+          <div className="img_shownow" style={{ height: "735px" }}>
             <div>
               <div
-                style={{
-                  height: "590px",
-                  width: "650px",
-                  button: "10px",
-                }}
+              
               >
-                <img src={img10} alt="" height="100%" width="100%" />
+                <img
+                  src={img10}
+                  alt=""
+                  height="100%"
+                  width="100%"
+                  className="img_shownowsasss"
+                />
               </div>
               <div className="textimgshownow">
                 <h3 style={{ color: "white" }}>
@@ -201,11 +203,11 @@ export default function Index() {
                 </div>
               </div>
             </div>
-            <div style={{ height: "590px", width: "650px", button: "10px" }}>
+            <div  className="img_shownow_2">
               <img
                 src={img11}
                 alt=""
-                style={{ height: "100%", width: "100%" }}
+                
               />
             </div>
           </div>
@@ -394,24 +396,13 @@ export default function Index() {
             </div>
           </div>
         </div>
-        <div
-          style={{
-            backgroundColor: "#3C4242",
-
-            width: "1280px",
-            height: "357px",
-            margin: "0 auto",
-            marginTop: "70px",
-            borderRadius: "10px",
-            color: "white",
-          }}
-        >
+        <div className="bannerTopbrands">
           <h2
             style={{
               paddingTop: "40px",
               fontSize: "60px",
               textAlign: "center",
-              color:"white"
+              color: "white",
             }}
           >
             Top Brands Deal
@@ -427,7 +418,9 @@ export default function Index() {
               justifyContent: "center",
               alignItems: "center",
             }}
+            className="logo_topbrand"
           >
+            
             <img src={Logo1} alt="" style={{ width: "155px" }} />
             <img
               src={Logo2}
@@ -572,7 +565,7 @@ export default function Index() {
 
           <div className=" feedbackpeople">
             <div className="people">
-              <div style={{ display: "flex", gap: "160px", marginTop: "20px" }}>
+              <div className="feedbackstar">
                 <img src={people1} alt="" />
 
                 <Star></Star>
@@ -589,14 +582,7 @@ export default function Index() {
               </p>
             </div>
             <div className="people">
-              <div
-                style={{
-                  display: "flex",
-                  gap: "160px",
-                  marginTop: "20px",
-                  padding: "10px",
-                }}
-              >
+              <div className="feedbackstar">
                 <img src={people2} alt="" />
                 <Star></Star>
               </div>
@@ -610,13 +596,7 @@ export default function Index() {
               </p>
             </div>
             <div className="people">
-              <div
-                style={{
-                  display: "flex",
-                  gap: "160px",
-                  marginTop: "20px",
-                }}
-              >
+              <div className="feedbackstar">
                 <img src={people3} alt="" />
                 <Star></Star>
               </div>
