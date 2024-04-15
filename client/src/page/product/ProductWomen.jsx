@@ -6,13 +6,20 @@ import {
     MailOutlined,
     SettingOutlined,
 } from "@ant-design/icons";
-import { Menu } from "antd";
+import publicAxios from "../../config/PublicAxios";
+import { Menu, Rate  } from "antd";
 import "./product.scss";
 import anh1 from "../../../public/images/product13.png";
 import { Select } from "antd";
 function ProductWomen() {
+    const [product, setProduct] = useState([]);
+    const handleGetProducts = async () => {
+        const response = await publicAxios.get("/api/product");
+        setProduct(response.data);
+    }
     useEffect(() => {
-      window.scrollTo(0, 0);
+        handleGetProducts();
+        window.scrollTo(0, 0);
     }, []);
     function getItem(label, key, icon, children, type) {
         return {
@@ -248,86 +255,7 @@ const handleChange = (value) => {
                 <p className="text-lg font-bold">ProducName</p>
                 <div className="flex items-end justify-between">
                   <p className="text-lg font-bold">Price</p>
-                  <button className="bg-[#8A33FD] text-white rounded-lg px-4 py-2">
-                    Add to cart
-                  </button>
-                </div>
-              </div>
-              <div>
-                <img src={anh1} alt="" />
-                <br />
-                <p className="text-lg font-bold">ProducName</p>
-                <div className="flex items-end justify-between">
-                  <p className="text-lg font-bold">Price</p>
-                  <button className="bg-[#8A33FD] text-white rounded-lg px-4 py-2">
-                    Add to cart
-                  </button>
-                </div>
-              </div>
-              <div>
-                <img src={anh1} alt="" />
-                <br />
-                <p className="text-lg font-bold">ProducName</p>
-                <div className="flex items-end justify-between">
-                  <p className="text-lg font-bold">Price</p>
-                  <button className="bg-[#8A33FD] text-white rounded-lg px-4 py-2">
-                    Add to cart
-                  </button>
-                </div>
-              </div>
-              <div>
-                <img src={anh1} alt="" />
-                <br />
-                <p className="text-lg font-bold">ProducName</p>
-                <div className="flex items-end justify-between">
-                  <p className="text-lg font-bold">Price</p>
-                  <button className="bg-[#8A33FD] text-white rounded-lg px-4 py-2">
-                    Add to cart
-                  </button>
-                </div>
-              </div>
-              <div>
-                <img src={anh1} alt="" />
-                <br />
-                <p className="text-lg font-bold">ProducName</p>
-                <div className="flex items-end justify-between">
-                  <p className="text-lg font-bold">Price</p>
-                  <button className="bg-[#8A33FD] text-white rounded-lg px-4 py-2">
-                    Add to cart
-                  </button>
-                </div>
-              </div>
-              <div>
-                <img src={anh1} alt="" />
-                <br />
-                <p className="text-lg font-bold">ProducName</p>
-                <div className="flex items-end justify-between">
-                  <p className="text-lg font-bold">Price</p>
-                  <button className="bg-[#8A33FD] text-white rounded-lg px-4 py-2">
-                    Add to cart
-                  </button>
-                </div>
-              </div>
-              <div>
-                <img src={anh1} alt="" />
-                <br />
-                <p className="text-lg font-bold">ProducName</p>
-                <div className="flex items-end justify-between">
-                  <p className="text-lg font-bold">Price</p>
-                  <button className="bg-[#8A33FD] text-white rounded-lg px-4 py-2">
-                    Add to cart
-                  </button>
-                </div>
-              </div>
-              <div>
-                <img src={anh1} alt="" />
-                <br />
-                <p className="text-lg font-bold">ProducName</p>
-                <div className="flex items-end justify-between">
-                  <p className="text-lg font-bold">Price</p>
-                  <button className="bg-[#8A33FD] text-white rounded-lg px-4 py-2">
-                    Add to cart
-                  </button>
+                  <Rate disabled defaultValue={2} />
                 </div>
               </div>
             </div>

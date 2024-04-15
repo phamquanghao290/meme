@@ -2,20 +2,26 @@ import React, { useState } from 'react'
 import { Button } from '@mui/material'
 import { Modal } from 'antd';
 import '../admin/admin.css'
+import publicAxios from '../config/PublicAxios';
 import axios from 'axios';
+import { success, failed } from '../components/Modal/NotificationModal';
 export default function AdminBrand() {
-    const [dataUser, setDataUser] = React.useState([]);
-    const handleGetUsers = async () => {
-        const response = await axios.get("/api/user");
-        setDataUser(response.data);
-    };
+    const [newBrand, setNewBrand] = React.useState({
+        nameBrand: "",
+        image_brand: "",
+    });
+    const [brands, setBrands] = React.useState([]);
+    const [preview, setPreview] = React.useState("");
+    const [selectedMedia, setSelectedMedia] = React.useState(null);
+    const [flag, setFlag] = React.useState(false);
+    const handleGetBrands = async () => {
+        const response = await publicAxios.get("/api/brand");
+        setBrands(response.data);
+    }
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const showModal = () => {
         setIsModalOpen(true);
-    };
-    const handleOk = () => {
-        setIsModalOpen(false);
     };
     const handleCancel = () => {
         setIsModalOpen(false);
@@ -36,30 +42,61 @@ export default function AdminBrand() {
     const showModalDelete = () => {
         setIsModalOpenDelete(!isModalOpenDelete);
     };
-    const handleOkDelete = () => {
+    const handleOkDelete = async (id) => {
+        const response = await publicAxios.delete(`/api/brand/${id}`);
+        setFlag(!flag);
+        success(response.data.message);
         setIsModalOpenDelete(false);
     };
     const handleCancelDelete = () => {
         setIsModalOpenDelete(false)
     };
 
-    React.useEffect(() => {
-        handleGetUsers();
-        document.title = "Admin - User";
-    }, []);
-
-    const handleChangeStatus = async (user) => {
-        if (user.status === 1) {
-            user.status = 0;
-        } else {
-            user.status = 1;
-        }
-        await publicAxios.patch(`/api/user/status/${user.userId}`, user);
-        success("Thay đổi trạng thái thành công");
-        handleGetUsers();
+    const changeImage = (event) => {
+        setSelectedMedia(event.target.files[0]);
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.onload = function (event) {
+            setPreview(event.target.result);
+        };
+        reader.readAsDataURL(file);
     };
-    return (
 
+    const handleGetValue = (e) => {
+        setNewBrand({ ...newBrand, [e.target.name]: e.target.value });
+    }
+
+    const handleAddBrand = async () => {
+        try {
+            const formData = new FormData();
+            formData.append("file", selectedMedia);
+            formData.append("upload_preset", "project");
+            const [uploadMedia] = await Promise.all([
+                axios.post("https://api.cloudinary.com/v1_1/dixzrnjbq/image/upload", formData),
+            ]);
+            const response = await publicAxios.post("/api/brand", {
+                ...newBrand,
+                image_brand: uploadMedia.data.secure_url,
+            });
+            setFlag(!flag);
+            success(response.data.message);
+            setPreview("");
+            setNewBrand({   
+                nameBrand: "",
+                image_brand: "",
+            })
+            setIsModalOpen(false);
+        } catch (error) {
+            failed("Vui lòng điền đầy đủ thông tin");
+        }
+    }
+
+    React.useEffect(() => {
+        handleGetBrands();
+        document.title = "Admin Brand";
+    }, [flag]);
+
+    return (
         <>
             <div className="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary">
                 {/* Main content */}
@@ -86,26 +123,47 @@ export default function AdminBrand() {
                                         {/* <Button type="primary" onClick={showModal}>
                                             Open Modal
                                         </Button> */}
-                                        <Modal title="Create New Brand" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                                            <p className='text-[#575757] text-[14px] font-[700]'>Brand Image</p>
-                                            <input
-                                                type="file"
-                                                name="image"
-                                                id="image"
-                                                className="hidden"
-                                            />
+                                        <Modal
+                                            title="Create New Brand"
+                                            open={isModalOpen}
+                                            onOk={handleAddBrand}
+                                            onCancel={handleCancel}
+                                        >
+                                            <p className="text-[#575757] text-[14px] font-[700]">
+                                                Brand Image
+                                            </p>
                                             <label
-                                                htmlFor="image"
-                                                className=" mt-2 w-[100px] h-[100px] border-2 border-dashed border-blue-600 rounded-lg flex justify-center items-center "
+                                                htmlFor="formFileSm"
+                                                // className=" mt-2 w-[100px] h-[100px] border-2 border-dashed border-blue-600 rounded-lg flex justify-center items-center "
                                             >
                                                 Upload
                                             </label>
-
-                                            <p className='mt-4 text-[#575757] text-[14px] font-[700]'>Brand Name</p>
-                                            <input className='mt-2 rounded px-2 py-4 bg-[#eeeded] outline-none w-full' type="text" placeholder='Brand Name' />
-
+                                            <input
+                                                id="formFileSm"
+                                                type="file"
+                                                name="image"
+                                                className="hidden"
+                                                onChange={changeImage}
+                                                value={newBrand.image_brand}
+                                                hidden
+                                            />
+                                            <img
+                                                id="image"
+                                                src={preview}
+                                                alt="preview"
+                                            />
+                                            <p className="mt-4 text-[#575757] text-[14px] font-[700]">
+                                                Brand Name
+                                            </p>
+                                            <input
+                                                className="mt-2 rounded px-2 py-4 bg-[#eeeded] outline-none w-full"
+                                                type="text"
+                                                placeholder="Brand Name"
+                                                value={newBrand.nameBrand}
+                                                name="nameBrand"
+                                                onChange={handleGetValue}
+                                            />
                                         </Modal>
-
                                     </div>
                                     {/* Actions */}
                                     <div className="col-sm-6 col-12 text-sm-end"></div>
@@ -249,10 +307,15 @@ export default function AdminBrand() {
                             </div>
                             <div className="card shadow border-0 mb-7">
                                 <div className="card-header flex items-center gap-[60%] relative">
-                                    <h5 className="mb-0">List Brand</h5>
-                                    <input type="text" placeholder='Search for brand' className='outline-0 border-1 shadow-sm p-2 max-w-[300px] ' />
-                                    <p className='absolute ml-[80%]'><i className="fa-solid fa-magnifying-glass text-[#575757] text-md"></i></p>
-
+                                    <h5 className="mb-0 text-lg font-semibold">List Brand</h5>
+                                    <input
+                                        type="text"
+                                        placeholder="Search for brand"
+                                        className="outline-0 border-1 shadow-sm p-2 max-w-[300px] "
+                                    />
+                                    <p className="absolute ml-[80%]">
+                                        <i className="fa-solid fa-magnifying-glass text-[#575757] text-md"></i>
+                                    </p>
                                 </div>
                                 <div className="table-responsive">
                                     <table className="table table-hover table-nowrap">
@@ -260,76 +323,92 @@ export default function AdminBrand() {
                                             <tr>
                                                 <th scope="col">Id </th>
                                                 <th scope="col">Brand</th>
-                                                <th scope="col">
-                                                    Create Date
-                                                </th>
-                                                <th></th>
-                                                {/* <th scope="col">Status</th>
-                                              <th scope="col">Acction</th> */}
+                                                <th scope="col">Create Date</th>
+                                                <th scope="col">Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody className='text-xl'>
+                                        <tbody className="text-xl">
+                                            {brands?.map((brand, index) => (
+                                                <tr key={index}>
+                                                    <td scope="col">
+                                                        {index + 1}
+                                                    </td>
+                                                    <td
+                                                        scope="col"
+                                                        className="flex justify-center items-center max-w-[200px] w-full m-auto max-h-[100px]"
+                                                    >
+                                                        <img src={brand.image_brand} alt="" />
+                                                    </td>
+                                                    <td scope="col">
+                                                        {brand.nameBrand}
+                                                    </td>
+                                                    <td className="">
+                                                        <Button
+                                                            onClick={
+                                                                showModalEdit
+                                                            }
+                                                            variant="danger"
+                                                        >
+                                                            <i className="fa-regular fa-pen-to-square text-md"></i>
+                                                            <Modal
+                                                                title="Edit Brand"
+                                                                open={
+                                                                    isModalOpenEdit
+                                                                }
+                                                                onOk={
+                                                                    handleOkEdit
+                                                                }
+                                                                onCancel={
+                                                                    handleCancelEdit
+                                                                }
+                                                            >
+                                                                <p className="text-[#575757] text-[14px] font-[700]">
+                                                                    Brand Name
+                                                                </p>
+                                                                <input
+                                                                    className="mt-2 rounded px-2 py-4 bg-[#eeeded] outline-none w-full"
+                                                                    type="text"
+                                                                    placeholder="Brand Name"
+                                                                />
+                                                            </Modal>
+                                                        </Button>
 
-                                            <tr  >
-                                                <td scope="col">
-                                                    1231
-                                                </td>
-                                                <td scope="col" className='flex justify-center items-center'>
-                                                    <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-13_2_.png" className='w-[100px] h-[100px]' alt="" />
-                                                    <p>awdadwad</p>
-                                                </td>
-                                                {/* <td scope="col">
-                                                          {user.phone}
-                                                      </td>
-                                                      <td scope="col">
-                                                          {user.status == 1
-                                                              ? "Lock"
-                                                              : "Normal"}
-                                                      </td> */}
-                                                <td scope='col'>
-                                                    22/12/1242
-                                                </td>
-                                                <td scope="col">
-                                                    <Button onClick={showModalEdit} variant="danger" >
-                                                        <i className="fa-regular fa-pen-to-square text-md" ></i>
-                                                        <Modal title="Edit Brand" open={isModalOpenEdit} onOk={handleOkEdit} onCancel={handleCancelEdit}>
-                                                            <p className='text-[#575757] text-[14px] font-[700]'>Brand Name</p>
-                                                            <input className='mt-2 rounded px-2 py-4 bg-[#eeeded] outline-none w-full' type="text" placeholder='Brand Name' />
-                                                        </Modal>
-                                                    </Button>
-
-                                                    <Button variant="danger" onClick={showModalDelete}>
-                                                        <i className="fa-regular fa-trash-can  text-md"></i>
-                                                        <Modal title="Delete" open={isModalOpenDelete} onOk={handleOkDelete} onCancel={handleCancelDelete}>
-                                                            <div className='flex justify-center'>
-                                                                <div className='bg-[#D64D22] w-[80px] h-[80px] rounded-full flex justify-center items-center shadow-lg'>
-                                                                    <i className="fa-regular fa-trash-can text-white text-[40px] shadow-lg"></i>
+                                                        <Button
+                                                            variant="danger"
+                                                            onClick={
+                                                                showModalDelete
+                                                            }
+                                                        >
+                                                            <i className="fa-regular fa-trash-can  text-md"></i>
+                                                            <Modal
+                                                                title="Delete"
+                                                                open={isModalOpenDelete}
+                                                                onOk={() => handleOkDelete(brand.id)}                                       
+                                                                onCancel={
+                                                                    handleCancelDelete
+                                                                }
+                                                            >
+                                                                <div className="flex justify-center">
+                                                                    <div className="bg-[#D64D22] w-[80px] h-[80px] rounded-full flex justify-center items-center shadow-lg">
+                                                                        <i className="fa-regular fa-trash-can text-white text-[40px] shadow-lg"></i>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <p className='text-[#575757] text-[18px] font-[700] text-center mt-3'>Are you sure you want to delete this brand?</p>
-                                                            <p className='text-[#575757] text-[14px] font-[400] text-center '>This action cannot be undo.</p>
-
-
-                                                        </Modal>
-                                                    </Button>
-
-                                                    {/*  <Switch
-                                                              checkedChildren={
-                                                                  <CheckOutlined />
-                                                              }
-                                                              unCheckedChildren={
-                                                                  <CloseOutlined />
-                                                              }
-                                                              defaultChecked
-                                                              onChange={() =>
-                                                                  handleChangeStatus(
-                                                                      user
-                                                                  )
-                                                              }
-                                                          /> */}
-                                                </td>
-                                            </tr>
-
+                                                                <p className="text-[#575757] text-[18px] font-[700] text-center mt-3">
+                                                                    Are you sure
+                                                                    you want to
+                                                                    delete this
+                                                                    brand?
+                                                                </p>
+                                                                <p className="text-[#575757] text-[14px] font-[400] text-center ">
+                                                                    This action
+                                                                    cannot be
+                                                                    undo.
+                                                                </p>
+                                                            </Modal>
+                                                        </Button>
+                                                    </td>
+                                                </tr>
+                                            ))}
                                         </tbody>
                                     </table>
                                 </div>
@@ -339,5 +418,5 @@ export default function AdminBrand() {
                 </div>
             </div>
         </>
-    )
+    );
 }
