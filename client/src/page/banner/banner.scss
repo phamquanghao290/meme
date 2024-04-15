@@ -101,3 +101,30 @@
 }
 }
 }
+@media (max-width: 375px) {
+
+   .textBanner_css{
+ width: 100%;
+          position: relative;
+          z-index: 90;
+         height: 10px;
+          top: -500px;
+         font-size: 60px;
+          color: rgb(255, 255, 255);
+     p{
+     font-weight: normal;
+           margin-left: 100px;
+            font-size: 20px;
+     }
+        h4{
+       margin-left: 100px;
+       font-size: 40px;
+       font-weight: bold;
+       color: #ffffff;
+     }
+    .buttonbaner {
+ margin-left: 100px;
+  width: 200px;
+}
+}
+}

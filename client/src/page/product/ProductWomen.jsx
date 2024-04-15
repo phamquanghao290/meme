@@ -1,3 +1,4 @@
+import { ImMenu2 } from "react-icons/im"; 
 import React, { useEffect, useState } from "react";
 import { Slider, Switch } from "antd";
 import {
@@ -8,7 +9,7 @@ import {
 import { Menu } from "antd";
 import "./product.scss";
 import anh1 from "../../../public/images/product13.png";
-
+import { Select } from "antd";
 function ProductWomen() {
     useEffect(() => {
       window.scrollTo(0, 0);
@@ -22,7 +23,9 @@ function ProductWomen() {
             type,
         };
     }
-
+const handleChange = (value) => {
+  console.log(value); // { value: "lucy", key: "lucy", label: "Lucy (101)" }
+};
     const items = [
         getItem("Dress Style", "1", <MailOutlined />, [
             getItem("Classic", "11"),
@@ -103,17 +106,135 @@ function ProductWomen() {
       <div style={{ marginTop: "50px", fontFamily: "Montserrat" }}>
         <div className="flex items-start justify-between gap-11 max-w-[1440px] w-full mx-auto px-4 mb-10 sm:px-6 lg:px-8">
           <div>
-            <p className="font-bold text-xl ml-6">Fillter</p>
-            <Menu
-              mode="inline"
-              defaultSelectedKeys={["231"]}
-              openKeys={stateOpenKeys}
-              onOpenChange={onOpenChange}
-              style={{
-                width: 256,
-              }}
-              items={items}
-            />
+            <h3 className="font-bold text-xl ml-6 flex items-center ">
+              Fillter <ImMenu2 className="ml-[170px]" />
+            </h3>
+            <hr className="mt-6" />
+            <div>
+              <h4 className="ml-6 mt-7 text-xl font-bold ">Category</h4>
+              <p className="text-xl ml-6 flex items-center  mt-7">
+                vffdddfsdsdf
+              </p>
+              <p className="text-xl ml-6 flex items-center  mt-7">
+                vffdddfsdsdf
+              </p>
+              <p className="text-xl ml-6 flex items-center  mt-7">
+                {" "}
+                vffdddfsdsdf
+              </p>
+              <p className="text-xl ml-6 flex items-center  mt-7">
+                vffdddfsdsdf
+              </p>
+              <div>
+                <h4 className="ml-6 mt-7 text-xl font-bold ">Prices</h4>
+                <Select
+                  className="ml-6 mt-7"
+                  labelInValue
+                  defaultValue={{
+                    value: "prices gradually increase",
+                    label: "prices",
+                  }}
+                  style={{
+                    width: 240,
+                  }}
+                  onChange={handleChange}
+                  options={[
+                    {
+                      value: "prices gradually decrease",
+                      label: "prices gradually decrease",
+                    },
+                    {
+                      value: "prices gradually increase",
+                      label: "prices gradually increase",
+                    },
+                  ]}
+                />
+              </div>
+              <div>
+                <h4 className="ml-6 mt-7 text-xl font-bold ">Size</h4>
+                <div className="flex items-center gap-6 ml-6 mt-7">
+                  <button
+                    style={{
+                      width: "50px",
+                      height: "50px",
+                      border: "1px solid gray",
+                    }}
+                    className="w-8 h-8 rounded-lg"
+                  >
+                    XS
+                  </button>
+                  <button>S</button>
+                  <button>M</button>
+                  <button>L</button>
+                  <button>Xl</button>
+                </div>
+              </div>
+              <div>
+                <h4 className="ml-6 mt-7 text-xl font-bold ">Color</h4>
+                <Select
+                  className="ml-6 mt-7"
+                  labelInValue
+                  defaultValue={{
+                    value: "red",
+                    label: "color",
+                  }}
+                  style={{
+                    width: 240,
+                  }}
+                  onChange={handleChange}
+                  options={[
+                    {
+                      value: "red",
+                      label: "red",
+                      style: {
+                        color: "red",
+                        backgroundColor: "red",
+                      },
+                    },
+                    {
+                      value: "blue",
+                      label: "blue",
+                      style: {
+                        color: "blue",
+                        backgroundColor: "blue",
+                      },
+                    },
+                    {
+                      value: "gray",
+                      label: "gray",
+                      style: {
+                        color: "gray",
+                        backgroundColor: "gray",
+                      },
+                    },
+                    {
+                      value: "Yellow",
+                      label: "Yellow",
+                      style: {
+                        color: "#edd146",
+                        backgroundColor: "#edd146",
+                      },
+                    },
+                  ]}
+                />
+              </div>
+              <div>
+                <h4 className="ml-6 mt-7 text-xl font-bold ">Brand</h4>
+                <p className="text-xl ml-6 flex items-center  mt-7">
+                  vffdddfsdsdf
+                </p>
+                <p className="text-xl ml-6 flex items-center  mt-7">
+                  vffdddfsdsdf
+                </p>
+                <p className="text-xl ml-6 flex items-center  mt-7">
+                  {" "}
+                  vffdddfsdsdf
+                </p>
+                <p className="text-xl ml-6 flex items-center  mt-7">
+                  vffdddfsdsdf
+                </p>
+              </div>
+            </div>
           </div>
           <div>
             <div className="flex items-center mt-10">
