@@ -1,3 +1,5 @@
+import { AiFillHeart } from "react-icons/ai"; 
+import { AiOutlineHeart } from "react-icons/ai"; 
 import { ImMenu2 } from "react-icons/im"; 
 import React, { useEffect, useState } from "react";
 import { Slider, Switch } from "antd";
@@ -11,12 +13,15 @@ import { Menu, Rate  } from "antd";
 import "./product.scss";
 import anh1 from "../../../public/images/product13.png";
 import { Select } from "antd";
+import { Link } from "react-router-dom";
 function ProductWomen() {
     const [product, setProduct] = useState([]);
     const handleGetProducts = async () => {
         const response = await publicAxios.get("/api/product");
-        setProduct(response.data);
-    }
+     
+      setProduct(response.data);
+  }
+
     useEffect(() => {
         handleGetProducts();
         window.scrollTo(0, 0);
@@ -249,15 +254,23 @@ const handleChange = (value) => {
               <p className="ml-6 font-bold text-xl">Women's Clothing</p>
             </div>
             <div className="grid grid-cols-4 mt-10 gap-10">
-              <div className="rounded-xl p-3 border">
-                <img src={anh1} alt="" />
-                <br />
-                <p className="text-lg font-bold">ProducName</p>
-                <div className="flex items-end justify-between">
-                  <p className="text-lg font-bold">Price</p>
-                  <Rate disabled defaultValue={5} />
+              {product.map((item, index) => (
+                <div key={index}>
+                  <Link to={`/product-detail/${item.id}`}>
+                    <img src={item.image} alt="" />
+                    {/* <AiFillHeart /> */}
+                    <button className="w-8 h-8  relative bottom-[230px] left-[200px]">
+                      <AiOutlineHeart className="text-red-500 w-7 h-7 " />
+                    </button>
+                    <br />
+                    <p className="text-lg font-bold">{item.nameProduct}</p>
+                    <div className="flex items-end justify-between">
+                      <p className="text-lg font-bold">{item.price}</p>
+                      <Rate disabled defaultValue={item.rate} />
+                    </div>
+                  </Link>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>

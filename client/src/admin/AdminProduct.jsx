@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "@mui/material";
 import publicAxios from "../config/PublicAxios";
 import { success, failed } from "../components/Modal/NotificationModal";
 import axios from "axios";
 import { Modal } from "antd";
 import { Pagination } from "antd";
+import { Select, Tag } from "antd";
 
 import "./admin.css";
 import { TbCameraPlus } from "react-icons/tb";
+import { useState } from "react";
 
 function AdminProduct() {
     const USDollar = new Intl.NumberFormat("en-US", {
@@ -21,7 +23,15 @@ function AdminProduct() {
     const [products, setProducts] = React.useState([]);
     const [oneProduct, setOneProduct] = React.useState([]);
     const [edit, setEdit] = React.useState(false);
+    const [colors, setColors] = React.useState([]);
     const [flag, setFlag] = React.useState(false);
+    const handleGetColor = async () => {
+        const response = await publicAxios.get("/api/color");
+        console.log(response.data);
+        setColors(response.data);
+    }
+    const [options, setOptions] = useState([]);
+
     const [newProduct, setNewProduct] = React.useState({
         nameProduct: "",
         price: 0,
@@ -54,6 +64,8 @@ function AdminProduct() {
         const response = await publicAxios.get("/api/product");
         setProducts(response.data);
     };
+
+    console.log(colors);
 
     const handleGetValue = (e) => {
         setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
@@ -213,12 +225,21 @@ function AdminProduct() {
         handleGetAllBrand();
         handleGetProducts();
         handleGetOneProduct(1);
+        handleGetColor();
         document.title = "Admin - Product";
-    }, []);
+        let value = colors.map((item) => {
+            return item.nameColor;
+        });
+        setOptions(value);
+        // console.log(options)
+    }, [flag]);
+
+    console.log(options)
 
     const [isModalOpen, setIsModalOpen] = React.useState(false);
     const showModal = () => {
         setIsModalOpen(!isModalOpen);
+        setFlag(!flag);
     };
     const handleAddInfor = async () => {
         const response = await publicAxios.post(`/api/product/${id}`);
@@ -229,6 +250,31 @@ function AdminProduct() {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
+
+   
+    const tagRender = (props) => {
+        const { label, value, closable, onClose } = props;
+        const onPreventMouseDown = (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+        };
+        return (
+            <Tag
+                color={value}
+                onMouseDown={onPreventMouseDown}
+                closable={closable}
+                onClose={onClose}
+                style={{
+                    marginInlineEnd: 4,
+                }}
+            >
+                {label}
+            </Tag>
+        );
+    };
+   const options2 = options.map((item) => {
+       return { value: item };
+   });
     return (
         <>
             {/* Dashboard */}
@@ -575,7 +621,7 @@ function AdminProduct() {
                                                             Price
                                                         </th>
                                                         <th scope="col">
-                                                            Quantity
+                                                            Infomation
                                                         </th>
                                                         <th scope="col">
                                                             Acction
@@ -678,17 +724,24 @@ function AdminProduct() {
                 // onOk={handlaAddInfor}
                 onCancel={handleCancel}
             >
-                <div className="flex justify-center">
-                    <div className="bg-[#D64D22] w-[80px] h-[80px] rounded-full flex justify-center items-center shadow-lg">
-                        <i className="fa-regular fa-trash-can text-white text-[40px] shadow-lg"></i>
-                    </div>
+                <div>
+                    {products.map((item, index) => (
+                        <div key={index}>
+                            <p>Name: {item.nameProduct}</p>
+                            <p>{USDollar.format(item.price)}</p>
+                            <p>{item.category_id}</p>
+                        </div>
+                    ))}
                 </div>
-                <p className="text-[#575757] text-[18px] font-[700] text-center mt-3">
-                    Are you sure you want to delete this brand?
-                </p>
-                <p className="text-[#575757] text-[14px] font-[400] text-center ">
-                    This action cannot be undo.
-                </p>
+                <Select
+                    mode="multiple"
+                    tagRender={tagRender}
+                    defaultValue={["gold", "cyan"]}
+                    style={{
+                        width: "100%",
+                    }}
+                    options={options2}
+                />
             </Modal>
         </>
     );

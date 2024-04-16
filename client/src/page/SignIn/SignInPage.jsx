@@ -56,8 +56,8 @@ export default function SignInPage() {
             phone: "0987654321",
             role: 0,
             status: 0,
-        }
-        console.log("data1",data1);
+        };
+        console.log("data1", data1);
         try {
             const res = await publicAxios.post("/api/login-facebook", data1);
             console.log(res);
