@@ -307,22 +307,12 @@ export default function AdminBrand() {
                             </div>
                             <div className="card shadow border-0 mb-7">
                                 <div className="card-header flex items-center gap-[60%] relative">
-<<<<<<< HEAD
+
                                     <h5 className="mb-0">List Brand</h5>
                                     {/* <input type="text" placeholder='Search for brand' className='outline-0 border-1 shadow-sm p-2 max-w-[300px] ' />
                                     <p className='absolute ml-[80%]'><i className="fa-solid fa-magnifying-glass text-[#575757] text-md"></i></p> */}
 
-=======
-                                    <h5 className="mb-0 text-lg font-semibold">List Brand</h5>
-                                    <input
-                                        type="text"
-                                        placeholder="Search for brand"
-                                        className="outline-0 border-1 shadow-sm p-2 max-w-[300px] "
-                                    />
-                                    <p className="absolute ml-[80%]">
-                                        <i className="fa-solid fa-magnifying-glass text-[#575757] text-md"></i>
-                                    </p>
->>>>>>> 11fddb8e70f639d8eaf9fbdd9dfab22042182909
+
                                 </div>
                                 <div className="table-responsive">
                                     <table className="table table-hover table-nowrap">

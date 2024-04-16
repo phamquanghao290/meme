@@ -13,7 +13,7 @@ function AdminUser() {
         // setDataUser(response.data);
     };
     const handleChangeStatus = async (user) => {
-<<<<<<< HEAD
+
         // if (user.status === 1) {
         //     user.status = 0;
         // } else {
@@ -22,16 +22,7 @@ function AdminUser() {
         // await publicAxios.patch(`/api/user/status/${user.userId}`, user);
         // success("Thay đổi trạng thái thành công");
         // handleGetUsers();
-=======
-        if (user.status === 1) {
-            user.status = 0;
-        } else {
-            user.status = 1;
-        }
-        await publicAxios.patch(`/api/user/status/${user.id}`, user);
-        success("Thay đổi trạng thái thành công");
-        handleGetUsers();
->>>>>>> 11fddb8e70f639d8eaf9fbdd9dfab22042182909
+
     };
 
 

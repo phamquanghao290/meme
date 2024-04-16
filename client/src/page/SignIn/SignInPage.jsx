@@ -80,11 +80,7 @@ export default function SignInPage() {
         setUser({ ...user, [e.target.name]: e.target.value });
     };
 
-<<<<<<< HEAD
-        <div className='mainButton'>
-          <img className='mainButtonImage' src={Google} alt="" />
-          <button className='google-button-signin'>Continue With Google</button>
-=======
+
     const handleLogin = async () => {
         try {
             const response = await publicAxios.post("/api/login", user);
@@ -117,7 +113,7 @@ export default function SignInPage() {
             failed("Tài khoản hoặc mật khẩu không đúng");
         }
     };
->>>>>>> 11fddb8e70f639d8eaf9fbdd9dfab22042182909
+
 
     const userLogin = JSON.parse(localStorage.getItem("userLogin"));
     const handleLogout = () => {
@@ -182,9 +178,7 @@ export default function SignInPage() {
           </div>
 
           <div>
-<<<<<<< HEAD
-            <p className='forgot-pass-signin' >Forgot your password</p>
-=======
+
             <div className="mainInput2">
               <div
                 style={{
@@ -307,7 +301,7 @@ export default function SignInPage() {
                 </span>
               </Link>
             </p>
->>>>>>> 11fddb8e70f639d8eaf9fbdd9dfab22042182909
+
           </div>
         </div>
       </div>

@@ -22,13 +22,11 @@ import AdminUser from './admin/AdminUser'
 import AdminBanner from './admin/AdminBanner'
 import AdminBill from './admin/AdminBill'
 import AdminBrand from './admin/AdminBrand'
-<<<<<<< HEAD
-import CheckEmail from './page/CheckEmail/CheckEmail'
-=======
+
 import Verification from './page/Verification/Verification'
 import ResetPassword from './page/ResetPassword/ResetPassword'
 import AdminColorSize from './admin/AdminColorSize'
->>>>>>> 11fddb8e70f639d8eaf9fbdd9dfab22042182909
+
 
 function App() {
   return (
@@ -46,24 +44,7 @@ function App() {
         <Route path="/myinfo" element={<MyInfo />} />
         <Route path="/delivery-address" element={<DeliveryAddress />} />
       </Route>
-<<<<<<< HEAD
 
-
-
-      <Route path='/signUp' element={<SignUp />} />
-      <Route path='/signIn' element={<SignIn />} />
-      <Route path='/check-email' element={<CheckEmail />} />
-
-
-      <Route path='/admin' element={<div style={{ display: 'flex' }}><Admin /><div style={{ width: '100%' }}><Outlet /></div></div>}>
-        <Route path="/admin" element={<AdminUser />} />
-        <Route path="admin-product" element={<AdminProduct />} />
-        <Route path="admin-category" element={<AdminCategory />} />
-        <Route path="admin-bill" element={<AdminBill />} />
-        <Route path="admin-banner" element={<AdminBanner />} />
-        <Route path="admin-brand" element={<AdminBrand />} />
-      </Route>
-=======
       
       <Route path='/sign-up' element={<SignUp />} />
       <Route path='/sign-in' element={<SignIn />} />
@@ -79,7 +60,7 @@ function App() {
           <Route path="admin-brand" element={<AdminBrand />} />
           <Route path='admin-color-size' element={<AdminColorSize />} />
         </Route>
->>>>>>> 11fddb8e70f639d8eaf9fbdd9dfab22042182909
+
     </Routes>
   );
 }

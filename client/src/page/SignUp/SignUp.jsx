@@ -118,12 +118,11 @@ export default function SignUp() {
                     <img src={Divider} alt="" />
                 </div> */}
 
-<<<<<<< HEAD
                 <div className='mainInput1-signup'>
                     <p style={{ marginBottom: '10px', fontSize: '16px', fontWeight: '400', color: '#3c4242' }}>Email Address</p>
                     <input type="text" placeholder='designer@gmail.com' />
                     <p className='error-content'>Error Message</p>
-=======
+
                 <div className='mainInput1'>
                     <p style={{ fontSize: '16px', fontWeight: '400', color: '#3c4242' }}>Username</p>
                     <input 
@@ -178,7 +177,7 @@ export default function SignUp() {
                         value={newUser.confirmPassword}    
                     />
                     <p className='error-content'>{errorInput.errConfirm}</p>
->>>>>>> 11fddb8e70f639d8eaf9fbdd9dfab22042182909
+
                 </div>
 
                 {/* <div>
@@ -195,11 +194,8 @@ export default function SignUp() {
 
                     <div className='mainInput3-sign-up'>
                         <input type="text" />
-<<<<<<< HEAD
                         <p className='notice-sign-up'>Use 8 or more characters with a mix of letters, numbers & symbols</p>
-=======
                         <p style={{ fontSize: '14px', fontWeight: '500', color: '#666666', marginTop: '10px' }}>Use 8 or </p>
->>>>>>> 11fddb8e70f639d8eaf9fbdd9dfab22042182909
                     </div>
 
                 </div> */}
@@ -215,6 +211,7 @@ export default function SignUp() {
                 </div>
                 
             </div>
+        </div>
         </div>
     )
 }
