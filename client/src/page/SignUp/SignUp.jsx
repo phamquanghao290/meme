@@ -195,7 +195,7 @@ export default function SignUp() {
 
                 <div className='main-button'>
                     <div className='main-button-sign-up'>
-                        <button onClick={handleRegister} className='main-button-signin'>Sign Up</button>
+                        <button onClick={handleRegister} className='main-button-signin'>Sign Upp</button>
                     </div>
 
                     <div className='main-content-end'>
