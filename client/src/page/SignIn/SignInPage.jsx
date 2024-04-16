@@ -80,6 +80,7 @@ export default function SignInPage() {
         setUser({ ...user, [e.target.name]: e.target.value });
     };
 
+
     const handleLogin = async () => {
         try {
             const response = await publicAxios.post("/api/login", user);
@@ -112,6 +113,7 @@ export default function SignInPage() {
             failed("Tài khoản hoặc mật khẩu không đúng");
         }
     };
+
 
     const userLogin = JSON.parse(localStorage.getItem("userLogin"));
     const handleLogout = () => {
@@ -176,6 +178,7 @@ export default function SignInPage() {
           </div>
 
           <div>
+
             <div className="mainInput2">
               <div
                 style={{
@@ -298,6 +301,7 @@ export default function SignInPage() {
                 </span>
               </Link>
             </p>
+
           </div>
         </div>
       </div>

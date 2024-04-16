@@ -1,49 +1,49 @@
-// * {
-//     box-sizing: border-box;
-//     padding: 0;
-//     margin: 0;
-//     font-family: "Montserrat", sans-serif;
-// }
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: "Montserrat", sans-serif;
+}
 
-// .mainBody-checkmail {
-//     width: 100%;
-//     height: fit-content;
-//     display: flex;
+.mainBody-checkmail {
+    width: 100%;
+    height: fit-content;
+    display: flex;
 
-//     .mainImage-checkmail {
-//         max-width: 695px;
-//         height: fit-content;
+    .mainImage-checkmail {
+        max-width: 695px;
+        height: fit-content;
 
-//         .image-checkmail {
-//             width: 695px;
-//             height: 956px;
-//             background-size: contain;
-//             // object-fit: cover;
-//         }
-//     }
+        .image-checkmail {
+            width: 695px;
+            height: 956px;
+            background-size: contain;
+            // object-fit: cover;
+        }
+    }
 
-//     .mainContent-checkmail {
-//         width: 560px;
-//         margin: 0 auto;
-//         margin-top: 100px;
+    .mainContent-checkmail {
+        width: 560px;
+        margin: 0 auto;
+        margin-top: 100px;
 
 
-//         .mainTitle-checkmail {
-//             font-size: 32px;
-//             line-height: 25%;
-//             font-weight: 600;
-//         }
-//     }
-//     .content-end-checkmail{
-//         margin-top: 20px;
-//         display: flex;
-//         align-items: center;
-//         gap: 10px;
-//         p{
-//             font-size: 16px;
-//             font-weight: 500;
-//             color: #807D7E;
-//         }
-//     }
-// }
+        .mainTitle-checkmail {
+            font-size: 32px;
+            line-height: 25%;
+            font-weight: 600;
+        }
+    }
+    .content-end-checkmail{
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        p{
+            font-size: 16px;
+            font-weight: 500;
+            color: #807D7E;
+        }
+    }
+}
 

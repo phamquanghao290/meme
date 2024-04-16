@@ -22,9 +22,11 @@ import AdminUser from './admin/AdminUser'
 import AdminBanner from './admin/AdminBanner'
 import AdminBill from './admin/AdminBill'
 import AdminBrand from './admin/AdminBrand'
+
 import Verification from './page/Verification/Verification'
 import ResetPassword from './page/ResetPassword/ResetPassword'
 import AdminColorSize from './admin/AdminColorSize'
+
 
 function App() {
   return (
@@ -42,11 +44,14 @@ function App() {
         <Route path="/myinfo" element={<MyInfo />} />
         <Route path="/delivery-address" element={<DeliveryAddress />} />
       </Route>
+
+
       
       <Route path='/sign-up' element={<SignUp />} />
       <Route path='/sign-in' element={<SignIn />} />
       <Route path='/verification' element={<Verification />} />
       <Route path='/forgot-password' element={<ResetPassword />} />
+
 
       <Route path='/admin' element={<div style={{ display: 'flex' }}><Admin /><div style={{ width: '100%' }}><Outlet /></div></div>}>
           <Route path="/admin" element={<AdminUser />} />
@@ -57,6 +62,7 @@ function App() {
           <Route path="admin-brand" element={<AdminBrand />} />
           <Route path='admin-color-size' element={<AdminColorSize />} />
         </Route>
+
     </Routes>
   );
 }

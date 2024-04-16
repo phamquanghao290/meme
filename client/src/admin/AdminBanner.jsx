@@ -5,7 +5,7 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { AiOutlineEdit } from "react-icons/ai";
 import { CiSquareRemove } from "react-icons/ci";
 import { GrEdit } from "react-icons/gr";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import { DownOutlined } from "@ant-design/icons";
 import { Dropdown, Space } from "antd";
@@ -15,6 +15,8 @@ import products14 from "../../public/images/product14.png";
 // import products15 from "../../../public/images/product15.png";
 // import products16 from "../../../public/images/product16.png";
 import { Pagination } from "antd";
+import axios from "axios";
+import { successNoti } from "../utils/noti";
 function AdminBanner() {
   const items = [
     {
@@ -34,21 +36,126 @@ function AdminBanner() {
     },
   ];
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [newBanner, setNewBanner] = useState({
+    id: "",
+    name: "",
+    type: ""
+  })
+  const [flag, setFlag] = useState(false)
+  const [preview, setPreview] = useState(null || "");
+  const [selectedMedia, setSelectedMedia] = useState(null);
+  const handleGetValue = (e) => {
+    setNewBanner({ ...newBanner, [e.target.name]: e.target.value });
+  }
+  const [banner, setBanner] = useState([])
   const showModal = () => {
     setIsModalOpen(true);
   };
-  const handleOk = () => {
-    setIsModalOpen(false);
+
+  const handleGetBanner = async () => {
+    const result = await axios.get("http://localhost:8080/api/v1/banner")
+    setBanner(result.data)
+  }
+
+  useEffect(() => {
+    handleGetBanner()
+    return () => {
+      setFlag(false)
+    }
+  }, [flag])
+
+  const handleAddMedia = (event) => {
+    setSelectedMedia(event.target.files[0]);
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = function (event) {
+      setPreview(event.target.result);
+    };
+    reader.readAsDataURL(file);
   };
+
+  const handleOk = async () => {
+    setIsModalOpen(false);
+    const formData = new FormData();
+    formData.append("file", selectedMedia);
+    formData.append("upload_preset", "project-md3");
+    const [uploadMedia] = await Promise.all([
+      axios.post(
+        "https://api.cloudinary.com/v1_1/dqujxh3uc/image/upload",
+        formData
+      ),
+    ]);
+    const media = uploadMedia.data.secure_url;
+    const result = await axios.post("http://localhost:8080/api/v1/banner", {
+      ...newBanner,
+      image: media
+    })
+    // setBanner(result.data.data)
+    setFlag(true)
+    setNewBanner({
+      id: "",
+      name: "",
+      type: ""
+    })
+    setPreview(null)
+
+    successNoti(result.data.message)
+  }
+
   const handleCancel = () => {
     setIsModalOpen(false);
   };
   const [isModalOpenEdit, setIsModalOpenEdit] = useState(false);
-  const showModalEdit = () => {
+  const showModalEdit = (item) => {
     setIsModalOpenEdit(true);
+    setNewBanner(item)
+    setPreview(item.image)
   };
-  const handleOkEdit = () => {
+  const handleOkEdit = async () => {
     setIsModalOpenEdit(false);
+    try {
+      if (!selectedMedia) {
+        const response = await axios.patch(
+          `http://localhost:8080/api/v1/banner/update/${newBanner.id}`,
+          newBanner
+        );
+        setFlag(true)
+        setNewBanner({
+          id: "",
+          name: "",
+          type: ""
+        })
+        setPreview(null || "")
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("file", selectedMedia);
+      formData.append("upload_preset", "project-md3");
+      const [uploadMedia] = await Promise.all([
+        axios.post(
+          "https://api.cloudinary.com/v1_1/dqujxh3uc/image/upload",
+          formData
+        ),
+      ]);
+      const media = uploadMedia.data.secure_url;
+      const response = await axios.patch(
+        `http://localhost:8080/api/v1/banner/update/${newBanner.id}`,
+        { ...newBanner, image: media }
+      );
+      successNoti(response.data.message)
+      setFlag(true)
+      setNewBanner({
+        id: "",
+        name: "",
+        type: ""
+      })
+      setPreview(null || "")
+
+    } catch (error) {
+      console.log(error)
+    }
+
   };
   const handleCancelEdit = () => {
     setIsModalOpenEdit(false);
@@ -57,8 +164,12 @@ function AdminBanner() {
   const showModaldelete = () => {
     setIsModalOpendelete(true);
   };
-  const handleOkdelete = () => {
+  const handleOkdelete = async (banner_id) => {
     setIsModalOpendelete(false);
+    console.log(banner_id)
+    const result = await axios.delete(`http://localhost:8080/api/v1/banner/${banner_id}`)
+    setFlag(true)
+    successNoti(result.data.message)
   };
   const handleCanceldelete = () => {
     setIsModalOpendelete(false);
@@ -68,73 +179,9 @@ function AdminBanner() {
     console.log(page);
     setCurrent(page);
   };
-  const [newCate, setNewCate] = React.useState({
-    nameCategory: "",
-  });
-  const [categories, setCategories] = React.useState([]);
-  const handleGetAllCate = async () => {
-    try {
-      const response = await publicAxios.get("/api/category");
-      console.log(response.data);
-      setCategories(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
-  React.useEffect(() => {
-    handleGetAllCate();
-  }, []);
 
-  const handleAdd = async () => {
-    const check = categories.find(
-      (item) => item.nameCategory === newCate.nameCategory
-    );
-    console.log(check);
-    if (check) {
-      failed("Tên danh mục đã tồn tại");
-    } else {
-      try {
-        const response = await publicAxios.post("/api/category", newCate);
-        console.log(response.data);
-        await handleGetAllCate();
-        setCategories(response.data.data);
-        success(response.data.message);
-        setNewCate({ nameCategory: "" });
-      } catch (error) {
-        failed(error.response.data.message);
-      }
-    }
-  };
 
-  const handleEdit = (item) => {
-    console.log(item);
-    setNewCate(item);
-  };
-
-  const handleSave = async () => {
-    try {
-      const response = await publicAxios.patch(
-        `/api/category/${newCate.categoryId}`,
-        newCate
-      );
-      await handleGetAllCate();
-      setCategories(response.data.data);
-      success(response.data.message);
-      setNewCate({ nameCategory: "" });
-    } catch (error) {
-      failed("Sửa thất bại");
-    }
-  };
-
-  const handleDelete = async (id) => {
-    if (window.confirm("Bạn có chắc muốn xóa?")) {
-      const response = await publicAxios.delete(`/api/category/${id}`);
-      console.log(response.data);
-      setCategories(response.data.data);
-      success(response.data.message);
-    }
-  };
   return (
     <>
       <div className="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary">
@@ -148,15 +195,23 @@ function AdminBanner() {
                   <div className="col-sm-6 col-12 mb-4 mb-sm-0 flex gap-28 items-center">
                     {/* Title */}
                     <h1 className="text-xl mb-0 ls-tight font-bold">Banner</h1>
-
+                    <Button
+                      variant="contained"
+                      // onClick={newCate.categoryId ? handleSave : handleAdd}
+                      type="primary"
+                      onClick={showModal}
+                      className="w-full max-w-[200px] h-[40px] p-[12px] rounded-lg ml-16 border-2 border-blue-600 "
+                    >
+                      Create New Banner
+                    </Button>
                     <Modal
                       title="Create New Banner"
                       open={isModalOpen}
                       onOk={handleOk}
                       onCancel={handleCancel}
-                      className="mt-[50px]"
+                    // className="mt-[50px]"
                     >
-                      <h2>Image</h2>
+                      <h2 >Image</h2>
                       <p>Image upload can not over 20MB</p>
                       <div>
                         <div className="p-8 flex gap-2">
@@ -165,12 +220,15 @@ function AdminBanner() {
                             name="image"
                             id="image"
                             className="hidden"
+                            onChange={handleAddMedia}
                           />
+
                           <label
                             htmlFor="image"
                             className="w-[100px] h-[100px] border-2 border-dashed border-blue-600 rounded-lg flex justify-center items-center "
                           >
-                            <TbCameraPlus className="text-2xl text-[#B3B3B3]" />
+
+                            <img src={preview} alt="" width={75} height={90} />
                           </label>
                           {/* <Button
                             variant="contained"
@@ -187,15 +245,26 @@ function AdminBanner() {
                           <h3 className="text-md pt-1 pb-3">Name</h3>
                           <input
                             type="text"
+                            name="name"
                             className="w-full bg-[#DBDBDB] outline-none border-2 border-black-600 rounded-lg p-2"
                             placeholder="Placeholder"
+                            onChange={handleGetValue}
+                            value={newBanner.name}
                           />
                         </div>
                         <div>
                           <h3 className="text-md pt-3 pb-3 ">
                             Type
                           </h3>
-                          <select
+                          <input
+                            type="text"
+                            name="type"
+                            className="w-full bg-[#DBDBDB] outline-none border-2 border-black-600 rounded-lg p-2"
+                            placeholder="Placeholder"
+                            onChange={handleGetValue}
+                            value={newBanner.type}
+                          />
+                          {/* <select
                             name=""
                             id=""
                             className="w-full bg-[#DBDBDB] outline-none border-2 border-black-600 rounded-lg p-2"
@@ -203,28 +272,13 @@ function AdminBanner() {
                             <option value="">Banner</option>
                             <option value="">Banner</option>
                             <option value="">Banner</option>
-                          </select>
+                          </select> */}
                         </div>
-                        <div className="pb-4">
-                          <h3 className="text-md pt-3 pb-3"> Link</h3>
-                          <input
-                            type="text"
-                            className="w-full bg-[#DBDBDB] outline-none border-2 border-black-600 rounded-lg p-2"
-                            placeholder="Placeholder"
-                          />
-                        </div>
+
                       </div>
                     </Modal>
 
-                    <Button
-                      variant="contained"
-                      // onClick={newCate.categoryId ? handleSave : handleAdd}
-                      type="primary"
-                      onClick={showModal}
-                      className="w-full max-w-[200px] h-[40px] p-[12px] rounded-lg ml-16 border-2 border-blue-600 "
-                    >
-                      Create New Banner
-                    </Button>
+
                   </div>
                   {/* Actions */}
                   <div className="col-sm-6 col-12 text-sm-end"></div>
@@ -383,246 +437,131 @@ function AdminBanner() {
                         <th scope="col">Id </th>
                         <th scope="col">Banner</th>
                         <th scope="col">Type</th>
-                        <th scope="col">Link</th>
-                        <th scope="col"></th>
+                        <th scope="col">Action</th>
                       </tr>
                     </thead>
                     <tbody className="text-xl" style={{ marginLeft: "100px" }}>
-                      <tr>
-                        <td scope="col">1231</td>
-                        <td
-                          scope="col"
-                          className="flex justify-center items-center"
-                        >
-                          <img
-                            src="https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-13_2_.png"
-                            className="w-[100px] h-[100px]"
-                            alt=""
-                          />
-                          <p>awdadwad</p>
-                        </td>
-                        {/* <th scope="col">
-                                                          {user.phone}
-                                                      </th>
-                                                      <th scope="col">
-                                                          {user.status == 1
-                                                              ? "Lock"
-                                                              : "Normal"}
-                                                      </th> */}
-                        <td scope="col">Hero Section</td>
+                      {banner?.map((item, index) => {
+                        return (
+                          <tr key={index}>
+                            <td scope="col">{index + 1}</td>
+                            <td
+                              scope="col"
+                              className="flex justify-center items-center"
+                            >
+                              <img
+                                src={item.image}
+                                className="w-[100px] h-[100px]"
+                                alt=""
+                              />
+                              <p>{item.name}</p>
+                            </td>
 
-                        <td scope="col">
-                          <a href="https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-13_2_.png">
-                            Link
-                          </a>
-                        </td>
-                        <td scope="col">
-                          <Modal
-                            title="Edit Banner"
-                            open={isModalOpenEdit}
-                            onOk={handleOkEdit}
-                            onCancel={handleCancelEdit}
-                            className="mt-[50px]"
-                          >
-                            <h2>Image</h2>
-                            <p>Image upload can not over 20MB</p>
-                            <div>
-                              <div className="p-8 flex gap-2">
-                                <input
-                                  type="file"
-                                  name="image"
-                                  id="image"
-                                  className="hidden"
-                                />
-                                <label
-                                  htmlFor="image"
-                                  className="w-[100px] h-[100px] border-2 border-dashed border-blue-600 rounded-lg flex justify-center items-center "
-                                >
-                                  <TbCameraPlus className="text-2xl text-[#B3B3B3]" />
-                                </label>
-                              </div>
+                            <td scope="col">{item.type}</td>
 
-                              <div>
-                                <h3 className="text-md pt-1 pb-3">Name</h3>
-                                <input
-                                  type="text"
-                                  className="w-full bg-[#DBDBDB] outline-none border-2 border-black-600 rounded-lg p-2"
-                                  placeholder="Placeholder"
-                                />
-                              </div>
-                              <div>
-                                <h3 className="text-md pt-3 pb-3 ">
-                                  Type
-                                </h3>
-                                <select
-                                  name=""
-                                  id=""
-                                  className="w-full bg-[#DBDBDB] outline-none border-2 border-black-600 rounded-lg p-2"
-                                >
-                                  <option value="">Banner</option>
-                                  <option value="">Banner</option>
-                                  <option value="">Banner</option>
-                                </select>
-                              </div>
-                              <div className="pb-4">
-                                <h3 className="text-md pt-3 pb-3"> Link</h3>
-                                <input
-                                  type="text"
-                                  className="w-full bg-[#DBDBDB] outline-none border-2 border-black-600 rounded-lg p-2"
-                                  placeholder="Placeholder"
-                                />
-                              </div>
-                            </div>
-                          </Modal>
-                          <Button variant="danger" onClick={showModalEdit}>
-                            <i className="fa-regular fa-pen-to-square text-md"></i>
-                          </Button>
-                          <Modal
-                            open={isModalOpendelete}
-                            onOk={handleOkdelete}
-                            onCancel={handleCanceldelete}
-                            className="mt-[250px]"
-                          >
-                            <div>
-                              <div className="text-xl bg-[#D64D22] w-[100px] h-[100px] rounded-[50%] m-auto flex items-center">
-                                <RiDeleteBin6Line className="text-white w-[50px] h-[50px]  m-auto  " />
-                              </div>
-                              <div className="text-center ">
-                                <h2 className="mt-8">
-                                  Are You Sure Want To Remove This Banner ?
-                                </h2>
-                                <p className="mt-2">
-                                  This action can not be undo.
-                                </p>
-                              </div>
-                            </div>
-                          </Modal>
-                          <Button variant="danger" onClick={showModaldelete}>
-                            <i className="fa-regular fa-trash-can text-md"></i>
-                          </Button>
-                          {/*  <Switch
-                                                              checkedChildren={
-                                                                  <CheckOutlined />
-                                                              }
-                                                              unCheckedChildren={
-                                                                  <CloseOutlined />
-                                                              }
-                                                              defaultChecked
-                                                              onChange={() =>
-                                                                  handleChangeStatus(
-                                                                      user
-                                                                  )
-                                                              }
-                                                          /> */}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td scope="col">1231</td>
-                        <td
-                          scope="col"
-                          className="flex justify-center items-center"
-                        >
-                          <img
-                            src="https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-13_2_.png"
-                            className="w-[100px] h-[100px]"
-                            alt=""
-                          />
-                          <p>awdadwad</p>
-                        </td>
-                        {/* <th scope="col">
-                                                          {user.phone}
-                                                      </th>
-                                                      <th scope="col">
-                                                          {user.status == 1
-                                                              ? "Lock"
-                                                              : "Normal"}
-                                                      </th> */}
-                        <td scope="col">Hero Section</td>
+                            <td scope="col">
 
-                        <td scope="col">
-                          <a href="link">Link</a>
-                        </td>
-                        <td scope="col">
-                          <Button variant="danger">
-                            <i className="fa-regular fa-pen-to-square text-md"></i>
-                          </Button>
-                          <Button variant="danger">
-                            <i className="fa-regular fa-trash-can text-md"></i>
-                          </Button>
-                          {/*  <Switch
-                                                              checkedChildren={
-                                                                  <CheckOutlined />
-                                                              }
-                                                              unCheckedChildren={
-                                                                  <CloseOutlined />
-                                                              }
-                                                              defaultChecked
-                                                              onChange={() =>
-                                                                  handleChangeStatus(
-                                                                      user
-                                                                  )
-                                                              }
-                                                          /> */}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td scope="col">1231</td>
-                        <td
-                          scope="col"
-                          className="flex justify-center items-center"
-                        >
-                          <img
-                            src="https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-13_2_.png"
-                            className="w-[100px] h-[100px]"
-                            alt=""
-                          />
-                          <p>awdadwad</p>
-                        </td>
-                        {/* <th scope="col">
-                                                          {user.phone}
-                                                      </th>
-                                                      <th scope="col">
-                                                          {user.status == 1
-                                                              ? "Lock"
-                                                              : "Normal"}
-                                                      </th> */}
-                        <td scope="col">Hero Section</td>
+                              <Modal
+                                title="Edit Banner"
+                                open={isModalOpenEdit}
+                                onOk={handleOkEdit}
+                                onCancel={handleCancelEdit}
 
-                        <td scope="col">
-                          <a href="link">Link</a>
-                        </td>
-                        <td scope="col">
-                          <Button variant="danger">
-                            <i className="fa-regular fa-pen-to-square text-md"></i>
-                          </Button>
-                          <Button variant="danger">
-                            <i className="fa-regular fa-trash-can text-md"></i>
-                          </Button>
-                          {/*  <Switch
-                                                              checkedChildren={
-                                                                  <CheckOutlined />
-                                                              }
-                                                              unCheckedChildren={
-                                                                  <CloseOutlined />
-                                                              }
-                                                              defaultChecked
-                                                              onChange={() =>
-                                                                  handleChangeStatus(
-                                                                      user
-                                                                  )
-                                                              }
-                                                          /> */}
-                        </td>
-                      </tr>
+                              >
+                                <h2>Image</h2>
+                                <p>Image upload can not over 20MB</p>
+                                <div>
+                                  <div className="p-8 flex gap-2">
+                                    <input
+                                      type="file"
+                                      name="image"
+                                      id="image"
+                                      className="hidden"
+
+                                      onChange={handleAddMedia}
+                                    />
+
+                                    <label
+                                      htmlFor="image"
+                                      className="w-[100px] h-[100px] border-2 border-dashed border-blue-600 rounded-lg flex justify-center items-center "
+                                    >
+
+                                      <img src={preview} alt="" width={75} height={90} />
+                                    </label>
+                                  </div>
+
+                                  <div>
+                                    <h3 className="text-md pt-1 pb-3">Name</h3>
+                                    <input
+                                      type="text"
+                                      className="w-full bg-[#DBDBDB] outline-none border-2 border-black-600 rounded-lg p-2"
+                                      placeholder="Placeholder"
+                                      name="name"
+                                      value={newBanner.name}
+                                      onChange={handleGetValue}
+                                    />
+                                  </div>
+                                  <div>
+                                    <h3 className="text-md pt-3 pb-3 ">
+                                      Type
+                                    </h3>
+                                    <input
+                                      type="text"
+                                      className="w-full bg-[#DBDBDB] outline-none border-2 border-black-600 rounded-lg p-2"
+                                      placeholder="Placeholder"
+                                      name="type"
+                                      value={newBanner.type}
+                                      onChange={handleGetValue}
+                                    />
+                                  </div>
+                                </div>
+                              </Modal>
+
+                              <Button variant="danger" onClick={() => showModalEdit(item)}>
+                                <i className="fa-regular fa-pen-to-square text-md"></i>
+                              </Button>
+
+
+                              <Modal
+                                open={isModalOpendelete}
+                                onOk={()=> handleOkdelete(item.id)}
+                                onCancel={handleCanceldelete}
+
+                              >
+                                <div>
+                                  <div className="text-xl bg-[#D64D22] w-[100px] h-[100px] rounded-[50%] m-auto flex items-center">
+                                    <RiDeleteBin6Line className="text-white w-[50px] h-[50px] m-auto  " />
+                                  </div>
+                                  <div className="text-center ">
+                                    <h2 className="mt-8">
+                                      Are You Sure Want To Remove This Banner ?
+                                    </h2>
+                                    <p className="mt-2">
+                                      This action can not be undo.
+                                    </p>
+                                  </div>
+                                </div>
+                              </Modal>
+
+                              <Button variant="danger" onClick={showModaldelete} >
+                                <i className="fa-regular fa-trash-can text-md"></i>
+                              </Button>
+
+                            </td>
+                          </tr>
+                        )
+                      })}
+
+
                     </tbody>
                   </table>
                   <Pagination
                     current={current}
                     onChange={onChange}
-                    total={50}
-                    className="text-center"
+                    total={5}
+                    className="text-center mt-4"
                   />
-                  ;
+
                 </div>
               </div>
             </div>
