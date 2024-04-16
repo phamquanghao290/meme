@@ -14,21 +14,21 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-export default function Heatder() {
-  const userLogin = JSON.parse(localStorage.getItem("userLogin"));
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-      setAnchorEl(event.currentTarget);
-  };
 
-  const handleLogout = () => {
-      if (window.confirm("Bạn muốn đăng xuất?")) {
-          localStorage.removeItem("userLogin");
-          window.location.reload();
-          return;
-      }
-  }
+export default function Heatder() {
+    const userLogin = JSON.parse(localStorage.getItem("userLogin"));
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleLogout = () => {
+        if (window.confirm("Bạn muốn đăng xuất?")) {
+            localStorage.removeItem("userLogin");
+            window.location.reload();
+            return;
+        }
+    }
   const handleClose = () => {
       setAnchorEl(null);
   };
@@ -153,6 +153,7 @@ export default function Heatder() {
                                 </div>
                             ) : (
                                 <div className="flex gap-4 mt-3">
+
                                     <Link to="/sign-in">
                                         <button className="bg-[#8A33FD] text-white rounded-lg px-4 py-2">
                                             Login
@@ -171,4 +172,5 @@ export default function Heatder() {
             </Navbar>
         </>
   )
+
 }
