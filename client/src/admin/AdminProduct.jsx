@@ -39,7 +39,7 @@ function AdminProduct() {
         category_id: 0,
         brand_id: 0,
         stock: 0,
-        rate: 5
+        rate: 5,
     });
 
     const handleGetCategories = async () => {
@@ -50,7 +50,7 @@ function AdminProduct() {
     const handleGetAllBrand = async () => {
         const response = await publicAxios.get("/api/brand");
         setBrands(response.data);
-    }
+    };
 
     const handleGetOneProduct = async (id) => {
         const response = await publicAxios.get(
@@ -110,7 +110,7 @@ function AdminProduct() {
                 category_id: 0,
                 brand_id: 0,
                 stock: 0,
-                rate: 5
+                rate: 5,
             });
         } catch (error) {
             failed("Vui lòng điền đầy đủ thông tin");
@@ -153,7 +153,7 @@ function AdminProduct() {
                 brand_id: 0,
                 category_id: 0,
                 stock: 0,
-                rate: 5
+                rate: 5,
             });
         } catch (error) {
             failed("Sửa thất bại");
@@ -201,7 +201,7 @@ function AdminProduct() {
 
     const filterProduct = () => {
         if (searchProduct === "") {
-            return products
+            return products;
         } else {
             const result = products.filter((item) => {
                 return item.nameProduct.toLowerCase().includes(searchProduct);
@@ -227,7 +227,6 @@ function AdminProduct() {
         handleGetOneProduct(1);
         handleGetColor();
         document.title = "Admin - Product";
-
         let value = colors.map((item) => {
             return item.nameColor;
         });
@@ -235,7 +234,8 @@ function AdminProduct() {
         // console.log(options)
     }, [flag]);
 
-console.log(options)
+    console.log(options)
+
     const [isModalOpen, setIsModalOpen] = React.useState(false);
     const showModal = () => {
         setIsModalOpen(!isModalOpen);
