@@ -99,7 +99,6 @@ function Cart() {
                     <button className="continue">Place Order</button>
                 </div>
             </div>
-            <p>1</p>
         </div>
     );
 }

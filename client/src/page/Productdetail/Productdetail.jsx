@@ -25,10 +25,13 @@ import Heatder from "../../components/Heatder/Heatder";
 import Footer from "../../components/Foodter/Footer";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+import { failed } from "../../components/Modal/NotificationModal";
 export default function Productdetail() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  const currentUser = JSON.parse(localStorage.getItem("userLogin") || "{}");
+
     const { id } = useParams();
   const onChange = (key) => {
     console.log(key);
@@ -61,6 +64,25 @@ export default function Productdetail() {
       children: "Content of Tab Pane 3",
     },
   ];
+  const handlCLickAddtoCart = async (product) => {
+    console.log(product);
+    if (!(currentUser && currentUser.id)) {
+      failed("Cần Đăng Nhập Để Mua Hàng");
+      return;
+    }
+
+    const cart = {
+      userId: currentUser.id,
+      product,
+    };
+
+    const response = await axios.post(
+      "http://localhost:3000/api/v1/cart/addToCart",
+      cart
+    );
+    dispatch(getCart(currentUser?.id));
+    success(response.data.message);
+  };
    useEffect(() => {
      handleGetProduct();
    }, []);
@@ -147,12 +169,15 @@ export default function Productdetail() {
               </div>
               <div className="addtocart">
                 <button className="buttonaddtocart">
-                  <div className="flex items-center px-5 py-2 bg-[#8a33fd] rounded-lg gap-3 text-white">
+                  <button
+                    onClick={() => handlCLickAddtoCart(product)}
+                    className="flex items-center px-5 py-2 bg-[#8a33fd] rounded-lg gap-3 text-white"
+                  >
                     <BsCart style={{ color: "white" }} />
                     <h6 className="border-1 font-bold text-white">
                       Add to cart
                     </h6>
-                  </div>
+                  </button>
                 </button>
                 <p>${product.price}</p>
               </div>
