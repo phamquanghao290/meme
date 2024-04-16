@@ -1,20 +1,25 @@
-.Heatder {
-  position: sticky;
-  z-index: 9999;
-  top:0;
-  display: flex;
+.container-fluid{
+  // display: flex;
+  max-width: 1485px;
+  gap: 60px;
   width: 100%;
-  height: 108px;
-  justify-content: space-around;
-  align-items: center;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+// <<<<<<< HEAD
+//   align-items: center;
+  // box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
   position: sticky;
   top: 0;
-  z-index: 100000;
-  background-color: white;
-
-  .Menu_Heatder {
+//   z-index: 100000;
+//   background-color: white;
+// =======
+ 
+}
+.Logo_Heatder{
+  width: 100%;
+  height:100%;
+}
+  .header_nav {
     display: flex;
+    align-items: center;
     gap: 40px;
     h3 {
       cursor: pointer;
@@ -23,16 +28,17 @@
       font-family: "Montserrat", sans-serif;
       color: #636262;
       text-decoration: none;
+      font-size: 20px;
     }
     h3:hover {
       color: #000000;
       font-weight: bold;
     }
   }
-  .Search_Heatder {
+   .Search_Heatder {
     display: flex;
     cursor: pointer;
-
+    margin-top: 8px;
     background-color: #f6f6f6;
     width: Fixed;
     height: 44px;
@@ -45,8 +51,6 @@
       height: 20px;
     }
     input {
-      cursor: pointer;
-
       border: none;
       padding: 12px 20px 12px 20px;
       outline: none;
@@ -59,7 +63,7 @@
       cursor: pointer;
       background-color: #f6f6f6;
       width: 30%;
-      height: 40%;
+      height: 90%;
       padding: 12px;
       border-radius: 8px;
       .icon {
@@ -79,7 +83,218 @@
     display: flex;
     gap: 12px;
   }
+  @media (max-width: 1024px) {
+   .Logo_Heatder{
+  width: 100px;
+  height:100%;
+}
+.container-fluid{
+  display: flex;
+  gap: 24px;
+  width: 100%;
+
+  justify-content: space-around;
+ 
+}
+  .header_nav {
+    display: flex;
+    align-items: center;
+  
+    width:350px;
+    h3 {
+      width: 0px;
+      
+      cursor: pointer;
+      font-style: normal;
+      font-weight: 400;
+      font-family: "Montserrat", sans-serif;
+      color: #636262;
+      text-decoration: none;
+    }
+    h3:hover {
+      color: #000000;
+      font-weight: bold;
+    }
+  }
+     .Search_Heatder {
+    display: flex;
+    cursor: pointer;
+
+    background-color: #f6f6f6;
+    width: Fixed;
+    height: 44px;
+    border-radius: 8px;
+    img {
+      width: 10px;
+      margin-left: 15px;
+      position: relative;
+      margin-top: 12px;
+      width: 20px;
+      height: 20px;
+    }
+    input {
+      cursor: pointer;
+     width: 100px;
+      border: none;
+      padding: 12px 20px 12px 20px;
+      outline: none;
+      border-radius: 8px;
+      background-color: #f6f6f6;
+    }
+  }
 }
 @media (max-width: 768px) {
-   
+   .Logo_Heatder{
+  width: 100%;
+  height:100%;
+}
+ .header_nav {
+    display: flex;
+    align-items: center;
+  
+    gap: 100px;
+    h3 {
+      cursor: pointer;
+      font-style: normal;
+      font-weight: 400;
+      font-family: "Montserrat", sans-serif;
+      color: #636262;
+      text-decoration: none;
+    }
+    h3:hover {
+      color: #000000;
+      font-weight: bold;
+    }
+  }
+  .Search_Heatder {
+    display: flex;
+    cursor: pointer;
+     margin-top: 20px;
+    background-color: #f6f6f6;
+    width: Fixed;
+    height: 44px;
+    border-radius: 8px;
+    img {
+      margin-left: 15px;
+      position: relative;
+      margin-top: 12px;
+      width: 20px;
+      height: 20px;
+    }
+    input {
+      
+      cursor: pointer;
+     width: 100%;
+      border: none;
+      padding: 12px 20px 12px 20px;
+      outline: none;
+      border-radius: 8px;
+      background-color: #f6f6f6;
+    }
+  }
+  .Icon_Heatder {
+    .component {
+      cursor: pointer;
+      background-color: #f6f6f6;
+      width: 6%;
+      height: 90%;
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 20px;
+      .icon {
+        width: 20px;
+        height: 20px;
+        
+        margin-top: 3px;
+      }
+    }
+    .component:hover {
+      background-color: blueviolet;
+      .icon {
+        color: #ffffff;
+        font-weight: bold;
+      }
+    }
+    display: flex;
+    gap: 12px;
+  }
+}
+@media (max-width: 375px) {
+  .bg-body-tertiary{
+    width: 700px;
+  }
+   .Logo_Heatder{
+  width: 100%;
+  height:100%;
+}
+ .header_nav {
+    display: flex;
+    align-items: center;
+     width: 400px;
+    gap: 100px;
+    h3 {
+      cursor: pointer;
+      font-style: normal;
+      font-weight: 400;
+      font-family: "Montserrat", sans-serif;
+      color: #636262;
+      text-decoration: none;
+    }
+    h3:hover {
+      color: #000000;
+      font-weight: bold;
+    }
+  }
+  .Search_Heatder {
+    display: flex;
+    cursor: pointer;
+     margin-top: 20px;
+    background-color: #f6f6f6;
+    width: Fixed;
+    height: 44px;
+    border-radius: 8px;
+    img {
+      margin-left: 15px;
+      position: relative;
+      margin-top: 12px;
+      width: 20px;
+      height: 20px;
+    }
+    input {
+      
+      cursor: pointer;
+     width: 100%;
+      border: none;
+      padding: 12px 20px 12px 20px;
+      outline: none;
+      border-radius: 8px;
+      background-color: #f6f6f6;
+    }
+  }
+  .Icon_Heatder {
+    .component {
+      cursor: pointer;
+      background-color: #f6f6f6;
+      width: 6%;
+      height: 90%;
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 20px;
+      .icon {
+        width: 20px;
+        height: 20px;
+        
+        margin-top: 3px;
+      }
+    }
+    .component:hover {
+      background-color: blueviolet;
+      .icon {
+        color: #ffffff;
+        font-weight: bold;
+      }
+    }
+    display: flex;
+    gap: 12px;
+  }
 }

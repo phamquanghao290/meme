@@ -1,44 +1,66 @@
 import React from "react";
+import { Button } from "@mui/material";
 import publicAxios from "../config/PublicAxios";
 import { success, failed } from "../components/Modal/NotificationModal";
-import { Button } from "@mui/material";
-import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
-import { Switch, Space } from "antd";
 import "./admin.css";
 
-function AdminUser() {
-    const [dataUser, setDataUser] = React.useState([]);
-    const handleGetUsers = async () => {
-        // const response = await publicAxios.get("/api/user");
-        // setDataUser(response.data);
-    };
-    const handleChangeStatus = async (user) => {
-<<<<<<< HEAD
-        // if (user.status === 1) {
-        //     user.status = 0;
-        // } else {
-        //     user.status = 1;
-        // }
-        // await publicAxios.patch(`/api/user/status/${user.userId}`, user);
-        // success("Thay đổi trạng thái thành công");
-        // handleGetUsers();
-=======
-        if (user.status === 1) {
-            user.status = 0;
-        } else {
-            user.status = 1;
-        }
-        await publicAxios.patch(`/api/user/status/${user.id}`, user);
-        success("Thay đổi trạng thái thành công");
-        handleGetUsers();
->>>>>>> 11fddb8e70f639d8eaf9fbdd9dfab22042182909
-    };
+function AdminColorSize() {
+    const [newColor, setNewColor] = React.useState({nameColor: ""})
+    const [colors, setColors] = React.useState([])
+    const [newSize, setNewSize] = React.useState({nameSize: ""})
+    const [sizes, setSizes] = React.useState([])
+    const [flag, setFlag] = React.useState(false)
 
+    const handleGetAllColor = async () => {
+        const response = await publicAxios.get("/api/color")
+        setColors(response.data)
+    }
 
+    const handleGetAllSize = async () => {
+        const response = await publicAxios.get("/api/size")
+        setSizes(response.data)
+    }
+
+    const handleGetValueColor = (e) => {
+        setNewColor({nameColor: e.target.value})
+    }
+
+    const handleGetValueSize = (e) => {
+        setNewSize({nameSize: e.target.value})
+    }
+
+    const handleAddSize = async () => {
+        const response = await publicAxios.post("/api/size", newSize)
+        setFlag(!flag)
+        setNewSize({nameSize: ""})
+        success("Thêm thành công")
+    }
+
+    const handleDeleteSize = async (id) => {
+        const response = await publicAxios.delete(`/api/size/${id}`)
+        setFlag(!flag)
+        success("Xóa thành công")
+    }
+
+    const handleAddColor = async () => {
+        const response = await publicAxios.post("/api/color", newColor)
+        setFlag(!flag)
+        setNewColor({nameColor: ""})
+        success("Thêm thành công")
+    }
+
+    const handleDeleteColor = async (id) => {
+        const response = await publicAxios.delete(`/api/color/${id}`)
+        setFlag(!flag)
+        success("Xóa thành công")
+    }
+        
     React.useEffect(() => {
-        handleGetUsers();
-        document.title = "Admin - User";
-    }, []);
+        document.title = "Size and Color"
+        handleGetAllColor()
+        handleGetAllSize()
+    }, [flag])
+    
     return (
         <>
             <div className="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary">
@@ -49,11 +71,38 @@ function AdminUser() {
                         <div className="container-fluid">
                             <div className="mb-npx">
                                 <div className="row align-items-center">
-                                    <div className="col-sm-6 col-12 mb-4 mb-sm-0">
+                                    <div className="col-sm-6 col-12 mb-4 mb-sm-0 flex gap-16 items-center">
                                         {/* Title */}
-                                        <h1 className="h2 mb-0 ls-tight">
-                                            List User
+                                        <h1 className="text-xl mb-0 ls-tight font-bold">
+                                            Size and Color
                                         </h1>
+                                        {/* <input
+                                            onChange={(e) =>
+                                                setNewCate({
+                                                    ...newCate,
+                                                    nameCategory:
+                                                        e.target.value,
+                                                })
+                                            }
+                                            value={newCate.nameCategory}
+                                            name="nameCategory"
+                                            placeholder="Category name"
+                                            type="text"
+                                            className="w-full max-w-[300px] h-[40px] p-[12px] rounded-lg border-2 border-blue-600"
+                                        ></input>
+                                        <Button
+                                            variant="contained"
+                                            onClick={
+                                                newCate.id
+                                                    ? handleSave
+                                                    : handleAdd
+                                            }
+                                            className="w-full max-w-[100px] h-[40px] p-[12px] rounded-lg ml-16 border-2 border-blue-600"
+                                        >
+                                            {newCate.id
+                                                ? "Lưu"
+                                                : "Thêm"}
+                                        </Button> */}
                                     </div>
                                     {/* Actions */}
                                     <div className="col-sm-6 col-12 text-sm-end"></div>
@@ -195,63 +244,73 @@ function AdminUser() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="card shadow border-0 mb-7">
-                                <div className="card-header">
-                                    <h5 className="mb-0">List User</h5>
-                                </div>
-                                <div className="table-responsive">
-                                    <table className="table table-hover table-nowrap">
-                                        <thead className="thead-light">
-                                            <tr>
-                                                <th scope="col">Id </th>
-                                                <th scope="col">Account</th>
-                                                <th scope="col">
-                                                    Phone Number
-                                                </th>
-                                                <th scope="col">Status</th>
-                                                <th scope="col">Acction</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {dataUser?.map(
-                                                (user, index) => (
-                                                    <tr key={index}>
-                                                        <th scope="col">
-                                                            {user.id}
-                                                        </th>
-                                                        <th scope="col">
-                                                            {user.name}
-                                                        </th>
-                                                        <th scope="col">
-                                                            {user.phone}
-                                                        </th>
-                                                        <th scope="col">
-                                                            {user.status == 1
-                                                                ? "Lock"
-                                                                : "Normal"}
-                                                        </th>
-                                                        <th scope="col">
-                                                            {/* <Button variant="contained" onClick={() => handleChangeStatus(user)}>{user.status == 1 ? "Open" : "Lock"}</Button> */}
-                                                            <Switch
-                                                                checkedChildren={
-                                                                    <CheckOutlined />
-                                                                }
-                                                                unCheckedChildren={
-                                                                    <CloseOutlined />
-                                                                }
-                                                                defaultChecked
-                                                                onChange={() =>
-                                                                    handleChangeStatus(
-                                                                        user
-                                                                    )
-                                                                }
-                                                            />
-                                                        </th>
-                                                    </tr>
-                                                )
-                                            )}
-                                        </tbody>
-                                    </table>
+                            <div className="mt-5 mx-3">
+                                <div className="row grid gap-3">
+                                    <div className="g-col-6 card shadow border-0">
+                                        <div className="card-header">
+                                            <h5 className=" text-lg font-bold">
+                                                Add Size
+                                            </h5>
+                                        </div>
+                                        <div className="card-body">
+                                            <label htmlFor="name" className="form-label text-lg">
+                                                Name size
+                                            </label>
+                                            <div className="input-group mb-3">
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="nameSize"
+                                                    placeholder="Enter name size"
+                                                    name="nameSize"
+                                                    onChange={handleGetValueSize}
+                                                    value={newSize.nameSize}
+                                                />
+                                                <Button variant="contained" onClick={handleAddSize}>Add</Button>
+                                            </div><br />
+                                            {
+                                                sizes.map((size, index) => (
+                                                    <div className="flex justify-between items-start" key={index}>
+                                                        <p className="text-lg font-bold border border-black px-4 py-[5px] rounded-md mb-5">{size.nameSize}</p>
+                                                        <Button className="h-10" variant="contained" onClick={() => handleDeleteSize(Number(size.sizeId))}>Delete</Button>
+                                                    </div>
+                                                ))
+                                            }
+                                            
+                                        </div>
+                                    </div>
+                                    <div className="g-col-6 card shadow border-0">
+                                        <div className="card-header">
+                                            <h5 className=" text-lg font-bold">
+                                                Add Color
+                                            </h5>
+                                        </div>
+                                        <div className="card-body">
+                                            <label htmlFor="name" className="form-label text-lg">
+                                                Name Color
+                                            </label>
+                                            <div className="input-group mb-3">
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="nameColor"
+                                                    placeholder="Enter name Color"
+                                                    name="nameColor"
+                                                    onChange={handleGetValueColor}
+                                                    value={newColor.nameColor}
+                                                />
+                                                <Button variant="contained" onClick={handleAddColor}>Add</Button>
+                                            </div><br />
+                                            {
+                                                colors.map((color, index) => (
+                                                    <div className="flex justify-between items-start" key={index}>
+                                                        <p style={{ backgroundColor: color.nameColor, width: '80px', height: '40px'}}  className="text-lg font-bold rounded-md mb-5"></p>
+                                                        <Button className="h-10" variant="contained" onClick={() => handleDeleteColor(Number(color.colorId))}>Delete</Button>
+                                                    </div>
+                                                ))
+                                            }
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -262,4 +321,4 @@ function AdminUser() {
     );
 }
 
-export default AdminUser;
+export default AdminColorSize;

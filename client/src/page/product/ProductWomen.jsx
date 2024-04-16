@@ -1,3 +1,6 @@
+import { AiFillHeart } from "react-icons/ai"; 
+import { AiOutlineHeart } from "react-icons/ai"; 
+import { ImMenu2 } from "react-icons/im"; 
 import React, { useEffect, useState } from "react";
 import { Slider, Switch } from "antd";
 import {
@@ -5,13 +8,23 @@ import {
     MailOutlined,
     SettingOutlined,
 } from "@ant-design/icons";
-import { Menu } from "antd";
+import publicAxios from "../../config/PublicAxios";
+import { Menu, Rate  } from "antd";
 import "./product.scss";
 import anh1 from "../../../public/images/product13.png";
-
+import { Select } from "antd";
+import { Link } from "react-router-dom";
 function ProductWomen() {
+    const [product, setProduct] = useState([]);
+    const handleGetProducts = async () => {
+        const response = await publicAxios.get("/api/product");
+     
+      setProduct(response.data);
+  }
+
     useEffect(() => {
-      window.scrollTo(0, 0);
+        handleGetProducts();
+        window.scrollTo(0, 0);
     }, []);
     function getItem(label, key, icon, children, type) {
         return {
@@ -22,7 +35,9 @@ function ProductWomen() {
             type,
         };
     }
-
+const handleChange = (value) => {
+  console.log(value); // { value: "lucy", key: "lucy", label: "Lucy (101)" }
+};
     const items = [
         getItem("Dress Style", "1", <MailOutlined />, [
             getItem("Classic", "11"),
@@ -103,17 +118,135 @@ function ProductWomen() {
       <div style={{ marginTop: "50px", fontFamily: "Montserrat" }}>
         <div className="flex items-start justify-between gap-11 max-w-[1440px] w-full mx-auto px-4 mb-10 sm:px-6 lg:px-8">
           <div>
-            <p className="font-bold text-xl ml-6">Fillter</p>
-            <Menu
-              mode="inline"
-              defaultSelectedKeys={["231"]}
-              openKeys={stateOpenKeys}
-              onOpenChange={onOpenChange}
-              style={{
-                width: 256,
-              }}
-              items={items}
-            />
+            <h3 className="font-bold text-xl ml-6 flex items-center ">
+              Fillter <ImMenu2 className="ml-[170px]" />
+            </h3>
+            <hr className="mt-6" />
+            <div>
+              <h4 className="ml-6 mt-7 text-xl font-bold ">Category</h4>
+              <p className="text-xl ml-6 flex items-center  mt-7">
+                vffdddfsdsdf
+              </p>
+              <p className="text-xl ml-6 flex items-center  mt-7">
+                vffdddfsdsdf
+              </p>
+              <p className="text-xl ml-6 flex items-center  mt-7">
+                {" "}
+                vffdddfsdsdf
+              </p>
+              <p className="text-xl ml-6 flex items-center  mt-7">
+                vffdddfsdsdf
+              </p>
+              <div>
+                <h4 className="ml-6 mt-7 text-xl font-bold ">Prices</h4>
+                <Select
+                  className="ml-6 mt-7"
+                  labelInValue
+                  defaultValue={{
+                    value: "prices gradually increase",
+                    label: "prices",
+                  }}
+                  style={{
+                    width: 240,
+                  }}
+                  onChange={handleChange}
+                  options={[
+                    {
+                      value: "prices gradually decrease",
+                      label: "prices gradually decrease",
+                    },
+                    {
+                      value: "prices gradually increase",
+                      label: "prices gradually increase",
+                    },
+                  ]}
+                />
+              </div>
+              <div>
+                <h4 className="ml-6 mt-7 text-xl font-bold ">Size</h4>
+                <div className="flex items-center gap-6 ml-6 mt-7">
+                  <button
+                    style={{
+                      width: "50px",
+                      height: "50px",
+                      border: "1px solid gray",
+                    }}
+                    className="w-8 h-8 rounded-lg"
+                  >
+                    XS
+                  </button>
+                  <button>S</button>
+                  <button>M</button>
+                  <button>L</button>
+                  <button>Xl</button>
+                </div>
+              </div>
+              <div>
+                <h4 className="ml-6 mt-7 text-xl font-bold ">Color</h4>
+                <Select
+                  className="ml-6 mt-7"
+                  labelInValue
+                  defaultValue={{
+                    value: "red",
+                    label: "color",
+                  }}
+                  style={{
+                    width: 240,
+                  }}
+                  onChange={handleChange}
+                  options={[
+                    {
+                      value: "red",
+                      label: "red",
+                      style: {
+                        color: "red",
+                        backgroundColor: "red",
+                      },
+                    },
+                    {
+                      value: "blue",
+                      label: "blue",
+                      style: {
+                        color: "blue",
+                        backgroundColor: "blue",
+                      },
+                    },
+                    {
+                      value: "gray",
+                      label: "gray",
+                      style: {
+                        color: "gray",
+                        backgroundColor: "gray",
+                      },
+                    },
+                    {
+                      value: "Yellow",
+                      label: "Yellow",
+                      style: {
+                        color: "#edd146",
+                        backgroundColor: "#edd146",
+                      },
+                    },
+                  ]}
+                />
+              </div>
+              <div>
+                <h4 className="ml-6 mt-7 text-xl font-bold ">Brand</h4>
+                <p className="text-xl ml-6 flex items-center  mt-7">
+                  vffdddfsdsdf
+                </p>
+                <p className="text-xl ml-6 flex items-center  mt-7">
+                  vffdddfsdsdf
+                </p>
+                <p className="text-xl ml-6 flex items-center  mt-7">
+                  {" "}
+                  vffdddfsdsdf
+                </p>
+                <p className="text-xl ml-6 flex items-center  mt-7">
+                  vffdddfsdsdf
+                </p>
+              </div>
+            </div>
           </div>
           <div>
             <div className="flex items-center mt-10">
@@ -121,94 +254,23 @@ function ProductWomen() {
               <p className="ml-6 font-bold text-xl">Women's Clothing</p>
             </div>
             <div className="grid grid-cols-4 mt-10 gap-10">
-              <div>
-                <img src={anh1} alt="" />
-                <br />
-                <p className="text-lg font-bold">ProducName</p>
-                <div className="flex items-end justify-between">
-                  <p className="text-lg font-bold">Price</p>
-                  <button className="bg-[#8A33FD] text-white rounded-lg px-4 py-2">
-                    Add to cart
-                  </button>
+              {product.map((item, index) => (
+                <div key={index}>
+                  <Link to={`/product-detail/${item.id}`}>
+                    <img src={item.image} alt="" />
+                    {/* <AiFillHeart /> */}
+                    <button className="w-8 h-8  relative bottom-[230px] left-[200px]">
+                      <AiOutlineHeart className="text-red-500 w-7 h-7 " />
+                    </button>
+                    <br />
+                    <p className="text-lg font-bold">{item.nameProduct}</p>
+                    <div className="flex items-end justify-between">
+                      <p className="text-lg font-bold">{item.price}</p>
+                      <Rate disabled defaultValue={item.rate} />
+                    </div>
+                  </Link>
                 </div>
-              </div>
-              <div>
-                <img src={anh1} alt="" />
-                <br />
-                <p className="text-lg font-bold">ProducName</p>
-                <div className="flex items-end justify-between">
-                  <p className="text-lg font-bold">Price</p>
-                  <button className="bg-[#8A33FD] text-white rounded-lg px-4 py-2">
-                    Add to cart
-                  </button>
-                </div>
-              </div>
-              <div>
-                <img src={anh1} alt="" />
-                <br />
-                <p className="text-lg font-bold">ProducName</p>
-                <div className="flex items-end justify-between">
-                  <p className="text-lg font-bold">Price</p>
-                  <button className="bg-[#8A33FD] text-white rounded-lg px-4 py-2">
-                    Add to cart
-                  </button>
-                </div>
-              </div>
-              <div>
-                <img src={anh1} alt="" />
-                <br />
-                <p className="text-lg font-bold">ProducName</p>
-                <div className="flex items-end justify-between">
-                  <p className="text-lg font-bold">Price</p>
-                  <button className="bg-[#8A33FD] text-white rounded-lg px-4 py-2">
-                    Add to cart
-                  </button>
-                </div>
-              </div>
-              <div>
-                <img src={anh1} alt="" />
-                <br />
-                <p className="text-lg font-bold">ProducName</p>
-                <div className="flex items-end justify-between">
-                  <p className="text-lg font-bold">Price</p>
-                  <button className="bg-[#8A33FD] text-white rounded-lg px-4 py-2">
-                    Add to cart
-                  </button>
-                </div>
-              </div>
-              <div>
-                <img src={anh1} alt="" />
-                <br />
-                <p className="text-lg font-bold">ProducName</p>
-                <div className="flex items-end justify-between">
-                  <p className="text-lg font-bold">Price</p>
-                  <button className="bg-[#8A33FD] text-white rounded-lg px-4 py-2">
-                    Add to cart
-                  </button>
-                </div>
-              </div>
-              <div>
-                <img src={anh1} alt="" />
-                <br />
-                <p className="text-lg font-bold">ProducName</p>
-                <div className="flex items-end justify-between">
-                  <p className="text-lg font-bold">Price</p>
-                  <button className="bg-[#8A33FD] text-white rounded-lg px-4 py-2">
-                    Add to cart
-                  </button>
-                </div>
-              </div>
-              <div>
-                <img src={anh1} alt="" />
-                <br />
-                <p className="text-lg font-bold">ProducName</p>
-                <div className="flex items-end justify-between">
-                  <p className="text-lg font-bold">Price</p>
-                  <button className="bg-[#8A33FD] text-white rounded-lg px-4 py-2">
-                    Add to cart
-                  </button>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>

@@ -5,10 +5,12 @@
   margin-top: 50px;
   margin-bottom: 150px;
   .img_detail {
-    width: 40%;
+    width:50%;
+    
     img {
+      object-fit: fill;
       width: 100%;
-      height: 1000px;
+      height: 800px;
     }
   }
   .content_Detail {
@@ -30,16 +32,16 @@
   }
   .textProduct_detail {
    
-    margin-left: 100px;
+    margin-left: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 100vh;
     h4 {
-      font-size: 20px;
+      font-size: 15px;
     }
     h2 {
-      font-size: 50px;
+      font-size: 40px;
     }
     h5 {
       font-size: 20px;

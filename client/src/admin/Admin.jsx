@@ -88,6 +88,12 @@ function Admin() {
                                     Banner
                                 </Link>
                             </li>
+                            <li className="nav-item">
+                                <Link to="admin-color-size">
+                                    <i className="bi bi-people px-lg-6" />{" "}
+                                    Color-Size
+                                </Link>
+                            </li>
                         </ul>
                         {/* Divider */}
                         <hr className="navbar-divider my-5 opacity-20" />
@@ -102,9 +108,9 @@ function Admin() {
                             </li>
                             <li
                                 className="nav-item"
-                                onClick={() => handleLogout()}
+                                // onClick={() => handleLogout()}
                             >
-                                <Link to="/login" className="nav-link">
+                                <Link to="/sign-in" className="nav-link">
                                     <i className="bi bi-box-arrow-left" />{" "}
                                     Logout
                                 </Link>

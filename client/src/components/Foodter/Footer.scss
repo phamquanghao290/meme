@@ -112,7 +112,7 @@
 
   .container2 {
     max-width: 1440px;
-    width: 100%;
+   
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -127,17 +127,19 @@
       margin-top: 80px;
     }
     .downloadapp {
-      display: flex;
-      margin-top: 50px;
+    width: 100%;
  
+    }
+    .location_2{
+      width: 300px;
     }
 
     .appstore {
 
-      width: 250px;
+    
       height: 51px;
       display: flex;
-      gap: 20px;
+ 
       h5 {
         font-size: 9px;
         position: relative;
@@ -145,7 +147,7 @@
       }
     }
     .chplay {
-      width: 220px;
+      width: 120px;
       height: 51px;
       display: flex;
       gap: 20px;

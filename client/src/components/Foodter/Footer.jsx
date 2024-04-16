@@ -48,7 +48,7 @@ export default function Footer() {
               <p>Shipping Policy</p>
               <p>Sitemap</p>
             </div>
-            <div>
+            <div className="location_2">
               <h2 style={{ color: "white" }}>Location</h2>
               <p>support@euphoria.in</p>
               <p>Eklingpura Chouraha, Ahmedabad Main Road</p>

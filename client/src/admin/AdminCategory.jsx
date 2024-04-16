@@ -19,17 +19,18 @@ function AdminCategory() {
         }
     }
 
-
     React.useEffect(() => {
+        document.title = "Danh mục"
         handleGetAllCate()
     }, [])
 
     const handleAdd = async () => {
-        const check = categories.find((item) => item.nameCategory === newCate.nameCategory)
-        console.log(check)
-        if (check) {
-            failed("Tên danh mục đã tồn tại")
-        } else {
+        // const check = categories.find((item) => item.nameCategory === newCate.nameCategory)
+        // console.log(newCate)
+        // console.log(check)
+        // if (check) {
+        //     failed("Tên danh mục đã tồn tại")
+        // } else {
             try {
                 const response = await publicAxios.post("/api/category", newCate)
                 console.log(response.data);
@@ -40,7 +41,7 @@ function AdminCategory() {
             } catch (error) {
                 failed(error.response.data.message)
             }
-        }
+        
 
     }
 
@@ -263,6 +264,7 @@ function AdminCategory() {
                                                 <th scope="col">Acction</th>
                                             </tr>
                                         </thead>
+                                    {/* body */}
                                         <tbody className="text-xl" style={{ marginLeft: '100px' }}>
                                             {categories.map((item, index) => (
                                                 <tr key={index}>
@@ -285,7 +287,7 @@ function AdminCategory() {
                                                             variant="contained"
                                                             onClick={() =>
                                                                 handleDelete(Number(
-                                                                    item.categoryId
+                                                                    item.id
                                                                 )
                                                                 )
                                                             }
