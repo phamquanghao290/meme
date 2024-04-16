@@ -9,8 +9,8 @@ import "./admin.css";
 function AdminUser() {
     const [dataUser, setDataUser] = React.useState([]);
     const handleGetUsers = async () => {
-        const response = await publicAxios.get("/api/user");
-        setDataUser(response.data);
+        // const response = await publicAxios.get("/api/user");
+        // setDataUser(response.data);
     };
 
     React.useEffect(() => {
@@ -19,14 +19,14 @@ function AdminUser() {
     }, []);
 
     const handleChangeStatus = async (user) => {
-        if (user.status === 1) {
-            user.status = 0;
-        } else {
-            user.status = 1;
-        }
-        await publicAxios.patch(`/api/user/status/${user.userId}`, user);
-        success("Thay đổi trạng thái thành công");
-        handleGetUsers();
+        // if (user.status === 1) {
+        //     user.status = 0;
+        // } else {
+        //     user.status = 1;
+        // }
+        // await publicAxios.patch(`/api/user/status/${user.userId}`, user);
+        // success("Thay đổi trạng thái thành công");
+        // handleGetUsers();
     };
     return (
         <>
