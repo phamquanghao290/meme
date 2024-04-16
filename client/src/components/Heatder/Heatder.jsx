@@ -33,173 +33,142 @@ export default function Heatder() {
       setAnchorEl(null);
   };
   return (
-<<<<<<< HEAD
-      <>
-          <div className="Heatder">
-              <div className="Logo_Heatder">
-                  <img src={logo} alt="" />
-              </div>
-              <div className="Menu_Heatder">
-                  <Link to="/">
-                      <h3>Home</h3>
-                  </Link>
-                  <Link to="/productMen">
-                      <h3>Men</h3>
-                  </Link>
-                  <Link to="/productWomen">
-                      <h3>Women</h3>
-                  </Link>
-                  <h3>Combos</h3>
-                  <h3>Joggers</h3>
-              </div>
-              <div className="Search_Heatder">
-                  <div>
-                      <img src={search} alt="" />
-                  </div>
-                  <input type="text" placeholder="Search" />
-              </div>
-              {/* **** */}
-              {userLogin ? (
-                  <div className="Icon_Heatder">
-                      <div className="component">
-                          <Link to="/wishlist">
-                              <AiOutlineHeart className="icon" />
-                          </Link>
-                      </div>
-                      {/* <div className="component">
-                          <AiOutlineUser className="icon" />
-                      </div> */}
-                      {/* ******* */}
-                      <div>
-                          <Button
-                              // id="basic-button"
-                              className="z-9999999 p-3 bg-[#f6f6f6]"
-                              aria-controls={open ? "basic-menu" : undefined}
-                              // aria-haspopup="true"
-                              aria-expanded={open ? "true" : undefined}
-                              onClick={handleClick}
-                          >  
-                            <AiOutlineUser className="icon" />
-                          </Button>
-                          <Menu
-                              className="z-9999999"
-                              id="basic-menu"
-                              anchorEl={anchorEl}
-                              open={open}
-                              onClose={handleClose}
-                              MenuListProps={{
-                                  "aria-labelledby": "basic-button",
-                              }}
-                          >
-                              <MenuItem onClick={handleClose}>Profile</MenuItem>
-                              <MenuItem onClick={handleClose}>
-                                  My account
-                              </MenuItem>
-                              <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                          </Menu>
-                      </div>
-                      {/* ******* */}
-                      <div className="component">
-                          <Link to="/cart">
-                              <BsCart className="icon" />
-                          </Link>
-                      </div>
-                  </div>
-              ) : (
-                  <div className="flex gap-4">
-                      <Link to="/sign-in">
-                          <button className="bg-[#8A33FD] text-white rounded-lg px-4 py-2">
-                              Login
-                          </button>
-                      </Link>
-                      <Link to="/sign-up">
-                          <button className="bg-[#8A33FD] text-white rounded-lg px-4 py-2">
-                              Sign Up
-                          </button>
-                      </Link>
-                  </div>
-              )}
-
-              {/* **** */}
-          </div>
-      </>
-=======
-    <>
-      <Navbar expand="lg" className="bg-body-tertiary "  style={{ position: "fixed", width: "100%", backgroundColor:"white" }}>
-        <div className="container-fluid"  >
-          <Navbar.Brand href="#home">
-            {" "}
-            <div className="Logo_Heatder">
-              <img src={logo} alt="" />
-            </div>
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav" className="visible">
-            <Nav
-              className="me-auto "
-              style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "space-between",
-              }}
+     <>
+            <Navbar
+                expand="lg"
+                className="bg-body-tertiary "
+                style={{
+                    position: "sticky",
+                    top: 0,
+                    width: "100%",
+                    backgroundColor: "white",
+                }}
             >
-              <div className="header_nav">
-                <Nav.Link href="#home">
-                  {" "}
-                  <Link to="/">
-                    <h3>Home</h3>
-                  </Link>
-                </Nav.Link>
-                <Nav.Link href="#link">
-                  {" "}
-                  <Link to="/productMen">
-                    <h3>Men</h3>
-                  </Link>
-                </Nav.Link>
-                <Nav.Link href="#link">
-                  {" "}
-                  <Link to="/productWomen">
-                    <h3>Women</h3>
-                  </Link>
-                </Nav.Link>
-                <Nav.Link href="#link">
-                  {" "}
-                  <Link to="/productMen">
-                    <h3>Combos</h3>
-                  </Link>
-                </Nav.Link>
-                <Nav.Link href="#link">
-                  {" "}
-                  <Link to="/productMen">
-                    <h3>Joggers</h3>
-                  </Link>
-                </Nav.Link>
-              </div>
+                <div className="container-fluid">
+                    <Navbar.Brand href="#home">
+                        {" "}
+                        <div className="Logo_Heatder">
+                            <img src={logo} alt="" />
+                        </div>
+                    </Navbar.Brand>
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                    <Navbar.Collapse id="basic-navbar-nav" className="visible">
+                        <Nav
+                            className="me-auto "
+                            style={{
+                                width: "100%",
+                                display: "flex",
+                                justifyContent: "space-between",
+                            }}
+                        >
+                            <div className="header_nav">
+                                <Nav.Link href="#home">
+                                    {" "}
+                                    <Link to="/">
+                                        <h3>Home</h3>
+                                    </Link>
+                                </Nav.Link>
+                                {/* <Nav.Link href="#link">
+                                    {" "}
+                                    <Link to="/product-men">
+                                        <h3>Men</h3>
+                                    </Link>
+                                </Nav.Link> */}
+                                <Nav.Link href="#link">
+                                    {" "}
+                                    <Link to="/product-women">
+                                        <h3>Women</h3>
+                                    </Link>
+                                </Nav.Link>
+                                <Nav.Link href="#link">
+                                    {" "}
+                                    <Link to="*">
+                                        <h3>Combos</h3>
+                                    </Link>
+                                </Nav.Link>
+                                <Nav.Link href="#link">
+                                    {" "}
+                                    <Link to="*">
+                                        <h3>Joggers</h3>
+                                    </Link>
+                                </Nav.Link>
+                            </div>
 
-              <div className="Search_Heatder">
-                <div>
-                  <img src={search} alt="" />
+                            <div className="Search_Heatder">
+                                <div>
+                                    <img src={search} alt="" />
+                                </div>
+                                <input type="text" placeholder="Search" />
+                            </div>
+                            {userLogin ? (
+                                <div className="Icon_Heatder">
+                                    <div className="component">
+                                        <Link to="/wishlist">
+                                            <AiOutlineHeart className="icon" />
+                                        </Link>
+                                    </div>
+                                    <div>
+                                        <Button
+                                            // id="basic-button"
+                                            className="z-9999999 p-3 bg-[#f6f6f6]"
+                                            aria-controls={
+                                                open ? "basic-menu" : undefined
+                                            }
+                                            // aria-haspopup="true"
+                                            aria-expanded={
+                                                open ? "true" : undefined
+                                            }
+                                            onClick={handleClick}
+                                        >
+                                            <AiOutlineUser className="icon" />
+                                        </Button>
+                                        <Menu
+                                            className="z-9999999"
+                                            id="basic-menu"
+                                            anchorEl={anchorEl}
+                                            open={open}
+                                            onClose={handleClose}
+                                            MenuListProps={{
+                                                "aria-labelledby":
+                                                    "basic-button",
+                                            }}
+                                        >
+                                            <MenuItem onClick={handleClose}>
+                                                Profile
+                                            </MenuItem>
+                                            <MenuItem onClick={handleClose}>
+                                                My account
+                                            </MenuItem>
+                                            <MenuItem onClick={handleLogout}>
+                                                Logout
+                                            </MenuItem>
+                                        </Menu>
+                                    </div>
+
+                                    <div className="component">
+                                        <Link to="/cart">
+                                            <BsCart className="icon" />
+                                        </Link>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="flex gap-4">
+                                    <Link to="/sign-in">
+                                        <button className="bg-[#8A33FD] text-white rounded-lg px-4 py-2">
+                                            Login
+                                        </button>
+                                    </Link>
+                                    <Link to="/sign-up">
+                                        <button className="bg-[#8A33FD] text-white rounded-lg px-4 py-2">
+                                            Sign Up
+                                        </button>
+                                    </Link>
+                                </div>
+                            )}
+                        </Nav>
+                    </Navbar.Collapse>
                 </div>
-                <input type="text" placeholder="Search" />
-              </div>
-              <div className="Icon_Heatder">
-                <div className="component">
-                  <AiOutlineHeart className="icon" />
-                </div>
-                <div className="component">
-                  <AiOutlineUser className="icon" />
-                </div>
-                <div className="component">
-                  <Link to="/cart">
-                    <BsCart className="icon" />
-                  </Link>
-                </div>
-              </div>
-            </Nav>
-          </Navbar.Collapse>
-        </div>
-      </Navbar>
-    </>
->>>>>>> 374b075b2bcd18e875d616b2fcece078ed9297e1
-  );
+            </Navbar>
+        </>
+  )
 }
