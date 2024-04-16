@@ -264,6 +264,7 @@ function AdminCategory() {
                                                 <th scope="col">Acction</th>
                                             </tr>
                                         </thead>
+                                    {/* body */}
                                         <tbody className="text-xl" style={{ marginLeft: '100px' }}>
                                             {categories.map((item, index) => (
                                                 <tr key={index}>
