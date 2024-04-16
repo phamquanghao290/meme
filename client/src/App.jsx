@@ -45,11 +45,13 @@ function App() {
         <Route path="/delivery-address" element={<DeliveryAddress />} />
       </Route>
 
+
       
       <Route path='/sign-up' element={<SignUp />} />
       <Route path='/sign-in' element={<SignIn />} />
       <Route path='/verification' element={<Verification />} />
       <Route path='/forgot-password' element={<ResetPassword />} />
+
 
       <Route path='/admin' element={<div style={{ display: 'flex' }}><Admin /><div style={{ width: '100%' }}><Outlet /></div></div>}>
           <Route path="/admin" element={<AdminUser />} />
