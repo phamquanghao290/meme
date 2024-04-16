@@ -152,7 +152,7 @@ export default function Heatder() {
                                     </div>
                                 </div>
                             ) : (
-                                <div className="flex gap-4">
+                                <div className="flex gap-4 mt-3">
                                     <Link to="/sign-in">
                                         <button className="bg-[#8A33FD] text-white rounded-lg px-4 py-2">
                                             Login
