@@ -164,10 +164,10 @@ function AdminBanner() {
   const showModaldelete = () => {
     setIsModalOpendelete(true);
   };
-  const handleOkdelete = async (banner_id) => {
+  const handleOkdelete = async (id) => {
     setIsModalOpendelete(false);
-    console.log(banner_id)
-    const result = await axios.delete(`http://localhost:8080/api/v1/banner/${banner_id}`)
+    console.log(id)
+    const result = await axios.delete(`http://localhost:8080/api/v1/banner/${id}`)
     setFlag(true)
     successNoti(result.data.message)
   };
