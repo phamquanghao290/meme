@@ -113,30 +113,44 @@ const handleChange = (value) => {
             // close
             setStateOpenKeys(openKeys);
         }
+  };
+  const [categories, setCategories] = React.useState([]);
+  const handleGetAllCate = async () => {
+    try {
+      const response = await publicAxios.get("/api/category");
+      console.log(response.data);
+      setCategories(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  React.useEffect(() => {
+    document.title = "Danh mục";
+    handleGetAllCate();
+    handleGetBrands();
+  }, []);
+      const [brands, setBrands] = React.useState([]);
+    const handleGetBrands = async () => {
+      const response = await publicAxios.get("/api/brand");
+      setBrands(response.data);
     };
     return (
       <div style={{ marginTop: "50px", fontFamily: "Montserrat" }}>
-        <div className="flex items-start justify-between gap-11 max-w-[1440px] w-full mx-auto px-4 mb-10 sm:px-6 lg:px-8">
-          <div>
+        <div className="flex items-start justify-between gap-11 max-w-[1485px] w-full mx-auto px-4 mb-10 sm:px-6 lg:px-8">
+          <div className="w-[300px] p-4 border rounded-xl">
             <h3 className="font-bold text-xl ml-6 flex items-center ">
               Fillter <ImMenu2 className="ml-[170px]" />
             </h3>
             <hr className="mt-6" />
             <div>
               <h4 className="ml-6 mt-7 text-xl font-bold ">Category</h4>
-              <p className="text-xl ml-6 flex items-center  mt-7">
-                vffdddfsdsdf
-              </p>
-              <p className="text-xl ml-6 flex items-center  mt-7">
-                vffdddfsdsdf
-              </p>
-              <p className="text-xl ml-6 flex items-center  mt-7">
-                {" "}
-                vffdddfsdsdf
-              </p>
-              <p className="text-xl ml-6 flex items-center  mt-7">
-                vffdddfsdsdf
-              </p>
+              {categories.map((item) => (
+                <p className="text-xl ml-6 flex items-center  mt-7">
+                  {item.nameCategory}
+                </p>
+              ))}
+
               <div>
                 <h4 className="ml-6 mt-7 text-xl font-bold ">Prices</h4>
                 <Select
@@ -232,19 +246,11 @@ const handleChange = (value) => {
               </div>
               <div>
                 <h4 className="ml-6 mt-7 text-xl font-bold ">Brand</h4>
-                <p className="text-xl ml-6 flex items-center  mt-7">
-                  vffdddfsdsdf
-                </p>
-                <p className="text-xl ml-6 flex items-center  mt-7">
-                  vffdddfsdsdf
-                </p>
-                <p className="text-xl ml-6 flex items-center  mt-7">
-                  {" "}
-                  vffdddfsdsdf
-                </p>
-                <p className="text-xl ml-6 flex items-center  mt-7">
-                  vffdddfsdsdf
-                </p>
+                {brands.map((item) => (
+                  <p className="text-xl ml-6 flex items-center  mt-7">
+                    {item.nameBrand}
+                  </p>
+                ))}
               </div>
             </div>
           </div>
@@ -253,19 +259,20 @@ const handleChange = (value) => {
               <div className="bg-[#8A33FD] w-2 h-8 rounded-lg"></div>
               <p className="ml-6 font-bold text-xl">Women's Clothing</p>
             </div>
-            <div className="grid grid-cols-4 mt-10 gap-10">
+            <div className="grid grid-cols-4 mt-10 gap-5 drop-shadow-xl">
               {product.map((item, index) => (
-                <div key={index}>
+                <div key={index} className="rounded-lg border h-[400px]">
                   <Link to={`/product-detail/${item.id}`}>
-                    <img src={item.image} alt="" />
+                    <img src={item.image} alt="" className="max-w-[220px] m-auto pt-3 h-[260px] hover:scale-105 transition-all duration-300 " />
+                  
                     {/* <AiFillHeart /> */}
-                    <button className="w-8 h-8  relative bottom-[230px] left-[200px]">
+                    <button className="w-8 h-8  relative bottom-[250px] left-[200px]">
                       <AiOutlineHeart className="text-red-500 w-7 h-7 " />
                     </button>
                     <br />
-                    <p className="text-lg font-bold">{item.nameProduct}</p>
-                    <div className="flex items-end justify-between">
-                      <p className="text-lg font-bold">{item.price}</p>
+                    <p className="text-[18px] font-bold px-3">{item.nameProduct}</p>
+                    <div className="flex items-end justify-between px-3">
+                      <p className="text-md line-clamp-2 font-bold">{item.price}</p>
                       <Rate disabled defaultValue={item.rate} />
                     </div>
                   </Link>
