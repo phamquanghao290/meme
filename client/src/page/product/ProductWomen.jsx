@@ -279,6 +279,7 @@ const handleChange = (value) => {
                 </div>
               ))}
             </div>
+            
           </div>
         </div>
         <div className="Product_Content" style={{ paddingBottom: "100px" }}>

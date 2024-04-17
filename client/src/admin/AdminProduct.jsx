@@ -621,7 +621,7 @@ function AdminProduct() {
                                                             Price
                                                         </th>
                                                         <th scope="col">
-                                                            Infomation
+                                                            Quantity
                                                         </th>
                                                         <th scope="col">
                                                             Acction
@@ -665,14 +665,7 @@ function AdminProduct() {
                                                                     )}
                                                                 </td>
                                                                 <td>
-                                                                    <Button
-                                                                        variant="contained"
-                                                                        onClick={
-                                                                            showModal
-                                                                        }
-                                                                    >
-                                                                        Infor
-                                                                    </Button>
+                                                                    {item.stock}
                                                                 </td>
                                                                 <td className="">
                                                                     <Button
