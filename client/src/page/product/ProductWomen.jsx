@@ -83,6 +83,8 @@ function ProductWomen() {
         if (item.children) {
           return func(item.children, level + 1);
         }
+      });
+    }
         func(items1);
         return key;
   };
