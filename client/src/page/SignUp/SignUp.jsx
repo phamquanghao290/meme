@@ -111,19 +111,7 @@ export default function SignUp() {
                     Sign up for free to access to in any of our products{" "}
                 </p>
 
-                <div className="mainButton">
-                    <img className="mainButtonImage" src={Google} alt="" />
-                    <button>Continue With Google</button>
-
-                    <div className="mainButton2">
-                        <img
-                            className="mainButtonImage1"
-                            src={Twitter}
-                            alt=""
-                        />
-                        <button>Continue With Twitter</button>
-                    </div>
-                </div>
+              
 
                 {/* <div className='divider'>
                     <img src={Divider} alt="" />

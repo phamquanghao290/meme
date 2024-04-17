@@ -1,14 +1,74 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Cart.scss";
 import p1 from "../../../public/images/Rectangle 734.png";
 import deletecon from "../../../public/images/deletecon.png";
 import { Input } from "antd";
+import { success } from "../../components/Modal/NotificationModal";
+import publicAxios from "../../config/PublicAxios";
+
+
 
 function Cart() {
+    const userLogin = JSON.parse(localStorage.getItem("userLogin") || "{}");
+    const USD = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+    })
+    const [cart, setCart] = useState([]);
+    const [product, setProduct] = useState([]);
+    const [flag, setFlag] = useState(false);
+    const [total, setTotal] = useState(0);
+
+    const handleGetCartByUserId = async () => {
+        const response = await publicAxios.get(`/api/cart/getCartByUserId/${userLogin.id}`);
+        setCart(response.data);
+    };
+    console.log(cart);
+    const handleGetProduct = async () => {
+        const response = await publicAxios.get(`/api/product`);
+        setProduct(response.data);
+    };
     useEffect(() => {
-      window.scrollTo(0, 0);
-    }, []);
+            handleGetCartByUserId();
+            document.title = "Cart";  
+            window.scrollTo(0, 0);
+        }, [flag]);
+    const handleDeleteCart = async (id) => {
+        if(window.confirm('Are you sure you want to delete this item?')){
+            const response = await publicAxios.delete(`/api/cart/${id}`);
+            setFlag(!flag);
+            success("Xoa thanh cong")
+        }  
+    };
+
+    const handleTotalPrice = () => {
+        let totalPrice = cart?.reduce((total, item) => {
+            return total + item.product.price * item.quantity;
+        }, 0);
+        setTotal(totalPrice);
+    }
+
+    const handleIncrease = async (item) => {
+        const response = await publicAxios.put("/api/cart/increase", (item)) 
+        setFlag(!flag);
+    }
+
+    const handleDecrease = async (item) => {
+        if (item.quantity <= 1) {
+            handleDeleteCart(item.id);
+            setFlag(!flag);
+        } else {
+            const response = await publicAxios.put("/api/cart/decrease", (item))
+            setFlag(!flag);
+        }
+    }
+
+    useEffect(() => {
+        handleTotalPrice();
+    }, [cart]);
+
+    
     return (
         <div>
             <div className="container">
@@ -24,49 +84,43 @@ function Cart() {
                 <table className="table_cart_info">
                     <thead>
                         <tr>
-                            <th className="one">PRODUCT DETAILS</th>
+                            <th>STT</th>
+                            <th>IMAGE</th>
+                            <th>NAME</th>
                             <th>PRICE</th>
                             <th>QUANTITY</th>
-                            <th>SHIPPING</th>
-                            <th>SUBTOTAL</th>
+                            <th>TOTAL</th>
                             <th>ACTION</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td className="image">
-                                <img src={p1} alt="" />
-                                <div>
-                                    <p>Product Name</p>
-                                    <p>Size: S</p>
-                                    <p>Color: Black</p>
-                                </div>
-                            </td>
-                            <td>$19.99</td>
-                            <td>1</td>
-                            <td>Free</td>
-                            <td>$19.99</td>
-                            <td style={{ cursor: "pointer" }}>
-                                <img src={deletecon} alt="" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="image">
-                                <img src={p1} alt="" />
-                                <div>
-                                    <p>Product Name</p>
-                                    <p>Size: S</p>
-                                    <p>Color: Black</p>
-                                </div>
-                            </td>
-                            <td>$19.99</td>
-                            <td>1</td>
-                            <td>Free</td>
-                            <td>$19.99</td>
-                            <td style={{ cursor: "pointer" }}>
-                                <img src={deletecon} alt="" />
-                            </td>
-                        </tr>
+                        {
+                            cart?.map((item, index) => (
+                                <tr>
+                                    <td>{index + 1}</td>
+                                    <td className="image">
+                                        <img className="max-w-[100px] m-auto" src={item.product.image} alt="" />                                     
+                                    </td>
+                                    <td>{item.product.nameProduct}</td>
+                                    <td>{USD.format(item.product.price)}</td>
+                                    <td className="">
+                                        <button className="mr-5" onClick={() => handleDecrease(item)}>-</button>
+                                        {item.quantity}
+                                        <button className="ml-5" onClick={() => handleIncrease(item)}>+</button>
+                                    </td>
+                                    <td>{USD.format(item.product.price * item.quantity)}</td>
+                                    <td className="cursor-pointer">
+                                        <img
+                                            className="m-auto"
+                                            src={deletecon}
+                                            alt=""
+                                            onClick={() =>
+                                                handleDeleteCart(item.id)
+                                            } />
+                                    </td>
+                                </tr>
+                            ))
+                        }         
                     </tbody>
                 </table>
             </div>
@@ -84,7 +138,7 @@ function Cart() {
                     <div>
                         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 15 }}>
                             <p>Subtotal</p>
-                            <p>$19.99</p>
+                            <p>{USD.format(total)}</p>
                         </div>
                         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 15 }}>
                             <p>Shipping</p>
@@ -92,7 +146,7 @@ function Cart() {
                         </div>
                         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 15, fontWeight: "bold" }}>
                             <p>Grand Total</p>
-                            <p>$19.99</p>
+                            <p>{USD.format(total)}</p>
                         </div>    
                     </div>
                     <hr />

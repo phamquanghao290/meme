@@ -77,7 +77,7 @@ export default function Heatder() {
                                 <Nav.Link href="#link">
                                     {" "}
                                     <Link to="/product-women">
-                                        <h3>Women</h3>
+                                        <h3>Product</h3>
                                     </Link>
                                 </Nav.Link>
                                 <Nav.Link href="#link">

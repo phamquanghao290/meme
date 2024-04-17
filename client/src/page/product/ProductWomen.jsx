@@ -83,211 +83,175 @@ function ProductWomen() {
         if (item.children) {
           return func(item.children, level + 1);
         }
-      });
-    };
-    func(items1);
-    return key;
+        func(items1);
+        return key;
   };
   const levelKeys = getLevelKeys(items);
-
-  const [stateOpenKeys, setStateOpenKeys] = useState(["2", "23"]);
-  const onOpenChange = (openKeys) => {
-    const currentOpenKey = openKeys.find(
-      (key) => stateOpenKeys.indexOf(key) === -1
-    );
-    // open
-    if (currentOpenKey !== undefined) {
-      const repeatIndex = openKeys
-        .filter((key) => key !== currentOpenKey)
-        .findIndex(
-          (key) => levelKeys[key] === levelKeys[currentOpenKey]
-        );
-      setStateOpenKeys(
-        openKeys
-          // remove repeat key
-          .filter((_, index) => index !== repeatIndex)
-          // remove current level all child
-          .filter(
-            (key) => levelKeys[key] <= levelKeys[currentOpenKey]
-          )
-      );
-    } else {
-      // close
-      setStateOpenKeys(openKeys);
+  const [categories, setCategories] = React.useState([]);
+  const handleGetAllCate = async () => {
+    try {
+      const response = await publicAxios.get("/api/category");
+      console.log(response.data);
+      setCategories(response.data);
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  const userLogin = JSON.parse(localStorage.getItem("userLogin"))
-  const handleAddToWishList = async (item) => {
-    console.log(item)
-    try {
-      const res = await axios.post(`http://localhost:8080/api/v1/favorite-product/${userLogin?.id}`, item)
-      successNoti(res.data.message)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  return (
-    <div style={{ marginTop: "50px", fontFamily: "Montserrat" }}>
-      <div className="flex items-start justify-between gap-11 max-w-[1440px] w-full mx-auto px-4 mb-10 sm:px-6 lg:px-8">
-        <div>
-          <h3 className="font-bold text-xl ml-6 flex items-center ">
-            Fillter <ImMenu2 className="ml-[170px]" />
-          </h3>
-          <hr className="mt-6" />
-          <div>
-            <h4 className="ml-6 mt-7 text-xl font-bold ">Category</h4>
-            <p className="text-xl ml-6 flex items-center  mt-7">
-              vffdddfsdsdf
-            </p>
-            <p className="text-xl ml-6 flex items-center  mt-7">
-              vffdddfsdsdf
-            </p>
-            <p className="text-xl ml-6 flex items-center  mt-7">
-              {" "}
-              vffdddfsdsdf
-            </p>
-            <p className="text-xl ml-6 flex items-center  mt-7">
-              vffdddfsdsdf
-            </p>
+  React.useEffect(() => {
+    document.title = "Danh mục";
+    handleGetAllCate();
+    handleGetBrands();
+  }, []);
+      const [brands, setBrands] = React.useState([]);
+    const handleGetBrands = async () => {
+      const response = await publicAxios.get("/api/brand");
+      setBrands(response.data);
+    };
+    return (
+      <div style={{ marginTop: "50px", fontFamily: "Montserrat" }}>
+        <div className="flex items-start justify-between gap-11 max-w-[1485px] w-full mx-auto px-4 mb-10 sm:px-6 lg:px-8">
+          <div className="w-[300px] p-4 border rounded-xl">
+            <h3 className="font-bold text-xl ml-6 flex items-center ">
+              Fillter <ImMenu2 className="ml-[170px]" />
+            </h3>
+            <hr className="mt-6" />
             <div>
-              <h4 className="ml-6 mt-7 text-xl font-bold ">Prices</h4>
-              <Select
-                className="ml-6 mt-7"
-                labelInValue
-                defaultValue={{
-                  value: "prices gradually increase",
-                  label: "prices",
-                }}
-                style={{
-                  width: 240,
-                }}
-                onChange={handleChange}
-                options={[
-                  {
-                    value: "prices gradually decrease",
-                    label: "prices gradually decrease",
-                  },
-                  {
-                    value: "prices gradually increase",
-                    label: "prices gradually increase",
-                  },
-                ]}
-              />
-            </div>
-            <div>
-              <h4 className="ml-6 mt-7 text-xl font-bold ">Size</h4>
-              <div className="flex items-center gap-6 ml-6 mt-7">
-                <button
-                  style={{
-                    width: "50px",
-                    height: "50px",
-                    border: "1px solid gray",
-                  }}
-                  className="w-8 h-8 rounded-lg"
-                >
-                  XS
-                </button>
-                <button>S</button>
-                <button>M</button>
-                <button>L</button>
-                <button>Xl</button>
-              </div>
-            </div>
-            <div>
-              <h4 className="ml-6 mt-7 text-xl font-bold ">Color</h4>
-              <Select
-                className="ml-6 mt-7"
-                labelInValue
-                defaultValue={{
-                  value: "red",
-                  label: "color",
-                }}
-                style={{
-                  width: 240,
-                }}
-                onChange={handleChange}
-                options={[
-                  {
-                    value: "red",
-                    label: "red",
-                    style: {
-                      color: "red",
-                      backgroundColor: "red",
-                    },
-                  },
-                  {
-                    value: "blue",
-                    label: "blue",
-                    style: {
-                      color: "blue",
-                      backgroundColor: "blue",
-                    },
-                  },
-                  {
-                    value: "gray",
-                    label: "gray",
-                    style: {
-                      color: "gray",
-                      backgroundColor: "gray",
-                    },
-                  },
-                  {
-                    value: "Yellow",
-                    label: "Yellow",
-                    style: {
-                      color: "#edd146",
-                      backgroundColor: "#edd146",
-                    },
-                  },
-                ]}
-              />
-            </div>
-            <div>
-              <h4 className="ml-6 mt-7 text-xl font-bold ">Brand</h4>
-              <p className="text-xl ml-6 flex items-center  mt-7">
-                vffdddfsdsdf
-              </p>
-              <p className="text-xl ml-6 flex items-center  mt-7">
-                vffdddfsdsdf
-              </p>
-              <p className="text-xl ml-6 flex items-center  mt-7">
-                {" "}
-                vffdddfsdsdf
-              </p>
-              <p className="text-xl ml-6 flex items-center  mt-7">
-                vffdddfsdsdf
-              </p>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div className="flex items-center mt-10">
-            <div className="bg-[#8A33FD] w-2 h-8 rounded-lg"></div>
-            <p className="ml-6 font-bold text-xl">Women's Clothing</p>
-          </div>
-          <div className="grid grid-cols-4 mt-10 gap-10">
-            {product.map((item, index) => (
-              <div key={index}>
-                <button className="w-8 h-8 relative top-10 left-[200px]" onClick={() => handleAddToWishList(item)}>
-                  <AiOutlineHeart className="text-red-500 w-7 h-7 " />
-                </button>
-                <Link to={`/product-detail/${item.id}`}>
-                  <img src={item.image} alt="" />
-                  {/* <AiFillHeart /> */}
-                  <br />
-                  <div className="flex gap-10">
-                    <p className="text-lg font-bold">{item.nameProduct}</p>
+              <h4 className="ml-6 mt-7 text-xl font-bold ">Category</h4>
+              {categories.map((item) => (
+                <p className="text-xl ml-6 flex items-center  mt-7">
+                  {item.nameCategory}
+                </p>
+              ))}
 
-                  </div>
-                  <div className="flex items-end justify-between">
-                    <p className="text-lg font-bold">{item.price}</p>
-                    <Rate disabled defaultValue={item.rate} />
-                  </div>
-                </Link>
+              <div>
+                <h4 className="ml-6 mt-7 text-xl font-bold ">Prices</h4>
+                <Select
+                  className="ml-6 mt-7"
+                  labelInValue
+                  defaultValue={{
+                    value: "prices gradually increase",
+                    label: "prices",
+                  }}
+                  style={{
+                    width: 240,
+                  }}
+                  onChange={handleChange}
+                  options={[
+                    {
+                      value: "prices gradually decrease",
+                      label: "prices gradually decrease",
+                    },
+                    {
+                      value: "prices gradually increase",
+                      label: "prices gradually increase",
+                    },
+                  ]}
+                />
               </div>
-            ))}
+              <div>
+                <h4 className="ml-6 mt-7 text-xl font-bold ">Size</h4>
+                <div className="flex items-center gap-6 ml-6 mt-7">
+                  <button
+                    style={{
+                      width: "50px",
+                      height: "50px",
+                      border: "1px solid gray",
+                    }}
+                    className="w-8 h-8 rounded-lg"
+                  >
+                    XS
+                  </button>
+                  <button>S</button>
+                  <button>M</button>
+                  <button>L</button>
+                  <button>Xl</button>
+                </div>
+              </div>
+              <div>
+                <h4 className="ml-6 mt-7 text-xl font-bold ">Color</h4>
+                <Select
+                  className="ml-6 mt-7"
+                  labelInValue
+                  defaultValue={{
+                    value: "red",
+                    label: "color",
+                  }}
+                  style={{
+                    width: 240,
+                  }}
+                  onChange={handleChange}
+                  options={[
+                    {
+                      value: "red",
+                      label: "red",
+                      style: {
+                        color: "red",
+                        backgroundColor: "red",
+                      },
+                    },
+                    {
+                      value: "blue",
+                      label: "blue",
+                      style: {
+                        color: "blue",
+                        backgroundColor: "blue",
+                      },
+                    },
+                    {
+                      value: "gray",
+                      label: "gray",
+                      style: {
+                        color: "gray",
+                        backgroundColor: "gray",
+                      },
+                    },
+                    {
+                      value: "Yellow",
+                      label: "Yellow",
+                      style: {
+                        color: "#edd146",
+                        backgroundColor: "#edd146",
+                      },
+                    },
+                  ]}
+                />
+              </div>
+              <div>
+                <h4 className="ml-6 mt-7 text-xl font-bold ">Brand</h4>
+                {brands.map((item) => (
+                  <p className="text-xl ml-6 flex items-center  mt-7">
+                    {item.nameBrand}
+                  </p>
+                ))}
+              </div>
+            </div>
           </div>
+          <div>
+            <div className="flex items-center mt-10">
+              <div className="bg-[#8A33FD] w-2 h-8 rounded-lg"></div>
+              <p className="ml-6 font-bold text-xl">Women's Clothing</p>
+            </div>
+            <div className="grid grid-cols-4 mt-10 gap-5 drop-shadow-xl">
+              {product.map((item, index) => (
+                <div key={index} className="rounded-lg border h-[400px]">
+                  <Link to={`/product-detail/${item.id}`}>
+                    <img src={item.image} alt="" className="max-w-[220px] m-auto pt-3 h-[260px] hover:scale-105 transition-all duration-300 " />
+                  
+                    {/* <AiFillHeart /> */}
+                    <button className="w-8 h-8  relative bottom-[250px] left-[200px]">
+                      <AiOutlineHeart className="text-red-500 w-7 h-7 " />
+                    </button>
+                    <br />
+                    <p className="text-[18px] font-bold px-3">{item.nameProduct}</p>
+                    <div className="flex items-end justify-between px-3">
+                      <p className="text-md line-clamp-2 font-bold">{item.price}</p>
+                      <Rate disabled defaultValue={item.rate} />
+                    </div>
+                  </Link>
+                </div>
+              ))}
+            </div>
         </div>
       </div>
       <div className="Product_Content" style={{ paddingBottom: "100px" }}>
