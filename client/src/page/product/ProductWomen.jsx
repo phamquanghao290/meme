@@ -28,67 +28,13 @@ function ProductWomen() {
     handleGetProducts();
     window.scrollTo(0, 0);
   }, []);
-  function getItem(label, key, icon, children, type) {
-    return {
-      key,
-      icon,
-      children,
-      label,
-      type,
-    };
-  }
+ 
   const handleChange = (value) => {
     console.log(value); // { value: "lucy", key: "lucy", label: "Lucy (101)" }
   };
-  const items = [
-    getItem("Dress Style", "1", <MailOutlined />, [
-      getItem("Classic", "11"),
-      getItem("Casual", "12"),
-      getItem("Business", "13"),
-      getItem("Sport", "14"),
-    ]),
-    getItem("Size", "2", <AppstoreOutlined />, [
-      getItem(
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr 1fr",
-            marginBottom: "10px",
-            marginTop: "10px",
-            width: "100%",
-          }}
-        >
-          <p>XS</p>
-          <p>S</p>
-          <p>M</p>
-          <p>L</p>
-          <p>XL</p>
-          <p>XXL</p>
-        </div>
-      ),
-      "21",
-    ]),
-    getItem("Price", "3", <SettingOutlined />, [
-      getItem(<Slider range defaultValue={[20, 50]} />, "31"),
-    ]),
-  ];
+ 
 
-  const getLevelKeys = (items1) => {
-    const key = {};
-    const func = (items2, level = 1) => {
-      items2.forEach((item) => {
-        if (item.key) {
-          key[item.key] = level;
-        }
-        if (item.children) {
-          return func(item.children, level + 1);
-        }
-      });
-    }
-        func(items1);
-        return key;
-  };
-  const levelKeys = getLevelKeys(items);
+ 
   const [categories, setCategories] = React.useState([]);
   const handleGetAllCate = async () => {
     try {
@@ -109,7 +55,8 @@ function ProductWomen() {
     const handleGetBrands = async () => {
       const response = await publicAxios.get("/api/brand");
       setBrands(response.data);
-    };
+  };
+ 
     return (
       <div style={{ marginTop: "50px", fontFamily: "Montserrat" }}>
         <div className="flex items-start justify-between gap-11 max-w-[1485px] w-full mx-auto px-4 mb-10 sm:px-6 lg:px-8">
@@ -125,7 +72,7 @@ function ProductWomen() {
                   {item.nameCategory}
                 </p>
               ))}
-
+              
               <div>
                 <h4 className="ml-6 mt-7 text-xl font-bold ">Prices</h4>
                 <Select
@@ -151,74 +98,7 @@ function ProductWomen() {
                   ]}
                 />
               </div>
-              <div>
-                <h4 className="ml-6 mt-7 text-xl font-bold ">Size</h4>
-                <div className="flex items-center gap-6 ml-6 mt-7">
-                  <button
-                    style={{
-                      width: "50px",
-                      height: "50px",
-                      border: "1px solid gray",
-                    }}
-                    className="w-8 h-8 rounded-lg"
-                  >
-                    XS
-                  </button>
-                  <button>S</button>
-                  <button>M</button>
-                  <button>L</button>
-                  <button>Xl</button>
-                </div>
-              </div>
-              <div>
-                <h4 className="ml-6 mt-7 text-xl font-bold ">Color</h4>
-                <Select
-                  className="ml-6 mt-7"
-                  labelInValue
-                  defaultValue={{
-                    value: "red",
-                    label: "color",
-                  }}
-                  style={{
-                    width: 240,
-                  }}
-                  onChange={handleChange}
-                  options={[
-                    {
-                      value: "red",
-                      label: "red",
-                      style: {
-                        color: "red",
-                        backgroundColor: "red",
-                      },
-                    },
-                    {
-                      value: "blue",
-                      label: "blue",
-                      style: {
-                        color: "blue",
-                        backgroundColor: "blue",
-                      },
-                    },
-                    {
-                      value: "gray",
-                      label: "gray",
-                      style: {
-                        color: "gray",
-                        backgroundColor: "gray",
-                      },
-                    },
-                    {
-                      value: "Yellow",
-                      label: "Yellow",
-                      style: {
-                        color: "#edd146",
-                        backgroundColor: "#edd146",
-                      },
-                    },
-                  ]}
-                />
-              </div>
+           
               <div>
                 <h4 className="ml-6 mt-7 text-xl font-bold ">Brand</h4>
                 {brands.map((item) => (
@@ -232,7 +112,7 @@ function ProductWomen() {
           <div>
             <div className="flex items-center mt-10">
               <div className="bg-[#8A33FD] w-2 h-8 rounded-lg"></div>
-              <p className="ml-6 font-bold text-xl">Women's Clothing</p>
+              <p className="ml-6 font-bold text-xl">Products Clothing</p>
             </div>
             <div className="grid grid-cols-4 mt-10 gap-5 drop-shadow-xl">
               {product.map((item, index) => (

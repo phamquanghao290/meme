@@ -8,7 +8,6 @@ import Heatder from './components/Heatder/Heatder'
 import Footer from './components/Foodter/Footer'
 import SignIn from './page/SignIn/SignInPage'
 import ProductWomen from './page/product/ProductWomen'
-import ProductMen from './page/product/ProductMen'
 import CheckoutForBill from './page/checkout/CheckoutForBill'
 import Wishlist from "./page/wishlist/Wishlist";
 import Productdetail from './page/Productdetail/Productdetail'
@@ -24,7 +23,6 @@ import AdminBill from './admin/AdminBill'
 import AdminBrand from './admin/AdminBrand'
 import Verification from './page/Verification/Verification'
 import ResetPassword from './page/ResetPassword/ResetPassword'
-import AdminColorSize from './admin/AdminColorSize'
 
 function App() {
   return (
@@ -32,9 +30,8 @@ function App() {
       <Route path='/' element={<><Heatder /><Outlet /><Footer /></>}>
         <Route path='/' element={<Index />} />
         <Route path='/product-women' element={<ProductWomen />} />
-        <Route path='/product-men' element={<ProductMen />} />
         <Route path='/cart' element={<Cart />} />
-        <Route path='/checkout' element={<CheckoutForBill />} />
+        <Route path='/checkout/:id' element={<CheckoutForBill />} />
         <Route path='/order' element={<Order />} />
         <Route path='*' element={<NotFound />} />
         <Route path="/product-detail/:id" element={<Productdetail />} />
@@ -55,7 +52,7 @@ function App() {
           <Route path="admin-bill" element={<AdminBill />} />
           <Route path="admin-banner" element={<AdminBanner />} />
           <Route path="admin-brand" element={<AdminBrand />} />
-          <Route path='admin-color-size' element={<AdminColorSize />} />
+       
         </Route>
     </Routes>
   );

@@ -23,13 +23,12 @@ function AdminProduct() {
     const [products, setProducts] = React.useState([]);
     const [oneProduct, setOneProduct] = React.useState([]);
     const [edit, setEdit] = React.useState(false);
-    const [colors, setColors] = React.useState([]);
+    // const [colors, setColors] = React.useState([]);
     const [flag, setFlag] = React.useState(false);
-    const handleGetColor = async () => {
-        const response = await publicAxios.get("/api/color");
-        console.log(response.data);
-        setColors(response.data);
-    }
+    // const handleGetColor = async () => {
+    //     const response = await publicAxios.get("/api/color");
+    //     setColors(response.data);
+    // }
     const [options, setOptions] = useState([]);
 
     const [newProduct, setNewProduct] = React.useState({
@@ -52,20 +51,14 @@ function AdminProduct() {
         setBrands(response.data);
     };
 
-    const handleGetOneProduct = async (id) => {
-        const response = await publicAxios.get(
-            `/api/product/${products[id - 1].id}`
-        );
-        console.log(response.data);
-        setOneProduct(response.data);
-    };
-
+    // const handleGetOneProduct = async (id) => {
+    //     const response = await publicAxios.get(`/api/product/${products[id - 1].id}`);
+    //     setOneProduct(response.data);
+    // };
     const handleGetProducts = async () => {
         const response = await publicAxios.get("/api/product");
         setProducts(response.data);
     };
-
-    console.log(colors);
 
     const handleGetValue = (e) => {
         setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
@@ -97,7 +90,6 @@ function AdminProduct() {
                 image: media,
                 category_id: categories[0].id,
             });
-            console.log(response.data.data);
             setProducts(response.data.data);
             setOneProduct(response.data.data);
             success(response.data.message);
@@ -117,15 +109,63 @@ function AdminProduct() {
         }
     };
 
+    const handleEditProduct = async (item) => {
+      setOneProduct(item);
+      setEdit(true);
+      setNewProduct({
+        ...newProduct,
+        nameProduct: item.nameProduct,
+        price: item.price,
+        stock: item.stock,
+      });
+      setPreview(item.image);
+    };
+
     const handleEdit = async () => {
+        // const updateProduct = {
+        //     ...newProduct,
+        //     image: preview,
+        //     category_id: categories[0].id,
+        // }
+        // console.log(updateProduct);
+        // if (selectedMedia) { 
+        //     const formData = new FormData();
+        //     formData.append("file", selectedMedia);
+        //     formData.append("upload_preset", "project");
+        //     const [uploadMedia] = await Promise.all([
+        //         axios.post(
+        //             "https://api.cloudinary.com/v1_1/dixzrnjbq/image/upload",
+        //             formData
+        //         ),
+        //     ]);
+        //     const media = uploadMedia.data.secure_url;
+        //     updateProduct.image = media;
+        //     const response = await publicAxios.put(`/api/product/${updateProduct.id}`,
+        //         updateProduct
+        //     );
+        //     setProducts(response.data.data);
+        //     // setOneProduct(response.data.data);
+        //     success(response.data.message);
+        //     setEdit(false);
+        //     setPreview("");
+        //     setNewProduct({
+        //         nameProduct: "",
+        //         price: 0,
+        //         image: "",
+        //         category_id: 0,
+        //         brand_id: 0,
+        //         stock: 0,
+        //         rate: 5,
+        //     });
+        //     return
+        // }
         try {
             if (!selectedMedia) {
-                const response = await publicAxios.put(
-                    `/api/product/${oneProduct.id}`,
+                const response = await publicAxios.put(`/api/product/${oneProduct.id}`,
                     { ...oneProduct, image: preview }
                 );
                 setProducts(response.data.data);
-                return;
+                return
             }
             const formData = new FormData();
             formData.append("file", selectedMedia);
@@ -137,15 +177,19 @@ function AdminProduct() {
                 ),
             ]);
             const media = uploadMedia.data.secure_url;
-            const response = await publicAxios.put(
-                `/api/product/${oneProduct.id}`,
+            const response = await publicAxios.put(`/api/product/${oneProduct.id}`,
+                
                 {
                     ...oneProduct,
                     image: media,
                 }
             );
+            console.log(response.data);
             setProducts(response.data.data);
+            setOneProduct(response.data.data);
             success(response.data.message);
+            setEdit(false);
+            setPreview("");
             setNewProduct({
                 nameProduct: "",
                 price: 0,
@@ -160,24 +204,10 @@ function AdminProduct() {
         }
     };
 
-    const handleEditProduct = async (item) => {
-        setNewProduct({
-            ...newProduct,
-            productName: item.productName,
-            price: item.price,
-            category_id: item.category_id,
-            brand_id: item.brand_id,
-            stock: item.stock,
-            rate: item.rate,
-        });
-        setPreview(item.image);
-        setEdit(true);
-    };
-
     const handleDeleteProduct = async (id) => {
         try {
             if (window.confirm("Bạn có chắc muốn xóa sản phẩm này ?")) {
-                const response = await publicAxios.delete(`/api/product/${id}`);
+                const response = await publicAxios.delete(`/api/product/${id}`);   
                 setProducts(response.data.data);
                 success(response.data.message);
             }
@@ -210,7 +240,6 @@ function AdminProduct() {
         }
     };
     const render = filterProduct();
-    console.log(render);
     const [currentPage, setCurrentPage] = React.useState(1);
     const itemsPerPage = 4;
     const endIndex = currentPage * itemsPerPage;
@@ -224,32 +253,32 @@ function AdminProduct() {
         handleGetCategories();
         handleGetAllBrand();
         handleGetProducts();
-        handleGetOneProduct(1);
-        handleGetColor();
+        // handleGetOneProduct(1);
+        // // handleGetColor();
         document.title = "Admin - Product";
-        let value = colors.map((item) => {
-            return item.nameColor;
-        });
-        setOptions(value);
+        // let value = colors.map((item) => {
+        //     return item.nameColor;
+        // });
+        // setOptions(value);
         // console.log(options)
     }, [flag]);
 
-    console.log(options)
+    // console.log(options)
 
-    const [isModalOpen, setIsModalOpen] = React.useState(false);
-    const showModal = () => {
-        setIsModalOpen(!isModalOpen);
-        setFlag(!flag);
-    };
-    const handleAddInfor = async () => {
-        const response = await publicAxios.post(`/api/product/${id}`);
-        setFlag(!flag);
-        success(response.data.message);
-        setIsModalOpen(false);
-    };
-    const handleCancel = () => {
-        setIsModalOpen(false);
-    };
+    // const [isModalOpen, setIsModalOpen] = React.useState(false);
+    // const showModal = () => {
+    //     setIsModalOpen(!isModalOpen);
+    //     setFlag(!flag);
+    // };
+    // const handleAddInfor = async () => {
+    //     const response = await publicAxios.post(`/api/product/${id}`);
+    //     setFlag(!flag);
+    //     success(response.data.message);
+    //     setIsModalOpen(false);
+    // };
+    // const handleCancel = () => {
+    //     setIsModalOpen(false);
+    // };
 
    
     const tagRender = (props) => {
@@ -621,7 +650,7 @@ function AdminProduct() {
                                                             Price
                                                         </th>
                                                         <th scope="col">
-                                                            Infomation
+                                                            Quantity
                                                         </th>
                                                         <th scope="col">
                                                             Acction
@@ -665,14 +694,7 @@ function AdminProduct() {
                                                                     )}
                                                                 </td>
                                                                 <td>
-                                                                    <Button
-                                                                        variant="contained"
-                                                                        onClick={
-                                                                            showModal
-                                                                        }
-                                                                    >
-                                                                        Infor
-                                                                    </Button>
+                                                                    {item.stock}
                                                                 </td>
                                                                 <td className="">
                                                                     <Button
@@ -718,7 +740,7 @@ function AdminProduct() {
                     </main>
                 </div>
             </div>
-            <Modal
+            {/* <Modal
                 title="Add Information Product"
                 open={isModalOpen}
                 // onOk={handlaAddInfor}
@@ -742,7 +764,7 @@ function AdminProduct() {
                     }}
                     options={options2}
                 />
-            </Modal>
+            </Modal> */}
         </>
     );
 }
