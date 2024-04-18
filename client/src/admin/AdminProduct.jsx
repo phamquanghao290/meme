@@ -25,12 +25,12 @@ function AdminProduct() {
     const [edit, setEdit] = React.useState(false);
     const [colors, setColors] = React.useState([]);
     const [flag, setFlag] = React.useState(false);
-    const handleGetColor = async () => {
-        const response = await publicAxios.get("/api/color");
-        console.log(response.data);
-        setColors(response.data);
-    }
     const [options, setOptions] = useState([]);
+
+    // const handleGetColor = async () => {
+    //     const response = await publicAxios.get("/api/color");
+    //     setColors(response.data);
+    // };
 
     const [newProduct, setNewProduct] = React.useState({
         nameProduct: "",
@@ -56,7 +56,6 @@ function AdminProduct() {
         const response = await publicAxios.get(
             `/api/product/${products[id - 1].id}`
         );
-        console.log(response.data);
         setOneProduct(response.data);
     };
 
@@ -65,7 +64,7 @@ function AdminProduct() {
         setProducts(response.data);
     };
 
-    console.log(colors);
+    // console.log(colors);
 
     const handleGetValue = (e) => {
         setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
@@ -118,11 +117,18 @@ function AdminProduct() {
     };
 
     const handleEdit = async () => {
+        console.log(newProduct);
         try {
             if (!selectedMedia) {
                 const response = await publicAxios.put(
                     `/api/product/${oneProduct.id}`,
-                    { ...oneProduct, image: preview }
+                    {
+                        ...newProduct,
+                        image: preview,
+                        nameProduct: newProduct.nameProduct,
+                        price: newProduct.price,
+                        stock: newProduct.stock,
+                    }
                 );
                 setProducts(response.data.data);
                 return;
@@ -144,14 +150,14 @@ function AdminProduct() {
                     image: media,
                 }
             );
-            setProducts(response.data.data);
+            setFlag(true);
             success(response.data.message);
             setNewProduct({
                 nameProduct: "",
                 price: 0,
                 image: "",
-                brand_id: 0,
                 category_id: 0,
+                brand_id: 0,
                 stock: 0,
                 rate: 5,
             });
@@ -163,12 +169,23 @@ function AdminProduct() {
     const handleEditProduct = async (item) => {
         setNewProduct({
             ...newProduct,
-            productName: item.productName,
+            nameProduct: item.nameProduct,
             price: item.price,
             category_id: item.category_id,
             brand_id: item.brand_id,
             stock: item.stock,
             rate: item.rate,
+            id: item.id,
+        });
+        setOneProduct({
+            ...newProduct,
+            nameProduct: item.nameProduct,
+            price: item.price,
+            category_id: item.category_id,
+            brand_id: item.brand_id,
+            stock: item.stock,
+            rate: item.rate,
+            id: item.id,
         });
         setPreview(item.image);
         setEdit(true);
@@ -210,7 +227,7 @@ function AdminProduct() {
         }
     };
     const render = filterProduct();
-    console.log(render);
+    // console.log(render);
     const [currentPage, setCurrentPage] = React.useState(1);
     const itemsPerPage = 4;
     const endIndex = currentPage * itemsPerPage;
@@ -225,33 +242,21 @@ function AdminProduct() {
         handleGetAllBrand();
         handleGetProducts();
         handleGetOneProduct(1);
-        handleGetColor();
+        // handleGetColor();
         document.title = "Admin - Product";
-        let value = colors.map((item) => {
-            return item.nameColor;
-        });
-        setOptions(value);
+        // let value = colors.map((item) => {
+        //     return item.nameColor;
+        // });
+        // setOptions(value);
         // console.log(options)
     }, [flag]);
-
-    console.log(options)
 
     const [isModalOpen, setIsModalOpen] = React.useState(false);
     const showModal = () => {
         setIsModalOpen(!isModalOpen);
         setFlag(!flag);
     };
-    const handleAddInfor = async () => {
-        const response = await publicAxios.post(`/api/product/${id}`);
-        setFlag(!flag);
-        success(response.data.message);
-        setIsModalOpen(false);
-    };
-    const handleCancel = () => {
-        setIsModalOpen(false);
-    };
 
-   
     const tagRender = (props) => {
         const { label, value, closable, onClose } = props;
         const onPreventMouseDown = (event) => {
@@ -272,9 +277,46 @@ function AdminProduct() {
             </Tag>
         );
     };
-   const options2 = options.map((item) => {
-       return { value: item };
-   });
+    const options2 = options.map((item) => {
+        return { value: item };
+    });
+
+    const [previewList, setPreviewList] = useState([]);
+    const [selectedMediaList, setSelectedMediaList] = useState(null);
+
+    const handleAddMedia = (event) => {
+        setSelectedMediaList(event.target.files[0]);
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.onload = function (event) {
+            setPreviewList(event.target.result);
+        };
+        reader.readAsDataURL(file);
+    };
+
+    const handleAddInfor = async () => {
+        const formData = new FormData();
+        formData.append("file", selectedMediaList);
+        formData.append("upload_preset", "project");
+        const [uploadMedia] = await Promise.all([
+            axios.post(
+                "https://api.cloudinary.com/v1_1/dixzrnjbq/image/upload",
+                formData
+            ),
+        ]);
+        const media = uploadMedia.data.secure_url;
+        const response = await publicAxios.post(`/api/product/${id}`, {
+            ...newProduct,
+            image: media,
+        });
+        setFlag(!flag);
+        setPreviewList(null);
+        success(response.data.message);
+        setIsModalOpen(false);
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
     return (
         <>
             {/* Dashboard */}
@@ -621,7 +663,7 @@ function AdminProduct() {
                                                             Price
                                                         </th>
                                                         <th scope="col">
-                                                            Infomation
+                                                            Quantity
                                                         </th>
                                                         <th scope="col">
                                                             Acction
@@ -665,14 +707,7 @@ function AdminProduct() {
                                                                     )}
                                                                 </td>
                                                                 <td>
-                                                                    <Button
-                                                                        variant="contained"
-                                                                        onClick={
-                                                                            showModal
-                                                                        }
-                                                                    >
-                                                                        Infor
-                                                                    </Button>
+                                                                    {item.stock}
                                                                 </td>
                                                                 <td className="">
                                                                     <Button
@@ -721,7 +756,7 @@ function AdminProduct() {
             <Modal
                 title="Add Information Product"
                 open={isModalOpen}
-                // onOk={handlaAddInfor}
+                onOk={handleAddInfor}
                 onCancel={handleCancel}
             >
                 <div>
@@ -742,6 +777,31 @@ function AdminProduct() {
                     }}
                     options={options2}
                 />
+                <br />
+                <br />
+                <textarea
+                    className="form-control group-[.col-md-6] h-24"
+                    name=""
+                    id=""
+                    placeholder="Infomation"
+                />
+                <br />
+                <div className="p-8 flex gap-2">
+                    <input
+                        type="file"
+                        name="image"
+                        id="image"
+                        className="hidden"
+                        onChange={handleAddMedia}
+                    />
+
+                    <label
+                        htmlFor="image"
+                        className="w-[100px] h-[100px] border-2 border-dashed border-blue-600 rounded-lg flex justify-center items-center "
+                    >
+                        <img src={previewList} alt="" width={75} height={90} />
+                    </label>
+                </div>
             </Modal>
         </>
     );

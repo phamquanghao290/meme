@@ -6,9 +6,35 @@ import deletecon from "../../../public/images/deletecon.png";
 import { Input } from "antd";
 
 function Cart() {
+    const userLogin = JSON.parse(localStorage.getItem("userLogin") || "{}");
+    const [cart, setCart] = useState([]);
+    const [product, setProduct] = useState([]);
+    const [flag, setFlag] = useState(false);
+
+    const handleGetCartByUserId = async () => {
+        const response = await publicAxios.get(`/api/cart/${userLogin.id}`);
+        setCart(response.data);
+    }
+
+    const handleGetProduct = async () => {
+        const response = await publicAxios.get("/api/product");
+        setProduct(response.data);
+    }
+
+    const handleDeleteProductInCart = async (id) => {
+        if (window.confirm("Bạn có chắc muốn xóa sản phẩm này ?")) {
+            const response = await publicAxios.delete(`/api/cart/${id}`);
+            setFlag(!flag);
+            success(response.data.message);
+        }
+    }
+
     useEffect(() => {
+      handleGetCartByUserId();
+      handleGetProduct();
       window.scrollTo(0, 0);
-    }, []);
+      document.title = "Cart";
+    }, [flag]);
     return (
         <div>
             <div className="container">

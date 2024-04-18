@@ -25,25 +25,22 @@ import Heatder from "../../components/Heatder/Heatder";
 import Footer from "../../components/Foodter/Footer";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+import publicAxios from "../../config/PublicAxios";
 import { failed } from "../../components/Modal/NotificationModal";
-export default function Productdetail() {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-  const currentUser = JSON.parse(localStorage.getItem("userLogin") || "{}");
 
-    const { id } = useParams();
+export default function Productdetail() {
+  const userLogin = JSON.parse(localStorage.getItem("userLogin") || "{}");
+  const [cart, setCart] = useState([]);
+  const [flag, setFlag] = useState(false);
+  const { id } = useParams();
   const onChange = (key) => {
     console.log(key);
   };
-   const [product, setProduct]= useState({});
+  const [product, setProduct]= useState({});
 
-   const handleGetProduct = async () => {
-     const response = await axios.get(
-       `http://localhost:8080/api/product/${id}`
-     );
-     
-     setProduct(response.data);
+  const handleGetProduct = async () => {
+    const response = await publicAxios.get(`/api/product/${id}`);
+    setProduct(response.data);
     
    };
   const items = [
@@ -66,26 +63,26 @@ export default function Productdetail() {
   ];
   const handlCLickAddtoCart = async (product) => {
     console.log(product);
-    if (!(currentUser && currentUser.id)) {
+    if (!(userLogin && userLogin.id)) {
       failed("Cần Đăng Nhập Để Mua Hàng");
       return;
     }
 
     const cart = {
-      userId: currentUser.id,
-      product,
+      user_id: userLogin.id,
+      product_id: product.id,
     };
 
-    const response = await axios.post(
-      "http://localhost:3000/api/v1/cart/addToCart",
-      cart
-    );
-    dispatch(getCart(currentUser?.id));
-    success(response.data.message);
+    const response = await publicAxios.post("/api/cart",cart);
+    // dispatch(getCart(userLogin?.id));
+    setFlag(!flag);
+    success("Thêm giỏ hàng thành công");
   };
    useEffect(() => {
      handleGetProduct();
-   }, []);
+     window.scrollTo(0, 0);
+     document.title = "Product Detail";
+   }, [flag]);
   return (
     <>
       <div className="Product_detail">

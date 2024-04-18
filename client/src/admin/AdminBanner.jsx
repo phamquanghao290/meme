@@ -247,7 +247,7 @@ function AdminBanner() {
                             type="text"
                             name="name"
                             className="w-full bg-[#DBDBDB] outline-none border-2 border-black-600 rounded-lg p-2"
-                            placeholder="Placeholder"
+                            placeholder="nameBanner"
                             onChange={handleGetValue}
                             value={newBanner.name}
                           />
@@ -260,7 +260,7 @@ function AdminBanner() {
                             type="text"
                             name="type"
                             className="w-full bg-[#DBDBDB] outline-none border-2 border-black-600 rounded-lg p-2"
-                            placeholder="Placeholder"
+                            placeholder="Type"
                             onChange={handleGetValue}
                             value={newBanner.type}
                           />

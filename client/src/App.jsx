@@ -8,7 +8,6 @@ import Heatder from './components/Heatder/Heatder'
 import Footer from './components/Foodter/Footer'
 import SignIn from './page/SignIn/SignInPage'
 import ProductWomen from './page/product/ProductWomen'
-import ProductMen from './page/product/ProductMen'
 import CheckoutForBill from './page/checkout/CheckoutForBill'
 import Wishlist from "./page/wishlist/Wishlist";
 import Productdetail from './page/Productdetail/Productdetail'
@@ -32,9 +31,8 @@ function App() {
       <Route path='/' element={<><Heatder /><Outlet /><Footer /></>}>
         <Route path='/' element={<Index />} />
         <Route path='/product-women' element={<ProductWomen />} />
-        <Route path='/product-men' element={<ProductMen />} />
         <Route path='/cart' element={<Cart />} />
-        <Route path='/checkout' element={<CheckoutForBill />} />
+        <Route path='/checkout/:id' element={<CheckoutForBill />} />
         <Route path='/order' element={<Order />} />
         <Route path='*' element={<NotFound />} />
         <Route path="/product-detail/:id" element={<Productdetail />} />
