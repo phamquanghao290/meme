@@ -56,7 +56,7 @@ function ProductWomen() {
       const response = await publicAxios.get("/api/brand");
       setBrands(response.data);
   };
-  console.log(product);
+ 
     return (
       <div style={{ marginTop: "50px", fontFamily: "Montserrat" }}>
         <div className="flex items-start justify-between gap-11 max-w-[1485px] w-full mx-auto px-4 mb-10 sm:px-6 lg:px-8">
@@ -72,7 +72,7 @@ function ProductWomen() {
                   {item.nameCategory}
                 </p>
               ))}
-
+              
               <div>
                 <h4 className="ml-6 mt-7 text-xl font-bold ">Prices</h4>
                 <Select
