@@ -1,7 +1,31 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import '../wishlist/Wishlist.scss'
 import Rectangle21 from '../../../public/images/Rectangle 21.png'
+import axios from 'axios';
+import { successNoti } from '../../utils/noti';
 export default function Wishlist() {
+    const [listProduct, setListProduct] = useState([])
+    const [flag,setFlag] = useState(false)
+    const userLogin = JSON.parse(localStorage.getItem("userLogin"));
+    const handleGetWishlist = async () => {
+        const res = await axios.get(`http://localhost:8080/api/v1/favorite-product/${userLogin.id}`)
+        setListProduct(res.data)
+    }
+
+    const handleDeleteWishlist = async (id) => {
+        const confirm = window.confirm("Bạn có chắc muốn xóa?")
+        if (confirm) {
+            const res = await axios.delete(`http://localhost:8080/api/v1/favorite-product/${id}`)
+            successNoti(res.data.message)
+            setFlag(!flag)
+        }
+    }
+
+    useEffect(() => {
+        handleGetWishlist()
+        return () => setFlag(false)
+    }, [flag])
+
     return (
         <div className='main-body-wishlist' >
             <div className='main-nav-wishlist'  >
@@ -52,62 +76,41 @@ export default function Wishlist() {
                     <div>
                         <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#3C4242', lineHeight: '33px' }}>Wishlist</h2>
                     </div>
+                    {listProduct?.map((item, index) => (
+                        <>
+                            <div className='main-content-wishlist-right-item'>
+                                <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+                                    <i onClick={() => handleDeleteWishlist(item.id)} class="fa-solid fa-x"></i>
+                                </div>
 
-                    <div className='main-content-wishlist-right-item'>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <i class="fa-solid fa-x"></i>
-                        </div>
+                                <div className='main-content-wishlist-right-image'>
+                                    <img className='image-wishlist' src={item.product.image} alt="" />
+                                </div>
 
-                        <div className='main-content-wishlist-right-image'>
-                            <img className='image-wishlist' src="https://s3-alpha-sig.figma.com/img/1d49/8085/cd056686e79c2dee4de64329271d3aac?Expires=1713744000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=TLNhWWxV8bB~xVZDPS5OujeCJMbtwy3tbJi-c2Q-kv8v8HlKXNAUXbvNMlWdtAwBLQPsy1fWazXp1w~XyLUx-VLlSbFRNa1nYvoWph269I62Eq-XXkQR7kSY-bjaI~ycPwcNKpUquBfoDb0mcQs6ALT3uAhnuM14zekyqv8IFjG1~r-egaaDVo8bbS-lkgExW0LH7QTULVqTaIHTM0MLPDULQJnR0Q8GI-6xa1E5TrZX8~E9CXtiBGO~IInXKome32ibC1QIQWbYqMK6KlIDYBgOu0BVC25DdjnZV6kjWQw96Jg79ofiwt5FZxTaup-mqdNaCbp8vrHgT~F2d~FCHg__" alt="" />
-                        </div>
+                                <div className='main-content-wishlist-right-info'>
+                                    <p>{item.product.nameProduct} </p>
+                                    {/* <p>Color : <span style={{ color: '#807D7E', fontWeight: '500' }}>Yellow</span></p> */}
+                                    <p>Quantity : <span style={{ color: '#807D7E', fontWeight: '500' }}>1</span></p>
+                                </div>
 
-                        <div className='main-content-wishlist-right-info'>
-                            <p>Blue Flower Print Crop Top </p>
-                            <p>Color : <span style={{ color: '#807D7E', fontWeight: '500' }}>Yellow</span></p>
-                            <p>Quantity : <span style={{ color: '#807D7E', fontWeight: '500' }}>1</span></p>
-                        </div>
+                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                    <h4 style={{ fontSize: '20px', fontWeight: '700', color: '#807D7E', lineHeight: '26px' }}>${item.product.price}</h4>
+                                </div>
 
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <h4 style={{ fontSize: '20px', fontWeight: '700', color: '#807D7E', lineHeight: '26px' }}>$29.00</h4>
-                        </div>
+                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                    <button className='main-content-wishlist-right-button'>Add to cart</button>
+                                </div>
 
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <button className='main-content-wishlist-right-button'>Add to cart</button>
-                        </div>
-
-                    </div>
-                    <hr style={{ width: '100%', color: '#807D7E', opacity: '0.6', marginTop: '30px' }} />
-                    <div className='main-content-wishlist-right-item'>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <i class="fa-solid fa-x"></i>
-                        </div>
-
-                        <div className='main-content-wishlist-right-image'>
-                            <img className='image-wishlist' src="https://s3-alpha-sig.figma.com/img/1d49/8085/cd056686e79c2dee4de64329271d3aac?Expires=1713744000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=TLNhWWxV8bB~xVZDPS5OujeCJMbtwy3tbJi-c2Q-kv8v8HlKXNAUXbvNMlWdtAwBLQPsy1fWazXp1w~XyLUx-VLlSbFRNa1nYvoWph269I62Eq-XXkQR7kSY-bjaI~ycPwcNKpUquBfoDb0mcQs6ALT3uAhnuM14zekyqv8IFjG1~r-egaaDVo8bbS-lkgExW0LH7QTULVqTaIHTM0MLPDULQJnR0Q8GI-6xa1E5TrZX8~E9CXtiBGO~IInXKome32ibC1QIQWbYqMK6KlIDYBgOu0BVC25DdjnZV6kjWQw96Jg79ofiwt5FZxTaup-mqdNaCbp8vrHgT~F2d~FCHg__" alt="" />
-                        </div>
-
-                        <div className='main-content-wishlist-right-info'>
-                            <p>Blue Flower Print Crop Top </p>
-                            <p>Color : <span style={{ color: '#807D7E', fontWeight: '500' }}>Yellow</span></p>
-                            <p>Quantity : <span style={{ color: '#807D7E', fontWeight: '500' }}>1</span></p>
-                        </div>
-
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <h4 style={{ fontSize: '20px', fontWeight: '700', color: '#807D7E', lineHeight: '26px' }}>$29.00</h4>
-                        </div>
-
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <button className='main-content-wishlist-right-button'>Add to cart</button>
-                        </div>
-
-                    </div>
+                            </div>
+                            <hr style={{ width: '100%', color: '#807D7E', opacity: '0.6', marginTop: '30px' }} />
+                        </>
+                    ))}
 
                 </div>
 
             </div>
 
-            <div className='main-content-wishlist-bottom'>
+            {/* <div className='main-content-wishlist-bottom'>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                     <p style={{ width: "6px", height: "30px", backgroundColor: "red", borderRadius: "5px" }}></p>
                     <p style={{ marginLeft: "10px", fontWeight: "700", color: "#3C4242", fontSize: "24px" }}>Recently Viewed</p>
@@ -129,7 +132,7 @@ export default function Wishlist() {
                     </div>
                 </div>
 
-            </div>
+            </div> */}
         </div>
     )
 }
