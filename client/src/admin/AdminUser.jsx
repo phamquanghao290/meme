@@ -12,6 +12,7 @@ function AdminUser() {
         const response = await publicAxios.get("/api/user");
         setDataUser(response.data);
     };
+    const listUser = dataUser.filter((user)=> user.role === 0);
     const handleChangeStatus = async (user) => {
         if (user.status === 1) {
             user.status = 0;
@@ -202,7 +203,7 @@ function AdminUser() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {dataUser?.map(
+                                            {listUser?.map(
                                                 (user, index) => (
                                                     <tr key={index}>
                                                         <th scope="col">

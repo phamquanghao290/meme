@@ -23,14 +23,9 @@ function AdminProduct() {
     const [products, setProducts] = React.useState([]);
     const [oneProduct, setOneProduct] = React.useState([]);
     const [edit, setEdit] = React.useState(false);
-    const [colors, setColors] = React.useState([]);
+    // const [colors, setColors] = React.useState([]);
     const [flag, setFlag] = React.useState(false);
     const [options, setOptions] = useState([]);
-
-    // const handleGetColor = async () => {
-    //     const response = await publicAxios.get("/api/color");
-    //     setColors(response.data);
-    // };
 
     const [newProduct, setNewProduct] = React.useState({
         nameProduct: "",
@@ -64,8 +59,6 @@ function AdminProduct() {
         setProducts(response.data);
     };
 
-    // console.log(colors);
-
     const handleGetValue = (e) => {
         setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
     };
@@ -96,7 +89,6 @@ function AdminProduct() {
                 image: media,
                 category_id: categories[0].id,
             });
-            console.log(response.data.data);
             setProducts(response.data.data);
             setOneProduct(response.data.data);
             success(response.data.message);
@@ -116,22 +108,27 @@ function AdminProduct() {
         }
     };
 
+    const handleEditProduct = async (item) => {
+      setOneProduct(item);
+      setEdit(true);
+      setNewProduct({
+        ...newProduct,
+        nameProduct: item.nameProduct,
+        price: item.price,
+        stock: item.stock,
+      });
+      setPreview(item.image);
+    };
+
     const handleEdit = async () => {
         console.log(newProduct);
         try {
             if (!selectedMedia) {
-                const response = await publicAxios.put(
-                    `/api/product/${oneProduct.id}`,
-                    {
-                        ...newProduct,
-                        image: preview,
-                        nameProduct: newProduct.nameProduct,
-                        price: newProduct.price,
-                        stock: newProduct.stock,
-                    }
+                const response = await publicAxios.put(`/api/product/${oneProduct.id}`,
+                    { ...oneProduct, image: preview }
                 );
                 setProducts(response.data.data);
-                return;
+                return
             }
             const formData = new FormData();
             formData.append("file", selectedMedia);
@@ -143,15 +140,21 @@ function AdminProduct() {
                 ),
             ]);
             const media = uploadMedia.data.secure_url;
-            const response = await publicAxios.put(
-                `/api/product/${oneProduct.id}`,
+            const response = await publicAxios.put(`/api/product/${oneProduct.id}`,
+                
                 {
                     ...oneProduct,
                     image: media,
                 }
             );
             setFlag(true);
+
+            
+            setProducts(response.data.data);
+            setOneProduct(response.data.data);
             success(response.data.message);
+            setEdit(false);
+            setPreview("");
             setNewProduct({
                 nameProduct: "",
                 price: 0,
@@ -190,11 +193,10 @@ function AdminProduct() {
         setPreview(item.image);
         setEdit(true);
     };
-
     const handleDeleteProduct = async (id) => {
         try {
             if (window.confirm("Bạn có chắc muốn xóa sản phẩm này ?")) {
-                const response = await publicAxios.delete(`/api/product/${id}`);
+                const response = await publicAxios.delete(`/api/product/${id}`);   
                 setProducts(response.data.data);
                 success(response.data.message);
             }
@@ -227,7 +229,6 @@ function AdminProduct() {
         }
     };
     const render = filterProduct();
-    // console.log(render);
     const [currentPage, setCurrentPage] = React.useState(1);
     const itemsPerPage = 4;
     const endIndex = currentPage * itemsPerPage;
@@ -241,16 +242,14 @@ function AdminProduct() {
         handleGetCategories();
         handleGetAllBrand();
         handleGetProducts();
+
         handleGetOneProduct(1);
         // handleGetColor();
-        document.title = "Admin - Product";
-        // let value = colors.map((item) => {
-        //     return item.nameColor;
-        // });
-        // setOptions(value);
-        // console.log(options)
-    }, [flag]);
 
+        // handleGetOneProduct(1);
+
+        document.title = "Admin - Product";
+    }, [flag]);
     const [isModalOpen, setIsModalOpen] = React.useState(false);
     const showModal = () => {
         setIsModalOpen(!isModalOpen);
@@ -753,56 +752,7 @@ function AdminProduct() {
                     </main>
                 </div>
             </div>
-            <Modal
-                title="Add Information Product"
-                open={isModalOpen}
-                onOk={handleAddInfor}
-                onCancel={handleCancel}
-            >
-                <div>
-                    {products.map((item, index) => (
-                        <div key={index}>
-                            <p>Name: {item.nameProduct}</p>
-                            <p>{USDollar.format(item.price)}</p>
-                            <p>{item.category_id}</p>
-                        </div>
-                    ))}
-                </div>
-                <Select
-                    mode="multiple"
-                    tagRender={tagRender}
-                    defaultValue={["gold", "cyan"]}
-                    style={{
-                        width: "100%",
-                    }}
-                    options={options2}
-                />
-                <br />
-                <br />
-                <textarea
-                    className="form-control group-[.col-md-6] h-24"
-                    name=""
-                    id=""
-                    placeholder="Infomation"
-                />
-                <br />
-                <div className="p-8 flex gap-2">
-                    <input
-                        type="file"
-                        name="image"
-                        id="image"
-                        className="hidden"
-                        onChange={handleAddMedia}
-                    />
-
-                    <label
-                        htmlFor="image"
-                        className="w-[100px] h-[100px] border-2 border-dashed border-blue-600 rounded-lg flex justify-center items-center "
-                    >
-                        <img src={previewList} alt="" width={75} height={90} />
-                    </label>
-                </div>
-            </Modal>
+            
         </>
     );
 }

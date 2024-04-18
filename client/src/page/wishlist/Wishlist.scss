@@ -9,14 +9,14 @@
     width: 100%;
     height: fit-content;
     margin: 0 auto;
-    margin-top: 20px;
+    margin-top: 10px;
     .main-nav-wishlist{
         
     }
     .main-content-wishlist{
         // width: 100%;
         display: flex;
-        margin-top: 60px;
+        margin-top: 40px;
         gap: 20px;
 
         .main-content-wishlist-left{
@@ -27,6 +27,7 @@
                 align-items: center;
                 margin-top: 20px;
                 margin-left: 20px;
+                cursor: pointer;
             }
         }
         .main-content-wishlist-right{
@@ -34,7 +35,7 @@
             
 
             .image-wishlist{
-                width: 180px;
+                width: 130px;
                 height: 110px;
                 object-fit: fill;
                 background-size: cover;

@@ -1,5 +1,5 @@
 import { AiOutlineRetweet } from "react-icons/ai";
-import { Tabs } from "antd";
+import { Rate, Tabs } from "antd";
 import { GiPoloShirt } from "react-icons/gi";
 import { FaShippingFast } from "react-icons/fa";
 import { MdPayment } from "react-icons/md";
@@ -18,7 +18,6 @@ import products10 from "../../../public/images/product10.png";
 import products11 from "../../../public/images/product11.png";
 import products12 from "../../../public/images/product12.png";
 import products13 from "../../../public/images/product13.png";
-
 import "./Productsdetail.scss";
 import Star from "../home/star/star";
 import Heatder from "../../components/Heatder/Heatder";
@@ -30,19 +29,26 @@ import { failed } from "../../components/Modal/NotificationModal";
 
 export default function Productdetail() {
   const userLogin = JSON.parse(localStorage.getItem("userLogin") || "{}");
-  const [cart, setCart] = useState([]);
-  const [flag, setFlag] = useState(false);
   const { id } = useParams();
   const onChange = (key) => {
     console.log(key);
   };
-  const [product, setProduct]= useState({});
-
+  const [size, setSize] = useState([]);
+  const [color, setColor] = useState([]);
+  const [flag, setFlag] = useState(false);
+  const [product, setProduct] = useState({});
   const handleGetProduct = async () => {
     const response = await publicAxios.get(`/api/product/${id}`);
     setProduct(response.data);
-    
-   };
+  };
+  const handleGetSize = async () => {
+    const response = await publicAxios.get(`/api/size/all`);
+    setSize(response.data);
+  };
+  const handleGetColor = async () => {
+    const response = await publicAxios.get(`/api/color/all`);
+    setColor(response.data);
+  };
   const items = [
     {
       key: "1",
@@ -61,153 +67,101 @@ export default function Productdetail() {
       children: "Content of Tab Pane 3",
     },
   ];
+
   const handlCLickAddtoCart = async (product) => {
-    console.log(product);
     if (!(userLogin && userLogin.id)) {
       failed("Cần Đăng Nhập Để Mua Hàng");
       return;
     }
 
     const cart = {
-      user_id: userLogin.id,
-      product_id: product.id,
+      userId: userLogin.id,
+      product,
     };
-
-    const response = await publicAxios.post("/api/cart",cart);
-    // dispatch(getCart(userLogin?.id));
-    setFlag(!flag);
-    success("Thêm giỏ hàng thành công");
+    const response = await privateAxios.post(`/api/cart/addToCart`, cart);
+    success(response.data.message);
   };
-   useEffect(() => {
-     handleGetProduct();
-     window.scrollTo(0, 0);
-     document.title = "Product Detail";
-   }, [flag]);
+  useEffect(() => {
+    handleGetProduct();
+    handleGetSize();
+    handleGetColor();
+    window.scrollTo(0, 0);
+    document.title = "Product Detail";
+  }, []);
+  console.log(product);
   return (
     <>
       <div className="Product_detail">
-        <Link to={`/product-detail/${product.id}`}>
-          <div className="content_Detail">
-            <div className="details">
-              <AiFillUpCircle style={{ fontSize: "30px", margin: "0 auto" }} />
-              <img src={products15} alt="" />
-              <img
-                src={products14}
-                alt=""
-                style={{
-                  padding: "6px",
-                  border: "2px solid black",
-                  borderRadius: "10px",
-                }}
-              />
-              <img src={products16} alt="" />
+        <div className="content_Detail">
+          <div className="details">
+            <AiFillUpCircle style={{ fontSize: "30px", margin: "0 auto" }} />
+            <img src={products15} alt="" />
+            <img
+              src={products14}
+              alt=""
+              style={{
+                padding: "6px",
+                border: "2px solid black",
+                borderRadius: "10px",
+              }}
+            />
+            <img src={products16} alt="" />
 
-              <AiFillDownCircle
-                style={{ fontSize: "30px", margin: "0 auto" }}
-              />
+            <AiFillDownCircle style={{ fontSize: "30px", margin: "0 auto" }} />
+          </div>
+          <div className="img_detail">
+            <img src={product.image} alt="" />
+          </div>
+          <div className="textProduct_detail">
+            <h4 style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              Shop <GrNext />
+              product: {product.id}
+            </h4>
+            <h2>{product.nameProduct}</h2>
+            <h3>Stock : {product.stock}</h3>
+            <hr />
+            <div>
+              <h3>brand : {product?.brand?.nameBrand}</h3>
             </div>
-            <div className="img_detail">
-              <img src={product.image} alt="" />
-            </div>
-            <div className="textProduct_detail">
-              <h4
-                style={{ display: "flex", alignItems: "center", gap: "10px" }}
-              >
-                Shop <GrNext /> Women <GrNext />
-                Top{" "}
-              </h4>
-              <h2>{product.nameProduct}</h2>
-              <div className="starfeetback">
-                <Star>{product.rate}</Star>
-                <span>{product.rate}</span>
-                <BiCommentDetail />
-                <span>120 comments</span>
-              </div>
-              <div
-                style={{ display: "flex", alignItems: "center", gap: "20px" }}
-              >
-                <h5>Select Size</h5>
-                <p>Size Guide</p> <GrLinkNext />
-              </div>
-
-              <div className="button_Detail">
-                <button>XS</button>
-                <button>S</button>
-                <button>M</button>
-                <button>L</button>
-                <button>Xl</button>
-              </div>
-
-              <h5>Colours Available </h5>
-              <div className="buttoncolor_Detail">
-                <div
-                  className="buttoncolor1"
-                  style={{
-                    width: "45px",
-                    height: "45px",
-                    borderRadius: "50px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    border: "2px solid gray",
-                  }}
+            <hr />
+            <div>
+              <h3>style : {product?.category?.nameCategory}</h3>
+            </div>{" "}
+            <hr />
+            <div className="addtocart">
+              <button className="buttonaddtocart">
+                <button
+                  onClick={() => handlCLickAddtoCart(product)}
+                  className="flex items-center px-5 py-2 bg-[#8a33fd] rounded-lg gap-3 text-white"
                 >
-                  <button className="buttoncolor01"></button>
-                </div>
-                <div className="buttoncolor2">
-                  <button className="buttoncolor02"></button>
-                </div>
-                <div className="buttoncolor3">
-                  <button className="buttoncolor03"></button>
-                </div>
-                <div className="buttoncolor4">
-                  <button className="buttoncolor04"></button>
-                </div>
-              </div>
-              <div className="addtocart">
-                <button className="buttonaddtocart">
-                  <button
-                    onClick={() => handlCLickAddtoCart(product)}
-                    className="flex items-center px-5 py-2 bg-[#8a33fd] rounded-lg gap-3 text-white"
-                  >
-                    <BsCart style={{ color: "white" }} />
-                    <h6 className="border-1 font-bold text-white">
-                      Add to cart
-                    </h6>
-                  </button>
+                  <BsCart style={{ color: "white" }} />
+                  <h6 className="border-1 font-bold text-white">Add to cart</h6>
                 </button>
-                <p>${product.price}</p>
+              </button>
+              <p>${product.price}</p>
+            </div>
+            <hr />
+            <div className="payment_detail">
+              <div>
+                <p>
+                  <MdPayment style={{ width: "30px", height: "30px" }} />
+                  Secure payment
+                </p>
+                <p>
+                  <FaShippingFast style={{ width: "30px", height: "30px" }} />
+                  Free shipping
+                </p>
               </div>
-
-              <hr />
-              <div className="payment_detail">
-                <div>
-                  <p>
-                    <MdPayment style={{ width: "30px", height: "30px" }} />
-                    Secure payment
-                  </p>
-                  <p>
-                    <FaShippingFast style={{ width: "30px", height: "30px" }} />
-                    Free shipping
-                  </p>
-                </div>
-                <div>
-                  <p>
-                    {" "}
-                    <GiPoloShirt style={{ width: "30px", height: "30px" }} />
-                    Size & Fit
-                  </p>
-                  <p>
-                    <AiOutlineRetweet
-                      style={{ width: "30px", height: "30px" }}
-                    />
-                    Free Shipping & Returns
-                  </p>
-                </div>
+              <div>
+                <p>
+                  <AiOutlineRetweet style={{ width: "30px", height: "30px" }} />
+                  Free Shipping & Returns
+                </p>
               </div>
             </div>
           </div>
-        </Link>
+        </div>
+
         <div className="Description">
           <div className="Description_detail">
             <h2>Product Description</h2>
