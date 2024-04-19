@@ -180,7 +180,11 @@ function ProductWomen() {
                   products.brand.id.toString().includes(selectedBrand)
               )
               .map((item, index) => (
+              
                 <div key={index} className="rounded-lg border h-[400px]">
+                                <button onClick={() => handleAddToWishList(item)} className="w-8 h-8 relative left-[180px]">
+                  <AiOutlineHeart className="text-red-500 w-7 h-7 " />
+                </button>
                   <Link to={`/product-detail/${item.id}`}>
                     <img
                       src={item.image}
@@ -189,9 +193,7 @@ function ProductWomen() {
                     />
 
                     {/* <AiFillHeart /> */}
-                    <button className="w-8 h-8  relative bottom-[250px] left-[200px]">
-                      <AiOutlineHeart className="text-red-500 w-7 h-7 " />
-                    </button>
+                    
                     <br />
                     <p className="text-[18px] font-bold px-3">
                       {item.nameProduct}
