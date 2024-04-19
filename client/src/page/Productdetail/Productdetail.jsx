@@ -101,6 +101,64 @@ export default function Productdetail() {
               product: {product.id}
             </h4>
             <h2>{product.nameProduct}</h2>
+
+            <div className="starfeetback">
+              <Rate disabled defaultValue={product.rate} />
+              <span>{product.rate}</span>
+              <BiCommentDetail />
+              <span>120 comments</span>
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+              <h5>Select Size</h5>
+              <p>Size Guide</p> <GrLinkNext />
+            </div>
+
+            <div className="button_Detail">
+              {/* {size?.map((item) => (
+                <button value={item.nameSize} onClick={() => handleClickSize(item)}>
+                  {item.nameSize}
+                </button>
+              ))} */}
+            </div>
+
+            <h5>Colours Available </h5>
+            <div className="buttoncolor_Detail">
+              {/* {color.map((item) => (
+                <button
+                  onClick={() => handleClickColor(item)}
+                  style={{
+                    backgroundColor: item.nameColor,
+                    border: "2px solid gray",
+                    borderRadius: "50px",
+                    width: "45px",
+                    height: "45px",
+                  }}
+                ></button>
+              ))} */}
+              {/* <div
+                className="buttoncolor1"
+                style={{
+                  width: "45px",
+                  height: "45px",
+                  borderRadius: "50px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  border: "2px solid gray",
+                }}
+              >
+                <button className="buttoncolor01"></button>
+              </div>
+              <div className="buttoncolor2">
+                <button className="buttoncolor02"></button>
+              </div>
+              <div className="buttoncolor3">
+                <button className="buttoncolor03"></button>
+              </div>
+              <div className="buttoncolor4">
+                <button className="buttoncolor04"></button>
+              </div> */}
+
             <h3>Stock : {product.stock}</h3>
             <hr />
             <div>

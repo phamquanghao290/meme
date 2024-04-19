@@ -34,6 +34,7 @@ function ProductWomen() {
     console.log(value); // { value: "lucy", key: "lucy", label: "Lucy (101)" }
   };
 
+
   const [categories, setCategories] = React.useState([]);
   const handleGetAllCate = async () => {
     try {
@@ -50,10 +51,12 @@ function ProductWomen() {
     handleGetAllCate();
     handleGetBrands();
   }, []);
+
   const [brands, setBrands] = React.useState([]);
   const handleGetBrands = async () => {
     const response = await publicAxios.get("/api/brand");
     setBrands(response.data);
+
   };
   const [selectedCategory, setSelectedCategory] = useState("");
   const handleClick_category = (id) => {
@@ -64,6 +67,14 @@ function ProductWomen() {
   const handleClick_brand = (id) => {
     setSelectedBrand(id);
   };
+    };
+
+  const userLogin = JSON.parse(localStorage.getItem("userLogin"));
+  const handleAddToWishList = async (item) => {
+    console.log(item)
+    const res = await axios.post(`http://localhost:8080/api/v1/favorite-product/${userLogin.id}`, item)
+    successNoti(res.data.message)
+  }
   return (
     <div style={{ marginTop: "50px", fontFamily: "Montserrat" }}>
       <div className="flex items-start justify-between gap-11 max-w-[1485px] w-full mx-auto px-4 mb-10 sm:px-6 lg:px-8">
@@ -98,6 +109,7 @@ function ProductWomen() {
                 {item.nameCategory}
               </p>
             ))}
+
 
             <div>
               <h4 className="ml-6 mt-7 text-xl font-bold ">Prices</h4>
@@ -153,6 +165,7 @@ function ProductWomen() {
               ))}
             </div>
           </div>
+
         </div>
         <div>
           <div className="flex items-center mt-10">
@@ -192,6 +205,7 @@ function ProductWomen() {
                   </Link>
                 </div>
               ))}
+
           </div>
         </div>
       </div>
