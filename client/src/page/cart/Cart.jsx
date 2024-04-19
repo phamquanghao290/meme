@@ -6,8 +6,7 @@ import deletecon from "../../../public/images/deletecon.png";
 import { Input } from "antd";
 import { success } from "../../components/Modal/NotificationModal";
 import publicAxios from "../../config/PublicAxios";
-
-
+import CheckoutForBill from "../checkout/CheckoutForBill";
 
 function Cart() {
     const userLogin = JSON.parse(localStorage.getItem("userLogin") || "{}");
@@ -19,6 +18,12 @@ function Cart() {
     const [product, setProduct] = useState([]);
     const [flag, setFlag] = useState(false);
     const [total, setTotal] = useState(0);
+    const [allCart, setAllCart] = useState([]);
+
+    const handleGetCart = async () => {
+        const response = await publicAxios.get('/api/cart/all-cart');
+        setAllCart(response.data);
+    };
 
     const handleGetCartByUserId = async () => {
         const response = await publicAxios.get(`/api/cart/getCartByUserId/${userLogin.id}`);
@@ -29,11 +34,7 @@ function Cart() {
         const response = await publicAxios.get(`/api/product`);
         setProduct(response.data);
     };
-    useEffect(() => {
-            handleGetCartByUserId();
-            document.title = "Cart";  
-            window.scrollTo(0, 0);
-        }, [flag]);
+    
     const handleDeleteCart = async (id) => {
         if(window.confirm('Are you sure you want to delete this item?')){
             const response = await publicAxios.delete(`/api/cart/${id}`);
@@ -63,6 +64,14 @@ function Cart() {
             setFlag(!flag);
         }
     }
+
+    useEffect(() => {
+        handleGetCartByUserId();
+        handleGetCart();
+        handleGetProduct();
+      document.title = "Cart";
+      window.scrollTo(0, 0);
+    }, [flag]);
 
     useEffect(() => {
         handleTotalPrice();
@@ -150,7 +159,7 @@ function Cart() {
                         </div>    
                     </div>
                     <hr />
-                    <button className="continue">Place Order</button>
+                    <Link to={`/checkout/${userLogin.id}`}><button className="continue" >Place Order</button></Link>
                 </div>
             </div>
         </div>

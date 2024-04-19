@@ -18,7 +18,6 @@ import products10 from "../../../public/images/product10.png";
 import products11 from "../../../public/images/product11.png";
 import products12 from "../../../public/images/product12.png";
 import products13 from "../../../public/images/product13.png";
-
 import "./Productsdetail.scss";
 import Star from "../home/star/star";
 import Heatder from "../../components/Heatder/Heatder";
@@ -27,37 +26,29 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { failed, success } from "../../components/Modal/NotificationModal";
 import privateAxios from "../../config/PrivateAxios";
+import publicAxios from "../../config/PublicAxios";
 export default function Productdetail() {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
   const userLogin = JSON.parse(localStorage.getItem("userLogin") || "{}");
   const { id } = useParams();
   const onChange = (key) => {
     console.log(key);
   };
-  const [size, setSize] = useState([])
+  const [size, setSize] = useState([]);
   const [color, setColor] = useState([]);
   const [flag, setFlag] = useState(false);
-  const [product, setProduct]= useState({});
-   const handleGetProduct = async () => {
-     const response = await axios.get(
-       `http://localhost:8080/api/product/${id}`
-     );
-     
-     setProduct(response.data);
-    
+  const [product, setProduct] = useState({});
+  const handleGetProduct = async () => {
+    const response = await publicAxios.get(`/api/product/${id}`);
+    setProduct(response.data);
   };
   const handleGetSize = async () => {
-    const response = await axios.get(`http://localhost:8080/api/size/all`);
-     setSize(response.data)
-  
+    const response = await publicAxios.get(`/api/size/all`);
+    setSize(response.data);
   };
-    const handleGetColor = async () => {
-      const response = await axios.get(`http://localhost:8080/api/color/all`);
-       setColor(response.data)
-   
-    };
+  const handleGetColor = async () => {
+    const response = await publicAxios.get(`/api/color/all`);
+    setColor(response.data);
+  };
   const items = [
     {
       key: "1",
@@ -76,15 +67,7 @@ export default function Productdetail() {
       children: "Content of Tab Pane 3",
     },
   ];
-  const [valueColor, setValueColor] = useState();
-  const [valueSize, setValueSize] = useState();
 
-  const handleClickColor = (value) => {
-    setValueColor(value.colorId);
-  }
-  const handleClickSize = (value) => {
-    setValueSize(value.sizeId);
-  };
   const handlCLickAddtoCart = async (product) => {
     if (!(userLogin && userLogin.id)) {
       failed("Cần Đăng Nhập Để Mua Hàng");
@@ -93,23 +76,19 @@ export default function Productdetail() {
 
     const cart = {
       userId: userLogin.id,
-      product,  
-      colorId: valueColor,
-      sizeId: valueSize,
+      product,
     };
-    console.log(cart);
-
-    const response = await privateAxios.post(`/api/cart/addToCart`, cart)
-   
-    // dispatch(getCart(userLogin?.id));
+    const response = await privateAxios.post(`/api/cart/addToCart`, cart);
     success(response.data.message);
   };
-   useEffect(() => {
-     handleGetProduct();
-     handleGetSize();
-     handleGetColor();
-   }, []);
-  
+  useEffect(() => {
+    handleGetProduct();
+    handleGetSize();
+    handleGetColor();
+    window.scrollTo(0, 0);
+    document.title = "Product Detail";
+  }, []);
+  console.log(product);
   return (
     <>
       <div className="Product_detail">
@@ -135,10 +114,11 @@ export default function Productdetail() {
           </div>
           <div className="textProduct_detail">
             <h4 style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              Shop <GrNext /> Women <GrNext />
-              idproduct: {product.id}
+              Shop <GrNext />
+              product: {product.id}
             </h4>
             <h2>{product.nameProduct}</h2>
+
             <div className="starfeetback">
               <Rate disabled defaultValue={product.rate} />
               <span>{product.rate}</span>
@@ -195,7 +175,17 @@ export default function Productdetail() {
               <div className="buttoncolor4">
                 <button className="buttoncolor04"></button>
               </div> */}
+
+            <h3>Stock : {product.stock}</h3>
+            <hr />
+            <div>
+              <h3>brand : {product?.brand?.nameBrand}</h3>
             </div>
+            <hr />
+            <div>
+              <h3>style : {product?.category?.nameCategory}</h3>
+            </div>{" "}
+            <hr />
             <div className="addtocart">
               <button className="buttonaddtocart">
                 <button
@@ -208,7 +198,6 @@ export default function Productdetail() {
               </button>
               <p>${product.price}</p>
             </div>
-
             <hr />
             <div className="payment_detail">
               <div>
@@ -222,11 +211,6 @@ export default function Productdetail() {
                 </p>
               </div>
               <div>
-                <p>
-                  {" "}
-                  <GiPoloShirt style={{ width: "30px", height: "30px" }} />
-                  Size & Fit
-                </p>
                 <p>
                   <AiOutlineRetweet style={{ width: "30px", height: "30px" }} />
                   Free Shipping & Returns

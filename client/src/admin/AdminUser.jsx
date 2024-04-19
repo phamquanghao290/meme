@@ -9,20 +9,19 @@ import "./admin.css";
 function AdminUser() {
     const [dataUser, setDataUser] = React.useState([]);
     const handleGetUsers = async () => {
-        // const response = await publicAxios.get("/api/user");
-        // setDataUser(response.data);
+        const response = await publicAxios.get("/api/user");
+        setDataUser(response.data);
     };
+    const listUser = dataUser.filter((user)=> user.role === 0);
     const handleChangeStatus = async (user) => {
-
-        // if (user.status === 1) {
-        //     user.status = 0;
-        // } else {
-        //     user.status = 1;
-        // }
-        // await publicAxios.patch(`/api/user/status/${user.userId}`, user);
-        // success("Thay đổi trạng thái thành công");
-        // handleGetUsers();
-
+        if (user.status === 1) {
+            user.status = 0;
+        } else {
+            user.status = 1;
+        }
+        await publicAxios.patch(`/api/user/status/${user.id}`, user);
+        success("Thay đổi trạng thái thành công");
+        handleGetUsers();
     };
 
 
@@ -204,7 +203,7 @@ function AdminUser() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {dataUser?.map(
+                                            {listUser?.map(
                                                 (user, index) => (
                                                     <tr key={index}>
                                                         <th scope="col">

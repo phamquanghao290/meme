@@ -28,50 +28,12 @@ function ProductWomen() {
     handleGetProducts();
     window.scrollTo(0, 0);
   }, []);
-  function getItem(label, key, icon, children, type) {
-    return {
-      key,
-      icon,
-      children,
-      label,
-      type,
-    };
-  }
+ 
   const handleChange = (value) => {
     console.log(value); // { value: "lucy", key: "lucy", label: "Lucy (101)" }
   };
-  const items = [
-    getItem("Dress Style", "1", <MailOutlined />, [
-      getItem("Classic", "11"),
-      getItem("Casual", "12"),
-      getItem("Business", "13"),
-      getItem("Sport", "14"),
-    ]),
-    getItem("Size", "2", <AppstoreOutlined />, [
-      getItem(
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr 1fr",
-            marginBottom: "10px",
-            marginTop: "10px",
-            width: "100%",
-          }}
-        >
-          <p>XS</p>
-          <p>S</p>
-          <p>M</p>
-          <p>L</p>
-          <p>XL</p>
-          <p>XXL</p>
-        </div>
-      ),
-      "21",
-    ]),
-    getItem("Price", "3", <SettingOutlined />, [
-      getItem(<Slider range defaultValue={[20, 50]} />, "31"),
-    ]),
-  ];
+ 
+
 
   const getLevelKeys = (items1) => {
     const key = {};
@@ -89,6 +51,7 @@ function ProductWomen() {
     return key;
   };
   const levelKeys = getLevelKeys(items);
+
   const [categories, setCategories] = React.useState([]);
   const handleGetAllCate = async () => {
     try {
@@ -105,6 +68,7 @@ function ProductWomen() {
     handleGetAllCate();
     handleGetBrands();
   }, []);
+
   const [brands, setBrands] = React.useState([]);
   const handleGetBrands = async () => {
     const response = await publicAxios.get("/api/brand");
@@ -117,125 +81,59 @@ function ProductWomen() {
     const res = await axios.post(`http://localhost:8080/api/v1/favorite-product/${userLogin.id}`, item)
     successNoti(res.data.message)
   }
-  return (
-    <div style={{ marginTop: "50px", fontFamily: "Montserrat" }}>
-      <div className="flex items-start justify-between gap-11 max-w-[1485px] w-full mx-auto px-4 mb-10 sm:px-6 lg:px-8">
-        <div className="w-[300px] p-4 border rounded-xl">
-          <h3 className="font-bold text-xl ml-6 flex items-center ">
-            Fillter <ImMenu2 className="ml-[170px]" />
-          </h3>
-          <hr className="mt-6" />
-          <div>
-            <h4 className="ml-6 mt-7 text-xl font-bold ">Category</h4>
-            {categories.map((item) => (
-              <p className="text-xl ml-6 flex items-center  mt-7">
-                {item.nameCategory}
-              </p>
-            ))}
-
+    return (
+      <div style={{ marginTop: "50px", fontFamily: "Montserrat" }}>
+        <div className="flex items-start justify-between gap-11 max-w-[1485px] w-full mx-auto px-4 mb-10 sm:px-6 lg:px-8">
+          <div className="w-[300px] p-4 border rounded-xl">
+            <h3 className="font-bold text-xl ml-6 flex items-center ">
+              Fillter <ImMenu2 className="ml-[170px]" />
+            </h3>
+            <hr className="mt-6" />
             <div>
-              <h4 className="ml-6 mt-7 text-xl font-bold ">Prices</h4>
-              <Select
-                className="ml-6 mt-7"
-                labelInValue
-                defaultValue={{
-                  value: "prices gradually increase",
-                  label: "prices",
-                }}
-                style={{
-                  width: 240,
-                }}
-                onChange={handleChange}
-                options={[
-                  {
-                    value: "prices gradually decrease",
-                    label: "prices gradually decrease",
-                  },
-                  {
-                    value: "prices gradually increase",
-                    label: "prices gradually increase",
-                  },
-                ]}
-              />
-            </div>
-            <div>
-              <h4 className="ml-6 mt-7 text-xl font-bold ">Size</h4>
-              <div className="flex items-center gap-6 ml-6 mt-7">
-                <button
-                  style={{
-                    width: "50px",
-                    height: "50px",
-                    border: "1px solid gray",
-                  }}
-                  className="w-8 h-8 rounded-lg"
-                >
-                  XS
-                </button>
-                <button>S</button>
-                <button>M</button>
-                <button>L</button>
-                <button>Xl</button>
-              </div>
-            </div>
-            <div>
-              <h4 className="ml-6 mt-7 text-xl font-bold ">Color</h4>
-              <Select
-                className="ml-6 mt-7"
-                labelInValue
-                defaultValue={{
-                  value: "red",
-                  label: "color",
-                }}
-                style={{
-                  width: 240,
-                }}
-                onChange={handleChange}
-                options={[
-                  {
-                    value: "red",
-                    label: "red",
-                    style: {
-                      color: "red",
-                      backgroundColor: "red",
-                    },
-                  },
-                  {
-                    value: "blue",
-                    label: "blue",
-                    style: {
-                      color: "blue",
-                      backgroundColor: "blue",
-                    },
-                  },
-                  {
-                    value: "gray",
-                    label: "gray",
-                    style: {
-                      color: "gray",
-                      backgroundColor: "gray",
-                    },
-                  },
-                  {
-                    value: "Yellow",
-                    label: "Yellow",
-                    style: {
-                      color: "#edd146",
-                      backgroundColor: "#edd146",
-                    },
-                  },
-                ]}
-              />
-            </div>
-            <div>
-              <h4 className="ml-6 mt-7 text-xl font-bold ">Brand</h4>
-              {brands.map((item) => (
+              <h4 className="ml-6 mt-7 text-xl font-bold ">Category</h4>
+              {categories.map((item) => (
                 <p className="text-xl ml-6 flex items-center  mt-7">
-                  {item.nameBrand}
+                  {item.nameCategory}
                 </p>
               ))}
+              
+              <div>
+                <h4 className="ml-6 mt-7 text-xl font-bold ">Prices</h4>
+                <Select
+                  className="ml-6 mt-7"
+                  labelInValue
+                  defaultValue={{
+                    value: "prices gradually increase",
+                    label: "prices",
+                  }}
+                  style={{
+                    width: 240,
+                  }}
+                  onChange={handleChange}
+                  options={[
+                    {
+                      value: "prices gradually decrease",
+                      label: "prices gradually decrease",
+                    },
+                    {
+                      value: "prices gradually increase",
+                      label: "prices gradually increase",
+                    },
+                  ]}
+                />
+              </div>
+           
+              <div>
+                <h4 className="ml-6 mt-7 text-xl font-bold ">Brand</h4>
+                {brands.map((item) => (
+                  <p className="text-xl ml-6 flex items-center  mt-7">
+                    {item.nameBrand}
+                  </p>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        
         <div>
           <div className="flex items-center mt-10">
             <div className="bg-[#8A33FD] w-2 h-8 rounded-lg"></div>
