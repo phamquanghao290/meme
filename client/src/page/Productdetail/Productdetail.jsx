@@ -151,16 +151,16 @@ export default function Productdetail() {
             </div>
 
             <div className="button_Detail">
-              {size.map((item) => (
+              {/* {size?.map((item) => (
                 <button value={item.nameSize} onClick={() => handleClickSize(item)}>
                   {item.nameSize}
                 </button>
-              ))}
+              ))} */}
             </div>
 
             <h5>Colours Available </h5>
             <div className="buttoncolor_Detail">
-              {color.map((item) => (
+              {/* {color.map((item) => (
                 <button
                   onClick={() => handleClickColor(item)}
                   style={{
@@ -171,7 +171,7 @@ export default function Productdetail() {
                     height: "45px",
                   }}
                 ></button>
-              ))}
+              ))} */}
               {/* <div
                 className="buttoncolor1"
                 style={{
