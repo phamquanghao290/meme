@@ -67,7 +67,7 @@ function ProductWomen() {
   const handleClick_brand = (id) => {
     setSelectedBrand(id);
   };
-    };
+    
 
   const userLogin = JSON.parse(localStorage.getItem("userLogin"));
   const handleAddToWishList = async (item) => {
@@ -181,8 +181,8 @@ function ProductWomen() {
               )
               .map((item, index) => (
               
-                <div key={index} className="rounded-lg border h-[400px]">
-                                <button onClick={() => handleAddToWishList(item)} className="w-8 h-8 relative left-[180px]">
+                <div key={index} className="rounded-lg border h-[430px]">
+                                <button onClick={() => handleAddToWishList(item)} className="w-8 h-8 relative left-[230px] ">
                   <AiOutlineHeart className="text-red-500 w-7 h-7 " />
                 </button>
                   <Link to={`/product-detail/${item.id}`}>
@@ -273,6 +273,6 @@ function ProductWomen() {
       </div>
     </div>
   );
-}
+};
 
 export default ProductWomen;

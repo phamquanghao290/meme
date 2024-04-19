@@ -148,14 +148,17 @@ function CheckoutForBill() {
       return acc + item.product.price * item.quantity;
     }, 0);
     setTotal(result);
-    setFlag(!flag);
+   
+    
   };
+  useEffect(() => {
+    handleTotalCart();
+  }, [cart]);
   useEffect(() => {
     handleGetDataCity();
     handleGetCart();
-    handleTotalCart();
     document.title = "Checkout";
-  }, [flag]);
+  }, []);
 
   return (
     <div>

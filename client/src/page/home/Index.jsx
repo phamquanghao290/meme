@@ -192,7 +192,7 @@ export default function Index() {
                 <h3 style={{ color: "white" }}>
                   WE MADE YOUR EVERYDAY <br /> FASHION BETTER!
                 </h3>
-                <p>
+                <p >
                   In our journey to improve everyday fashion, <br />
                   euphoria presents EVERYDAY wear range <br />- Comfortable &
                   Affordable fashion 24/7
