@@ -34,7 +34,24 @@ function ProductWomen() {
   };
  
 
- 
+
+  const getLevelKeys = (items1) => {
+    const key = {};
+    const func = (items2, level = 1) => {
+      items2.forEach((item) => {
+        if (item.key) {
+          key[item.key] = level;
+        }
+        if (item.children) {
+          return func(item.children, level + 1);
+        }
+      });
+    }
+    func(items1);
+    return key;
+  };
+  const levelKeys = getLevelKeys(items);
+
   const [categories, setCategories] = React.useState([]);
   const handleGetAllCate = async () => {
     try {
@@ -51,12 +68,19 @@ function ProductWomen() {
     handleGetAllCate();
     handleGetBrands();
   }, []);
-      const [brands, setBrands] = React.useState([]);
-    const handleGetBrands = async () => {
-      const response = await publicAxios.get("/api/brand");
-      setBrands(response.data);
+
+  const [brands, setBrands] = React.useState([]);
+  const handleGetBrands = async () => {
+    const response = await publicAxios.get("/api/brand");
+    setBrands(response.data);
   };
- 
+
+  const userLogin = JSON.parse(localStorage.getItem("userLogin"));
+  const handleAddToWishList = async (item) => {
+    console.log(item)
+    const res = await axios.post(`http://localhost:8080/api/v1/favorite-product/${userLogin.id}`, item)
+    successNoti(res.data.message)
+  }
     return (
       <div style={{ marginTop: "50px", fontFamily: "Montserrat" }}>
         <div className="flex items-start justify-between gap-11 max-w-[1485px] w-full mx-auto px-4 mb-10 sm:px-6 lg:px-8">
@@ -109,31 +133,32 @@ function ProductWomen() {
               </div>
             </div>
           </div>
-          <div>
-            <div className="flex items-center mt-10">
-              <div className="bg-[#8A33FD] w-2 h-8 rounded-lg"></div>
-              <p className="ml-6 font-bold text-xl">Products Clothing</p>
-            </div>
-            <div className="grid grid-cols-4 mt-10 gap-5 drop-shadow-xl">
-              {product.map((item, index) => (
-                <div key={index} className="rounded-lg border h-[400px]">
-                  <Link to={`/product-detail/${item.id}`}>
-                    <img src={item.image} alt="" className="max-w-[220px] m-auto pt-3 h-[260px] hover:scale-105 transition-all duration-300 " />
-                  
-                    {/* <AiFillHeart /> */}
-                    <button className="w-8 h-8  relative bottom-[250px] left-[200px]">
-                      <AiOutlineHeart className="text-red-500 w-7 h-7 " />
-                    </button>
-                    <br />
-                    <p className="text-[18px] font-bold px-3">{item.nameProduct}</p>
-                    <div className="flex items-end justify-between px-3">
-                      <p className="text-md line-clamp-2 font-bold">{item.price}</p>
-                      <Rate disabled defaultValue={item.rate} />
-                    </div>
-                  </Link>
-                </div>
-              ))}
-            </div>
+        
+        <div>
+          <div className="flex items-center mt-10">
+            <div className="bg-[#8A33FD] w-2 h-8 rounded-lg"></div>
+            <p className="ml-6 font-bold text-xl">Women's Clothing</p>
+          </div>
+          <div className="grid grid-cols-4 mt-10 gap-5 drop-shadow-xl">
+            {product.map((item, index) => (
+              <div key={index} className="rounded-lg border h-[400px]">
+                <button onClick={() => handleAddToWishList(item)} className="w-8 h-8 relative left-[180px]">
+                  <AiOutlineHeart className="text-red-500 w-7 h-7 " />
+                </button>
+                <Link to={`/product-detail/${item.id}`}>
+                  <img src={item.image} alt="" className="max-w-[220px] m-auto pt-3 h-[260px] hover:scale-105 transition-all duration-300 " />
+
+                  {/* <AiFillHeart /> */}
+                  <br />
+                  <p className="text-[18px] font-bold px-3">{item.nameProduct}</p>
+                  <div className="flex items-end justify-between px-3">
+                    <p className="text-md line-clamp-2 font-bold">{item.price}</p>
+                    <Rate disabled defaultValue={item.rate} />
+                  </div>
+                </Link>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       <div className="Product_Content" style={{ paddingBottom: "100px" }}>
