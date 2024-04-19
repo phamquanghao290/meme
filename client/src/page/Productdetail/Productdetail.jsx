@@ -34,6 +34,12 @@ export default function Productdetail() {
   const onChange = (key) => {
     console.log(key);
   };
+  const [productAll, setProductAll] = useState([]);
+  const handleGetProducts = async () => {
+    const response = await publicAxios.get("/api/product");
+
+    setProductAll(response.data);
+  };
   const [size, setSize] = useState([]);
   const [color, setColor] = useState([]);
   const [flag, setFlag] = useState(false);
@@ -42,14 +48,7 @@ export default function Productdetail() {
     const response = await publicAxios.get(`/api/product/${id}`);
     setProduct(response.data);
   };
-  const handleGetSize = async () => {
-    const response = await publicAxios.get(`/api/size/all`);
-    setSize(response.data);
-  };
-  const handleGetColor = async () => {
-    const response = await publicAxios.get(`/api/color/all`);
-    setColor(response.data);
-  };
+
   const items = [
     {
       key: "1",
@@ -71,7 +70,7 @@ export default function Productdetail() {
 
   const handlCLickAddtoCart = async (product) => {
     if (!(userLogin && userLogin.id)) {
-      failed("Cần Đăng Nhập Để Mua Hàng");
+      failed("Need to Login to Purchase");
       return;
     }
 
@@ -84,32 +83,16 @@ export default function Productdetail() {
   };
   useEffect(() => {
     handleGetProduct();
-    handleGetSize();
-    handleGetColor();
+
+    handleGetProducts();
     window.scrollTo(0, 0);
     document.title = "Product Detail";
   }, []);
-  console.log(product);
+
   return (
     <>
       <div className="Product_detail">
         <div className="content_Detail">
-          <div className="details">
-            <AiFillUpCircle style={{ fontSize: "30px", margin: "0 auto" }} />
-            <img src={products15} alt="" />
-            <img
-              src={products14}
-              alt=""
-              style={{
-                padding: "6px",
-                border: "2px solid black",
-                borderRadius: "10px",
-              }}
-            />
-            <img src={products16} alt="" />
-
-            <AiFillDownCircle style={{ fontSize: "30px", margin: "0 auto" }} />
-          </div>
           <div className="img_detail">
             <img src={product.image} alt="" />
           </div>
@@ -276,177 +259,28 @@ export default function Productdetail() {
               </div>
             </div>
             <div className="image_detail">
-              <img src={products16} alt="" />
+              <img src={product.image} alt="" />
             </div>
           </div>
         </div>
         <div className="NewArrivalProducts">
           <h2>In The Limelight</h2>
-          <div className="productshome">
-            <div>
-              <img src={products16} alt="" />
-              <div className="titleProducts">
-                <div>
-                  <h4>Black Sweatshirt with ....</h4> <p>Jhanvis Brand</p>
-                </div>
 
-                <div
-                  style={{
-                    marginLeft: "60px",
-                    marginTop: "10px",
-                    backgroundColor: "#F6F6F6",
-                    padding: "10px",
-                    borderRadius: "5px",
-                    height: "40px",
-                  }}
-                >
-                  $123.00
+          <div className="grid grid-cols-4 mt-10 gap-5 drop-shadow-xl ">
+            {productAll
+              .filter((products) => products.brand.id == product.brand.id)
+              .map((item, index) => (
+                <div className="Limelight max-w-[220px] m-auto pt-3 h-[260px] hover:scale-105 transition-all duration-300">
+                  <img src={item.image} alt="" />
+                  <div className="titleProducts">
+                    <div>
+                      {" "}
+                      <h4>{item.nameProduct}</h4> <p>{item.brand.nameBrand}</p>
+                    </div>
+                    <div className="pricebutton">{item.price}</div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div>
-              <img src={products15} alt="" />
-              <div className="titleProducts">
-                <div>
-                  {" "}
-                  <h4>line Pattern Black H...</h4> <p>ASs Brand</p>
-                </div>
-                <div
-                  style={{
-                    marginLeft: "90px",
-                    marginTop: "10px",
-                    backgroundColor: "#F6F6F6",
-                    padding: "10px",
-                    borderRadius: "5px",
-                    height: "40px",
-                  }}
-                >
-                  $37.00
-                </div>
-              </div>
-            </div>
-            <div>
-              <img src={products14} alt="" />{" "}
-              <div className="titleProducts">
-                <div>
-                  <h4>Black Shorts</h4> <p>MMs Brand</p>
-                </div>
-                <div
-                  style={{
-                    marginLeft: "170px",
-                    marginTop: "10px",
-                    backgroundColor: "#F6F6F6",
-                    padding: "10px",
-                    borderRadius: "5px",
-                    height: "40px",
-                  }}
-                >
-                  $37.00
-                </div>
-              </div>
-            </div>
-            <div>
-              <img src={products13} alt="" />{" "}
-              <div className="titleProducts">
-                <div>
-                  <h4>Levender Hoodie with ....</h4> <p>Nikes Brand</p>
-                </div>
-                <div
-                  style={{
-                    marginLeft: "60px",
-                    marginTop: "10px",
-                    backgroundColor: "#F6F6F6",
-                    padding: "10px",
-                    borderRadius: "5px",
-                    height: "40px",
-                  }}
-                >
-                  $119.00
-                </div>
-              </div>
-            </div>
-            <div>
-              <img src={products16} alt="" />
-              <div className="titleProducts">
-                <div>
-                  <h4>Black Sweatshirt with ....</h4> <p>Jhanvis Brand</p>
-                </div>
-
-                <div
-                  style={{
-                    marginLeft: "60px",
-                    marginTop: "10px",
-                    backgroundColor: "#F6F6F6",
-                    padding: "10px",
-                    borderRadius: "5px",
-                    height: "40px",
-                  }}
-                >
-                  $123.00
-                </div>
-              </div>
-            </div>
-            <div>
-              <img src={products15} alt="" />
-              <div className="titleProducts">
-                <div>
-                  {" "}
-                  <h4>line Pattern Black H...</h4> <p>ASs Brand</p>
-                </div>
-                <div
-                  style={{
-                    marginLeft: "90px",
-                    marginTop: "10px",
-                    backgroundColor: "#F6F6F6",
-                    padding: "10px",
-                    borderRadius: "5px",
-                    height: "40px",
-                  }}
-                >
-                  $37.00
-                </div>
-              </div>
-            </div>
-            <div>
-              <img src={products14} alt="" />{" "}
-              <div className="titleProducts">
-                <div>
-                  <h4>Black Shorts</h4> <p>MMs Brand</p>
-                </div>
-                <div
-                  style={{
-                    marginLeft: "170px",
-                    marginTop: "10px",
-                    backgroundColor: "#F6F6F6",
-                    padding: "10px",
-                    borderRadius: "5px",
-                    height: "40px",
-                  }}
-                >
-                  $37.00
-                </div>
-              </div>
-            </div>
-            <div>
-              <img src={products13} alt="" />{" "}
-              <div className="titleProducts">
-                <div>
-                  <h4>Levender Hoodie with ....</h4> <p>Nikes Brand</p>
-                </div>
-                <div
-                  style={{
-                    marginLeft: "60px",
-                    marginTop: "10px",
-                    backgroundColor: "#F6F6F6",
-                    padding: "10px",
-                    borderRadius: "5px",
-                    height: "40px",
-                  }}
-                >
-                  $119.00
-                </div>
-              </div>
-            </div>
+              ))}
           </div>
         </div>
       </div>
