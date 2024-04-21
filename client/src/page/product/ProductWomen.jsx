@@ -16,6 +16,7 @@ import { Select } from "antd";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { successNoti } from "../../utils/noti";
+
 function ProductWomen() {
   const [product, setProduct] = useState([]);
 
@@ -33,8 +34,6 @@ function ProductWomen() {
   const handleChange = (value) => {
     console.log(value); // { value: "lucy", key: "lucy", label: "Lucy (101)" }
   };
-
-
   const [categories, setCategories] = React.useState([]);
   const handleGetAllCate = async () => {
     try {
