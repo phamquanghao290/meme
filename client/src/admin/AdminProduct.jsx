@@ -106,19 +106,7 @@ function AdminProduct() {
         } catch (error) {
             failed("Vui lòng điền đầy đủ thông tin");
         }
-    };
-
-    const handleEditProduct = async (item) => {
-      setOneProduct(item);
-      setEdit(true);
-      setNewProduct({
-        ...newProduct,
-        nameProduct: item.nameProduct,
-        price: item.price,
-        stock: item.stock,
-      });
-      setPreview(item.image);
-    };
+    }
 
     const handleEdit = async () => {
         console.log(newProduct);
@@ -293,29 +281,6 @@ function AdminProduct() {
         reader.readAsDataURL(file);
     };
 
-    const handleAddInfor = async () => {
-        const formData = new FormData();
-        formData.append("file", selectedMediaList);
-        formData.append("upload_preset", "project");
-        const [uploadMedia] = await Promise.all([
-            axios.post(
-                "https://api.cloudinary.com/v1_1/dixzrnjbq/image/upload",
-                formData
-            ),
-        ]);
-        const media = uploadMedia.data.secure_url;
-        const response = await publicAxios.post(`/api/product/${id}`, {
-            ...newProduct,
-            image: media,
-        });
-        setFlag(!flag);
-        setPreviewList(null);
-        success(response.data.message);
-        setIsModalOpen(false);
-    };
-    const handleCancel = () => {
-        setIsModalOpen(false);
-    };
     return (
         <>
             {/* Dashboard */}
