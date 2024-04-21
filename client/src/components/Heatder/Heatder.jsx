@@ -8,7 +8,7 @@ import { AiFillHeart } from "react-icons/ai";
 import logo from "../../../public/images/Logo.png";
 import search from "../../../public/images/search.png";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Heatder.scss";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -29,6 +29,7 @@ export default function Heatder() {
       return;
     }
   };
+  const navigate = useNavigate();
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -118,7 +119,7 @@ export default function Heatder() {
                       }}
                     >
                       <MenuItem onClick={handleClose}>Profile</MenuItem>
-                      <MenuItem onClick={handleClose}>My account</MenuItem>
+                      <MenuItem onClick={()=> navigate("/order")}>My cart</MenuItem>
                       <MenuItem onClick={handleLogout}>Logout</MenuItem>
                     </Menu>
                   </div>
