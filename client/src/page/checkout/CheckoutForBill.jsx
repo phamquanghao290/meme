@@ -151,9 +151,12 @@ function CheckoutForBill() {
   };
 
   useEffect(() => {
+    handleTotalCart();
+  }, [cart]);
+  useEffect(() => {
     handleGetDataCity();
     handleGetCart();
-    // handleTotalCart();
+
     document.title = "Checkout";
   }, []);
 

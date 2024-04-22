@@ -25,8 +25,10 @@ import Footer from "../../components/Foodter/Footer";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import publicAxios from "../../config/PublicAxios";
-import { failed, success } from "../../components/Modal/NotificationModal";
+
 import privateAxios from "../../config/PrivateAxios";
+import { failed, success } from "../../components/Modal/NotificationModal";
+
 
 export default function Productdetail() {
   const userLogin = JSON.parse(localStorage.getItem("userLogin") || "{}");
