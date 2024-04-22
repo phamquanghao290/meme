@@ -63,7 +63,7 @@ export default function Index() {
     handleGetAllCate();
   }, []);
   const topFourProducts = product.sort((a, b) => b.id - a.id).slice(0, 4);
-  console.log(product);
+   
   const sortedProducts = product.sort((a, b) => a.stock - b.stock);
   const lowestStockProducts = sortedProducts.slice(0, 4);
   const handleGetAllCate = async () => {
@@ -244,6 +244,7 @@ export default function Index() {
           <div className="productshome">
             {product
               ?.filter((products) => products.category.id == 2)
+              .slice(0, 4)
               .map((product) => (
                 <div>
                   <img src={product.image} alt="" />{" "}
@@ -269,6 +270,7 @@ export default function Index() {
         <div className="NewArrivalProducts">
           {categories
             ?.filter((categories) => categories.id == 3)
+
             .map((categories) => (
               <h2>{categories.nameCategory}</h2>
             ))}
@@ -276,6 +278,7 @@ export default function Index() {
           <div className="productshome">
             {product
               ?.filter((products) => products.category.id == 3)
+              .slice(0, 4)
               .map((product) => (
                 <div>
                   <img src={product.image} alt="" />{" "}
@@ -308,6 +311,7 @@ export default function Index() {
           <div className="productshome">
             {product
               ?.filter((products) => products.category.id == 1)
+              .slice(0, 4)
               .map((product) => (
                 <div>
                   <img src={product.image} alt="" />{" "}
