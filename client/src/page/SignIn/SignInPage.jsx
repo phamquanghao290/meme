@@ -58,7 +58,6 @@ export default function SignInPage() {
             role: 0,
             status: 0,
         };
-        console.log("data1", data1);
         try {
             const res = await publicAxios.post("/api/login-facebook", data1);
             console.log(res);
@@ -89,13 +88,17 @@ export default function SignInPage() {
                 return;
             }
             if (response.data.user.email === "admin@gmail.com") {
-                success("Hello Admin");
-                setTimeout(() => {
-                    window.location.href = "/admin";
-                }, 1500);
-                localStorage.setItem("admin_token", response.data.token);
-                return;
+              success("Hello Admin");
+              setTimeout(() => {
+                  window.location.href = "/admin";
+              }, 1500);
+              localStorage.setItem(
+                  "admin",
+                  JSON.stringify(response.data.user)
+              );  
+              return;
             }
+            
             if (response.data.user.status === 1) {
                 failed("Your account has been locked");
                 return;
@@ -229,7 +232,7 @@ export default function SignInPage() {
             <div className="mainInput3">
               <input
                 className="input3-sign-in"
-                type="text"
+                type="password"
                 name="password"
                 onChange={handleGetValueLogin}
                 value={user.password}
