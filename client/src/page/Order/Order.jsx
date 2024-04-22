@@ -35,7 +35,6 @@ function Order() {
     const response = await axios.get(
       `http://localhost:8080/order/getorderById/${currentUser.id}`
     );
-
     setBills(response.data);
   };
   const [current, setCurrent] = useState("mail");
@@ -278,16 +277,17 @@ function Order() {
                     <p>Phone Number:{item.phone}</p>
                     <div className="flex items-center gap-3">
                       <p>${item.total}</p>
-                      <div
-                        className=""
-                        onClick={() =>
-                          handleChangStatus(item.id, item.status_order)
-                        }
-                      >
+                      <div>
                         {item.status_order === 0 ? (
-                          <button className="text-white bg-[#4166f8] rounded-lg px-4 py-2">
-                            Pending
+                          <button
+                            className="text-white bg-[#4166f8] rounded-lg px-4 py-2"
+                            onClick={() =>
+                              handleChangStatus(item.id, item.status_order)
+                            }
+                          >
+                            Cancel
                           </button>
+
                         ) :
                           item.status_order === 1 ? (
                             <p className="text-white bg-[#5b45eb] rounded-lg px-4 py-2">
@@ -299,6 +299,7 @@ function Order() {
                               Cancel
                             </p>
                           )}
+
                       </div>
                     </div>
                   </div>

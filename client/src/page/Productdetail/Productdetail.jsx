@@ -29,24 +29,24 @@ import publicAxios from "../../config/PublicAxios";
 import privateAxios from "../../config/PrivateAxios";
 import { failed, success } from "../../components/Modal/NotificationModal";
 
-
 export default function Productdetail() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   const userLogin = JSON.parse(localStorage.getItem("userLogin") || "{}");
+  const [product, setProduct] = useState({});
+  const [productAll, setProductAll] = useState([]);
   const { id } = useParams();
   const onChange = (key) => {
     console.log(key);
   };
-  const [productAll, setProductAll] = useState([]);
+
   const handleGetProducts = async () => {
     const response = await publicAxios.get("/api/product");
 
     setProductAll(response.data);
   };
 
-  const [product, setProduct] = useState({});
   const handleGetProduct = async () => {
     const response = await publicAxios.get(`/api/product/${id}`);
     setProduct(response.data);
@@ -274,7 +274,7 @@ export default function Productdetail() {
 
           <div className="grid grid-cols-4 mt-10 gap-5 drop-shadow-xl ">
             {productAll
-              .filter((products) => products.brand.id == products.brand.id)
+              .filter((products) => products.brand.id == product.brand.id)
               .map((item, index) => (
                 <div className="Limelight max-w-[220px] m-auto pt-3 h-[260px] hover:scale-105 transition-all duration-300">
                   <img src={item.image} alt="" />
