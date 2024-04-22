@@ -10,13 +10,8 @@ function AdminCategory() {
     })
     const [categories, setCategories] = React.useState([])
     const handleGetAllCate = async () => {
-        try {
             const response = await publicAxios.get("/api/category")
-            console.log(response.data);
             setCategories(response.data)
-        } catch (error) {
-            console.log(error)
-        }
     }
 
     React.useEffect(() => {
@@ -25,15 +20,8 @@ function AdminCategory() {
     }, [])
 
     const handleAdd = async () => {
-        // const check = categories.find((item) => item.nameCategory === newCate.nameCategory)
-        // console.log(newCate)
-        // console.log(check)
-        // if (check) {
-        //     failed("Tên danh mục đã tồn tại")
-        // } else {
             try {
                 const response = await publicAxios.post("/api/category", newCate)
-                console.log(response.data);
                 await handleGetAllCate()
                 setCategories(response.data.data)
                 success(response.data.message)
@@ -55,15 +43,15 @@ function AdminCategory() {
             const response = await publicAxios.patch(`/api/category/${newCate.categoryId}`, newCate)
             await handleGetAllCate()
             setCategories(response.data.data)
-            success(response.data.message)
+            success("Update successful");
             setNewCate({ nameCategory: "" })
         } catch (error) {
-            failed("Sửa thất bại")
+            failed("Update failed");
         }
     }
 
     const handleDelete = async (id) => {
-            if (window.confirm("Bạn có chắc muốn xóa?")) {
+            if (window.confirm("You definitely want to delete this category?")) {
                 const response = await publicAxios.delete(`/api/category/${id}`)
                 console.log(response.data);
                 setCategories(response.data.data)
