@@ -18,6 +18,9 @@ import axios from "axios";
 import { successNoti } from "../../utils/noti";
 
 function ProductWomen() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const [product, setProduct] = useState([]);
 
   const handleGetProducts = async () => {
@@ -28,12 +31,12 @@ function ProductWomen() {
 
   useEffect(() => {
     handleGetProducts();
-    window.scrollTo(0, 0);
   }, []);
 
   const handleChange = (value) => {
     console.log(value); // { value: "lucy", key: "lucy", label: "Lucy (101)" }
   };
+
   const [categories, setCategories] = React.useState([]);
   const handleGetAllCate = async () => {
     try {
@@ -55,7 +58,6 @@ function ProductWomen() {
   const handleGetBrands = async () => {
     const response = await publicAxios.get("/api/brand");
     setBrands(response.data);
-
   };
   const [selectedCategory, setSelectedCategory] = useState("");
   const handleClick_category = (id) => {
@@ -70,10 +72,13 @@ function ProductWomen() {
 
   const userLogin = JSON.parse(localStorage.getItem("userLogin"));
   const handleAddToWishList = async (item) => {
-    console.log(item)
-    const res = await axios.post(`http://localhost:8080/api/v1/favorite-product/${userLogin.id}`, item)
-    successNoti(res.data.message)
-  }
+    console.log(item);
+    const res = await axios.post(
+      `http://localhost:8080/api/v1/favorite-product/${userLogin.id}`,
+      item
+    );
+    successNoti(res.data.message);
+  };
   return (
     <div style={{ marginTop: "50px", fontFamily: "Montserrat" }}>
       <div className="flex items-start justify-between gap-11 max-w-[1485px] w-full mx-auto px-4 mb-10 sm:px-6 lg:px-8">
@@ -108,7 +113,6 @@ function ProductWomen() {
                 {item.nameCategory}
               </p>
             ))}
-
 
             <div>
               <h4 className="ml-6 mt-7 text-xl font-bold ">Prices</h4>
@@ -164,7 +168,6 @@ function ProductWomen() {
               ))}
             </div>
           </div>
-
         </div>
         <div>
           <div className="flex items-center mt-10">
@@ -179,11 +182,13 @@ function ProductWomen() {
                   products.brand.id.toString().includes(selectedBrand)
               )
               .map((item, index) => (
-              
                 <div key={index} className="rounded-lg border h-[430px]">
-                                <button onClick={() => handleAddToWishList(item)} className="w-8 h-8 relative left-[230px] ">
-                  <AiOutlineHeart className="text-red-500 w-7 h-7 " />
-                </button>
+                  <button
+                    onClick={() => handleAddToWishList(item)}
+                    className="w-8 h-8 relative left-[230px] "
+                  >
+                    <AiOutlineHeart className="text-red-500 w-7 h-7 " />
+                  </button>
                   <Link to={`/product-detail/${item.id}`}>
                     <img
                       src={item.image}
@@ -192,7 +197,7 @@ function ProductWomen() {
                     />
 
                     {/* <AiFillHeart /> */}
-                    
+
                     <br />
                     <p className="text-[18px] font-bold px-3">
                       {item.nameProduct}
@@ -206,7 +211,6 @@ function ProductWomen() {
                   </Link>
                 </div>
               ))}
-
           </div>
         </div>
       </div>
@@ -272,6 +276,6 @@ function ProductWomen() {
       </div>
     </div>
   );
-};
+}
 
 export default ProductWomen;

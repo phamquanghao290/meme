@@ -67,7 +67,9 @@ function Order() {
   };
 
     const handleChangStatus = async (id, status) => {
-        const confirm = window.confirm("Bạn có chắc muốn hủy đơn hàng?");
+        const confirm = window.confirm(
+          "Are you sure you want to cancel your order?"
+        );
     if (confirm) {
         try {
           const res = await axios.patch(
@@ -82,7 +84,7 @@ function Order() {
         }
     }
   };
-
+  const numbers= 0;
   useEffect(() => {
     handleGetbills();
   }, []);
@@ -136,7 +138,7 @@ function Order() {
                 lineHeight: "33px",
               }}
             >
-              Hello Jhanvi
+              Hello : {currentUser.name}
             </p>
           </div>
           <p
@@ -236,9 +238,10 @@ function Order() {
                 fontWeight: "700",
                 color: "#3C4242",
                 lineHeight: "33px",
+                borderLeft: "5px solid #8A33FD",
               }}
             >
-              My Order
+              <h2 style={{ marginLeft: "20px" }}>My Order</h2>
             </h2>
             <h2
               style={{
@@ -246,53 +249,68 @@ function Order() {
                 fontWeight: "600",
                 color: "#3C4242",
                 lineHeight: "33px",
+                marginLeft: "20px",
               }}
             >
               Contact Details
             </h2>
           </div>
-         
-          {bills.map((item, key) => (
-            <div className="w-100 h-40 p-7 bg-slate-100 rounded-lg drop-shadow-lg mt-10">
-              <div className="flex justify-between items-center">
-                <h3 className="text-lg font-semibold">
-                  NameUser : {item.user_name}
-                </h3>
-                <button
-                  className="text-white bg-[#8A33FD] rounded-lg px-[40px] py-2"
-                  onClick={() => showModal(item.id)}
-                >
-                  View Detail
-                </button>
-              </div>
-              <div className="flex  items-center mt-2">
-                <p>Address : {item.address},</p>
-                <p>{item.addressCity}</p>
-              </div>
-              <div className="flex justify-between items-center mt-2">
-                <p>Phone Number:{item.phone}</p>
-                <div className="flex items-center gap-3">
-                  <p>${item.total}</p>
-                  <div
-                    className=""
-                    onClick={() =>
-                      handleChangStatus(item.id, item.status_order)
-                    }
-                  >
-                    {item.status_order === 0 ? (
-                      <button className="text-white bg-[#4166f8] rounded-lg px-4 py-2">
-                        Pending
-                      </button>
-                    ) : (
-                      <p className="text-white bg-[#ee4c4c] rounded-lg px-4 py-2">
-                        Cancel
-                      </p>
-                    )}
+          {!bills?.length == numbers ? (
+            <>
+              {bills.map((item, key) => (
+                <div className="w-100 h-40 p-7 bg-slate-100 rounded-lg drop-shadow-lg mt-10">
+                  <div className="flex justify-between items-center">
+                    <h3 className="text-lg font-semibold">
+                      NameUser : {item.user_name}
+                    </h3>
+                    <button
+                      className="text-white bg-[#8A33FD] rounded-lg px-[40px] py-2"
+                      onClick={() => showModal(item.id)}
+                    >
+                      View Detail
+                    </button>
+                  </div>
+                  <div className="flex  items-center mt-2">
+                    <p>Address : {item.address},</p>
+                    <p>{item.addressCity}</p>
+                  </div>
+                  <div className="flex justify-between items-center mt-2">
+                    <p>Phone Number:{item.phone}</p>
+                    <div className="flex items-center gap-3">
+                      <p>${item.total}</p>
+                      <div
+                        className=""
+                        onClick={() =>
+                          handleChangStatus(item.id, item.status_order)
+                        }
+                      >
+                        {item.status_order === 0 ? (
+                          <button className="text-white bg-[#4166f8] rounded-lg px-4 py-2">
+                            Pending
+                          </button>
+                        ) : (
+                          <p className="text-white bg-[#ee4c4c] rounded-lg px-4 py-2">
+                            Cancel
+                          </p>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ))}
+            </>
+          ) : (
+            <div className="text-center mt-[50px] mb-[100px]">
+              <h2 className="h2Carts" style={{}}>
+                No orders have been paid...!!!
+              </h2>
+              <img
+                src="https://c7.alamy.com/thumbs/2apffam/a-funny-cartoon-character-of-shopping-basket-with-a-menu-2apffam.jpg"
+                alt=""
+                className="ml-[450px]"
+              />
             </div>
-          ))}
+          )}
         </div>
       </div>
       <Modal
@@ -312,7 +330,7 @@ function Order() {
                     <h3 className="font-bold">
                       Name : {item.product.nameProduct}
                     </h3>
-                    <p>Stock : {item.product.stock}</p>
+                    <p>Stock : {item.quantity}</p>
                     <p>Price : ${item.product.price}</p>
                   </div>
                 </div>

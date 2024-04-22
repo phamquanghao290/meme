@@ -1,7 +1,7 @@
 import { BiDownArrowAlt } from "react-icons/bi";
 import { GrLinkNext } from "react-icons/gr";
 import { GrLinkPrevious } from "react-icons/gr";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Banner from "../banner/banner";
 import Banner3 from "../../../public/images/banner3.png";
 import Banner4 from "../../../public/images/banner4.png";
@@ -45,10 +45,36 @@ import Logo5 from "../../../public/images/Logo5.png";
 
 import "../home/Index.scss";
 import Star from "./star/star";
+import { Link } from "react-router-dom";
+import publicAxios from "../../config/PublicAxios";
 export default function Index() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  const [product, setProduct] = useState([]);
+  const [categories, setCategories] = React.useState([]);
+  const handleGetProducts = async () => {
+    const response = await publicAxios.get("/api/product");
+
+    setProduct(response.data);
+  };
+  useEffect(() => {
+    handleGetProducts();
+    handleGetAllCate();
+  }, []);
+  const topFourProducts = product.sort((a, b) => b.id - a.id).slice(0, 4);
+  console.log(product);
+  const sortedProducts = product.sort((a, b) => a.stock - b.stock);
+  const lowestStockProducts = sortedProducts.slice(0, 4);
+  const handleGetAllCate = async () => {
+    try {
+      const response = await publicAxios.get("/api/category");
+
+      setCategories(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <Banner></Banner>
@@ -65,24 +91,14 @@ export default function Index() {
         <div className="NewArrival">
           <h2>New Arrival</h2>
           <div className="productsNewArrival">
-            <GrLinkPrevious style={{ fontSize: "30px", marginTop: "150px" }} />
-            <div>
-              <img src={img1} alt="" />
-              <p>Knitted Joggers</p>
-            </div>
-            <div>
-              <img src={img2} alt="" />
-              <p>Full Sleeve</p>
-            </div>
-            <div>
-              <img src={img3} alt="" />
-              <p>Active T-Shirts</p>
-            </div>
-            <div>
-              <img src={img4} alt="" />
-              <p>Urban Shirts</p>
-            </div>
-            <GrLinkNext style={{ fontSize: "30px", marginTop: "150px" }} />
+            {topFourProducts.map((item, index) => (
+              <>
+                <div>
+                  <img src={item.image} alt="" />
+                  <p>{item.nameProduct}</p>
+                </div>
+              </>
+            ))}
           </div>
         </div>
         <div className="NewArrivals">
@@ -100,7 +116,9 @@ export default function Index() {
                 <p>UPTO 50% OFF</p>
                 <BiDownArrowAlt className="icon" />
                 <div>
-                  <button>Shop Now</button>
+                  <Link to="/product-women">
+                    <button>Shop Now</button>
+                  </Link>{" "}
                 </div>
               </div>
             </div>
@@ -116,7 +134,9 @@ export default function Index() {
                 <p>UPTO 40% OFF</p>
                 <BiDownArrowAlt className="icon" />
                 <div>
-                  <button>Shop Now</button>
+                  <Link to="/product-women">
+                    <button>Shop Now</button>
+                  </Link>{" "}
                 </div>
               </div>
             </div>
@@ -134,7 +154,9 @@ export default function Index() {
                 <p>UPTO 50% OFF</p>
                 <BiDownArrowAlt className="icon" />
                 <div>
-                  <button>Shop Now</button>
+                  <Link to="/product-women">
+                    <button>Shop Now</button>
+                  </Link>{" "}
                 </div>
               </div>
             </div>
@@ -153,7 +175,9 @@ export default function Index() {
                 <p>FLAT 60% OFF</p>
                 <BiDownArrowAlt className="icon" />
                 <div>
-                  <button>Shop Now</button>
+                  <Link to="/product-women">
+                    <button>Shop Now</button>
+                  </Link>{" "}
                 </div>
               </div>
             </div>
@@ -170,16 +194,16 @@ export default function Index() {
                 <p>FLAT 60% OFF</p>
                 <BiDownArrowAlt className="icon" />
                 <div>
-                  <button>Shop Now</button>
+                  <Link to="/product-women">
+                    <button>Shop Now</button>
+                  </Link>{" "}
                 </div>
               </div>
             </div>
           </div>
           <div className="img_shownow" style={{ height: "735px" }}>
             <div>
-              <div
-              
-              >
+              <div>
                 <img
                   src={img10}
                   alt=""
@@ -192,208 +216,118 @@ export default function Index() {
                 <h3 style={{ color: "white" }}>
                   WE MADE YOUR EVERYDAY <br /> FASHION BETTER!
                 </h3>
-                <p >
+                <p>
                   In our journey to improve everyday fashion, <br />
                   euphoria presents EVERYDAY wear range <br />- Comfortable &
                   Affordable fashion 24/7
                 </p>
 
                 <div>
-                  <button>Shop Now</button>
+                  <Link to="/product-women">
+                    <button>Shop Now</button>
+                  </Link>{" "}
                 </div>
               </div>
             </div>
-            <div  className="img_shownow_2">
-              <img
-                src={img11}
-                alt=""
-                
-              />
+            <div className="img_shownow_2">
+              <img src={img11} alt="" />
             </div>
           </div>
         </div>
         <div className="NewArrivalProducts">
-          <h2>Categories For Men</h2>
-          <div className="productshome">
-            <div>
-              <img src={products1} alt="" />{" "}
-              <div className="titleProducts">
-                <div>
-                  <h4>Shirts</h4> <p>Explore Now!</p>
-                </div>
+          {categories
+            ?.filter((categories) => categories.id == 2)
+            .map((categories) => (
+              <h2>{categories.nameCategory}</h2>
+            ))}
 
+          <div className="productshome">
+            {product
+              ?.filter((products) => products.category.id == 2)
+              .map((product) => (
                 <div>
-                  {" "}
-                  <GrLinkNext
-                    style={{ marginLeft: "220px", marginTop: "22px" }}
-                  />
+                  <img src={product.image} alt="" />{" "}
+                  <div className="titleProducts">
+                    <div>
+                      <h4>{product.nameProduct}</h4>{" "}
+                      <p>{product.brand.nameBrand}</p>
+                    </div>
+
+                    <div>
+                      {" "}
+                      <Link to={`/product-detail/${product.id}`}>
+                        <GrLinkNext
+                          style={{ marginLeft: "220px", marginTop: "22px" }}
+                        />
+                      </Link>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div>
-              <img src={products2} alt="" />{" "}
-              <div className="titleProducts">
-                <div>
-                  {" "}
-                  <h4>Printed </h4> <p>Explore Now!</p>
-                </div>
-                <div>
-                  {" "}
-                  <GrLinkNext
-                    style={{ marginLeft: "220px", marginTop: "22px" }}
-                  />
-                </div>
-              </div>
-            </div>
-            <div>
-              <img src={products3} alt="" />{" "}
-              <div className="titleProducts">
-                <div>
-                  <h4>Plain T-Shirt</h4> <p>Explore Now!</p>
-                </div>
-                <div>
-                  {" "}
-                  <GrLinkNext
-                    style={{ marginLeft: "220px", marginTop: "22px" }}
-                  />
-                </div>
-              </div>
-            </div>
-            <div>
-              <img src={products4} alt="" />{" "}
-              <div className="titleProducts">
-                <div>
-                  <h4>Polo T-Shirt</h4> <p>Explore Now!</p>
-                </div>
-                <div>
-                  {" "}
-                  <GrLinkNext
-                    style={{ marginLeft: "220px", marginTop: "22px" }}
-                  />
-                </div>
-              </div>
-            </div>
-            <div>
-              <img src={products5} alt="" />{" "}
-              <div className="titleProducts">
-                <div>
-                  <h4>Hoodies</h4> <p>Explore Now!</p>
-                </div>
-                <div>
-                  {" "}
-                  <GrLinkNext
-                    style={{ marginLeft: "220px", marginTop: "22px" }}
-                  />
-                </div>
-              </div>
-            </div>
-            <div>
-              <img src={products6} alt="" />{" "}
-              <div className="titleProducts">
-                <div>
-                  <h4>Jeans</h4> <p>Explore Now!</p>
-                </div>
-                <div>
-                  {" "}
-                  <GrLinkNext
-                    style={{ marginLeft: "220px", marginTop: "22px" }}
-                  />
-                </div>
-              </div>
-            </div>
-            <div>
-              <img src={products7} alt="" />{" "}
-              <div className="titleProducts">
-                <div>
-                  {" "}
-                  <h4>Activewear</h4> <p>Explore Now!</p>
-                </div>
-                <div>
-                  {" "}
-                  <GrLinkNext
-                    style={{ marginLeft: "220px", marginTop: "22px" }}
-                  />
-                </div>
-              </div>
-            </div>
-            <div>
-              <img src={products8} alt="" />{" "}
-              <div className="titleProducts">
-                {" "}
-                <div>
-                  <h4>Boxers</h4> <p>Explore Now!</p>
-                </div>
-                <div>
-                  {" "}
-                  <GrLinkNext
-                    style={{ marginLeft: "220px", marginTop: "22px" }}
-                  />
-                </div>
-              </div>
-            </div>
+              ))}
           </div>
         </div>
         <div className="NewArrivalProducts">
-          <h2>Categories For Women</h2>
-          <div className="productshome">
-            <div>
-              <img src={products9} alt="" />{" "}
-              <div className="titleProducts">
-                <div>
-                  <h4>Hoodies Sweetshirt</h4> <p>Explore Now!</p>
-                </div>
+          {categories
+            ?.filter((categories) => categories.id == 3)
+            .map((categories) => (
+              <h2>{categories.nameCategory}</h2>
+            ))}
 
+          <div className="productshome">
+            {product
+              ?.filter((products) => products.category.id == 3)
+              .map((product) => (
                 <div>
-                  {" "}
-                  <GrLinkNext
-                    style={{ marginLeft: "160px", marginTop: "20px" }}
-                  />
+                  <img src={product.image} alt="" />{" "}
+                  <div className="titleProducts">
+                    <div>
+                      <h4>{product.nameProduct}</h4>{" "}
+                      <p>{product.brand.nameBrand}</p>
+                    </div>
+
+                    <div>
+                      {" "}
+                      <Link to={`/product-detail/${product.id}`}>
+                        <GrLinkNext
+                          style={{ marginLeft: "220px", marginTop: "22px" }}
+                        />
+                      </Link>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div>
-              <img src={products10} alt="" />{" "}
-              <div className="titleProducts">
+              ))}
+          </div>
+        </div>
+        <div className="NewArrivalProducts">
+          {categories
+            ?.filter((categories) => categories.id == 1)
+            .map((categories) => (
+              <h2>{categories.nameCategory}</h2>
+            ))}
+
+          <div className="productshome">
+            {product
+              ?.filter((products) => products.category.id == 1)
+              .map((product) => (
                 <div>
-                  {" "}
-                  <h4>Coats & Parkas</h4> <p>Explore Now!</p>
+                  <img src={product.image} alt="" />{" "}
+                  <div className="titleProducts">
+                    <div>
+                      <h4>{product.nameProduct}</h4>{" "}
+                      <p>{product.brand.nameBrand}</p>
+                    </div>
+
+                    <div>
+                      {" "}
+                      <Link to={`/product-detail/${product.id}`}>
+                        <GrLinkNext
+                          style={{ marginLeft: "220px", marginTop: "22px" }}
+                        />
+                      </Link>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  {" "}
-                  <GrLinkNext
-                    style={{ marginLeft: "200px", marginTop: "20px" }}
-                  />
-                </div>
-              </div>
-            </div>
-            <div>
-              <img src={products11} alt="" />{" "}
-              <div className="titleProducts">
-                <div>
-                  <h4>Tees & T-Shirt</h4> <p>Explore Now!</p>
-                </div>
-                <div>
-                  {" "}
-                  <GrLinkNext
-                    style={{ marginLeft: "210px", marginTop: "20px" }}
-                  />
-                </div>
-              </div>
-            </div>
-            <div>
-              <img src={products12} alt="" />{" "}
-              <div className="titleProducts">
-                <div>
-                  <h4>Boxers</h4> <p>Explore Now!</p>
-                </div>
-                <div>
-                  {" "}
-                  <GrLinkNext
-                    style={{ marginLeft: "210px", marginTop: "20px" }}
-                  />
-                </div>
-              </div>
-            </div>
+              ))}
           </div>
         </div>
         <div className="bannerTopbrands">
@@ -420,7 +354,6 @@ export default function Index() {
             }}
             className="logo_topbrand"
           >
-            
             <img src={Logo1} alt="" style={{ width: "155px" }} />
             <img
               src={Logo2}
@@ -474,88 +407,34 @@ export default function Index() {
         <div className="NewArrivalProducts">
           <h2>In The Limelight</h2>
           <div className="productshome">
-            <div>
-              <img src={products16} alt="" />
-              <div className="titleProducts">
-                <div>
-                  <h4>Black Sweatshirt with ....</h4> <p>Jhanvis Brand</p>
-                </div>
+            {lowestStockProducts.map((product) => (
+              <div>
+                <Link to={`/product-detail/${product.id}`}>
+                  <img
+                    src={product.image}
+                    alt=""
+                    className="max-w-[280px] m-auto  hover:scale-105 transition-all duration-300 "
+                  />
+                  <div className="titleProducts">
+                    <div>
+                      <h4>{product.nameProduct}</h4>{" "}
+                      <p>{product.brand.nameBrand}</p>
+                    </div>
 
-                <div
-                  style={{
-                    marginLeft: "60px",
-                    marginTop: "10px",
-                    backgroundColor: "#F6F6F6",
-                    padding: "10px",
-                    borderRadius: "5px",
-                    height: "40px",
-                  }}
-                >
-                  $123.00
-                </div>
+                    <div
+                      style={{
+                        backgroundColor: "#F6F6F6",
+                        padding: "10px",
+                        borderRadius: "5px",
+                        height: "40px",
+                      }}
+                    >
+                      ${product.price}
+                    </div>
+                  </div>
+                </Link>
               </div>
-            </div>
-            <div>
-              <img src={products15} alt="" />
-              <div className="titleProducts">
-                <div>
-                  {" "}
-                  <h4>line Pattern Black H...</h4> <p>ASs Brand</p>
-                </div>
-                <div
-                  style={{
-                    marginLeft: "90px",
-                    marginTop: "10px",
-                    backgroundColor: "#F6F6F6",
-                    padding: "10px",
-                    borderRadius: "5px",
-                    height: "40px",
-                  }}
-                >
-                  $37.00
-                </div>
-              </div>
-            </div>
-            <div>
-              <img src={products14} alt="" />{" "}
-              <div className="titleProducts">
-                <div>
-                  <h4>Black Shorts</h4> <p>MMs Brand</p>
-                </div>
-                <div
-                  style={{
-                    marginLeft: "170px",
-                    marginTop: "10px",
-                    backgroundColor: "#F6F6F6",
-                    padding: "10px",
-                    borderRadius: "5px",
-                    height: "40px",
-                  }}
-                >
-                  $37.00
-                </div>
-              </div>
-            </div>
-            <div>
-              <img src={products13} alt="" />{" "}
-              <div className="titleProducts">
-                <div>
-                  <h4>Levender Hoodie with ....</h4> <p>Nikes Brand</p>
-                </div>
-                <div
-                  style={{
-                    marginLeft: "60px",
-                    marginTop: "10px",
-                    backgroundColor: "#F6F6F6",
-                    padding: "10px",
-                    borderRadius: "5px",
-                    height: "40px",
-                  }}
-                >
-                  $119.00
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
         <div className="feedback">
