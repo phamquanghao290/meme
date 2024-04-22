@@ -11,7 +11,7 @@ export default function AdminBrand() {
         image_brand: "",
     });
     const [brands, setBrands] = React.useState([]);
-    const [preview, setPreview] = React.useState(nill || "");
+    const [preview, setPreview] = React.useState(null || "");
     const [selectedMedia, setSelectedMedia] = React.useState(null);
     const [flag, setFlag] = React.useState(false);
     const handleGetBrands = async () => {
