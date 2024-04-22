@@ -44,7 +44,7 @@ function Cart() {
     if (window.confirm("Are you sure you want to delete this item?")) {
       const response = await publicAxios.delete(`/api/cart/${id}`);
       setFlag(!flag);
-      success("Xoa thanh cong");
+      success("Deleted successfully");
     }
   };
 
@@ -57,7 +57,7 @@ function Cart() {
 
   const handleIncrease = async (item) => {
     if (item.quantity >= item.product.stock) {
-      failed("Số lượng tồn không đủ");
+      failed("Quantity in stock is not enough");
       return;
     }
     const response = await publicAxios.put("/api/cart/increase", item);

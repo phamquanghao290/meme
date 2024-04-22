@@ -74,7 +74,7 @@ function CheckoutForBill() {
   const handleOrderCart = async () => {
     let addresscity = city + "," + district + "," + ward;
     if (cart.length == 0) {
-      failed("Chưa Có Sản Phẩm Để Thanh Toán");
+      failed("No Products to Pay for");
       return;
     }
 
@@ -83,21 +83,21 @@ function CheckoutForBill() {
 
     if (phone == "" || !phoneNumberRegex.test(phone)) {
       failed(
-        "Số Điện Thoại Không Được Để Trống ,Số Điện Thoại không được có số âm"
+        "Phone Number Cannot Be Empty, Phone Number Cannot Have Negative Numbers"
       );
       return;
     }
 
     if (!regexPhone.test(phone)) {
-      failed("Số Điện Thoại Phải Có 10 Số,Đầu 09 ");
+      failed("Phone Number Must Have 10 Digits, Beginning 09");
       return;
     }
     if (address == "") {
-      failed("Địa Chỉ Addresss không đẻ trống");
+      failed("Address Addresses are not empty");
       return;
     }
     if (city == "" || district == "" || ward == "") {
-      failed("Địa Chỉ Không Được Để Trống");
+      failed("Address Cannot Be Empty");
       return;
     }
     const orders = {
@@ -329,7 +329,7 @@ function CheckoutForBill() {
             </div>
             <div className="sp">
               <h3>Total</h3>
-              <h3>${total}</h3>
+              <h3>${total}.00</h3>
             </div>
           </div>
         </div>
