@@ -21,7 +21,7 @@ function AdminProduct() {
     const [categories, setCategories] = React.useState([]);
     const [brands, setBrands] = React.useState([]);
     const [products, setProducts] = React.useState([]);
-    const [oneProduct, setOneProduct] = React.useState([]);
+    // const [oneProduct, setOneProduct] = React.useState([]);
     const [edit, setEdit] = React.useState(false);
     // const [colors, setColors] = React.useState([]);
     const [flag, setFlag] = React.useState(false);
@@ -47,12 +47,12 @@ function AdminProduct() {
         setBrands(response.data);
     };
 
-    const handleGetOneProduct = async (id) => {
-        const response = await publicAxios.get(
-            `/api/product/${products[id - 1].id}`
-        );
-        setOneProduct(response.data);
-    };
+    // const handleGetOneProduct = async (id) => {
+    //     const response = await publicAxios.get(
+    //         `/api/product/${products[id - 1].id}`
+    //     );
+    //     setOneProduct(response.data);
+    // };
 
     const handleGetProducts = async () => {
         const response = await publicAxios.get("/api/product");
@@ -90,7 +90,7 @@ function AdminProduct() {
                 category_id: categories[0].id,
             });
             setProducts(response.data.data);
-            setOneProduct(response.data.data);
+            // setOneProduct(response.data.data);
             success(response.data.message);
             setEdit(false);
             setPreview("");
@@ -109,11 +109,23 @@ function AdminProduct() {
     }
 
     const handleEdit = async () => {
-        console.log(newProduct);
+        const body = {
+            nameProduct: newProduct.nameProduct,
+            price: newProduct.price,
+            image: newProduct.image,
+            category_id: newProduct.category_id,
+            brand_id: newProduct.brand_id,
+            stock: newProduct.stock,
+            rate: newProduct.rate
+        }
+        console.log(body);
         try {
             if (!selectedMedia) {
-                const response = await publicAxios.put(`/api/product/${oneProduct.id}`,
-                    { ...oneProduct, image: preview }
+                const response = await publicAxios.put(`/api/product/${newProduct.id}`,
+                    { ...newProduct,
+                     image: preview,
+                     
+                    }
                 );
                 setProducts(response.data.data);
                 return
@@ -128,10 +140,10 @@ function AdminProduct() {
                 ),
             ]);
             const media = uploadMedia.data.secure_url;
-            const response = await publicAxios.put(`/api/product/${oneProduct.id}`,
+            const response = await publicAxios.put(`/api/product/${newProduct.id}`,
                 
                 {
-                    ...oneProduct,
+                    ...newProduct,
                     image: media,
                 }
             );
@@ -139,7 +151,6 @@ function AdminProduct() {
 
             
             setProducts(response.data.data);
-            setOneProduct(response.data.data);
             success(response.data.message);
             setEdit(false);
             setPreview("");
@@ -158,26 +169,7 @@ function AdminProduct() {
     };
 
     const handleEditProduct = async (item) => {
-        setNewProduct({
-            ...newProduct,
-            nameProduct: item.nameProduct,
-            price: item.price,
-            category_id: item.category_id,
-            brand_id: item.brand_id,
-            stock: item.stock,
-            rate: item.rate,
-            id: item.id,
-        });
-        setOneProduct({
-            ...newProduct,
-            nameProduct: item.nameProduct,
-            price: item.price,
-            category_id: item.category_id,
-            brand_id: item.brand_id,
-            stock: item.stock,
-            rate: item.rate,
-            id: item.id,
-        });
+        setNewProduct(item);
         setPreview(item.image);
         setEdit(true);
     };
@@ -230,10 +222,7 @@ function AdminProduct() {
         handleGetCategories();
         handleGetAllBrand();
         handleGetProducts();
-
-        handleGetOneProduct(1);
         // handleGetColor();
-
         // handleGetOneProduct(1);
 
         document.title = "Admin - Product";

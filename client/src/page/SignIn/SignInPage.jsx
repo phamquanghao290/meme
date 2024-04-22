@@ -85,11 +85,11 @@ export default function SignInPage() {
         try {
             const response = await publicAxios.post("/api/login", user);
             if (!user.email || !user.password) {
-                failed("Vui lòng nhập đầy đủ thông tin");
+                failed("Please enter complete information");
                 return;
             }
             if (response.data.user.email === "admin@gmail.com") {
-                success("Xin chào Admin nè");
+                success("Hello Admin");
                 setTimeout(() => {
                     window.location.href = "/admin";
                 }, 1500);
@@ -97,7 +97,7 @@ export default function SignInPage() {
                 return;
             }
             if (response.data.user.status === 1) {
-                failed("Tài khoản của bạn đã bị khóa");
+                failed("Your account has been locked");
                 return;
             }
             localStorage.setItem("token", response.data.token);
@@ -110,7 +110,7 @@ export default function SignInPage() {
                 window.location.href = "/";
             }, 1500);
         } catch (error) {
-            failed("Tài khoản hoặc mật khẩu không đúng");
+            failed("Account or password is incorrect");
         }
     };
 
