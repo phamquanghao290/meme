@@ -25,8 +25,10 @@ import Footer from "../../components/Foodter/Footer";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import publicAxios from "../../config/PublicAxios";
+
 import privateAxios from "../../config/PrivateAxios";
 import { failed, success } from "../../components/Modal/NotificationModal";
+
 
 export default function Productdetail() {
   useEffect(() => {
@@ -272,7 +274,7 @@ export default function Productdetail() {
 
           <div className="grid grid-cols-4 mt-10 gap-5 drop-shadow-xl ">
             {productAll
-              .filter((products) => products.brand.id == product.brand.id)
+              .filter((products) => products.brand.id == products.brand.id)
               .map((item, index) => (
                 <div className="Limelight max-w-[220px] m-auto pt-3 h-[260px] hover:scale-105 transition-all duration-300">
                   <img src={item.image} alt="" />

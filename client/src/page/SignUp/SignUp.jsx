@@ -185,7 +185,7 @@ export default function SignUp() {
                         Password
                     </p>
                     <input
-                        type="text"
+                        type="password"
                         placeholder="Qwerty@123"
                         name="password"
                         onChange={handleGetValue}
@@ -204,7 +204,7 @@ export default function SignUp() {
                         Confirm Password
                     </p>
                     <input
-                        type="text"
+                        type="password"
                         placeholder="Qwerty@123"
                         name="confirmPassword"
                         onChange={handleGetValue}

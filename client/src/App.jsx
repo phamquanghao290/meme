@@ -54,25 +54,24 @@ function App() {
       <Route path="/verification" element={<Verification />} />
       <Route path="/forgot-password" element={<ResetPassword />} />
 
-      <Route path="/admin" element={<PrivateRouter />}>
+      <Route
+        path="/admin"
+        element={
+          <div style={{ display: "flex" }}>
+            <Admin />
+            <div style={{ width: "100%" }}>
+              <PrivateRouter>
+                <Outlet />
+              </PrivateRouter>
+            </div>
+          </div>
+        }
+      >
         <Route path="/admin" element={<AdminUser />} />
-      </Route>
-      <Route path="admin-product" element={<PrivateRouter />}>
         <Route path="admin-product" element={<AdminProduct />} />
-      </Route>
-      <Route path="admin-category" element={<PrivateRouter />}>
         <Route path="admin-category" element={<AdminCategory />} />
-      </Route>
-      <Route path="admin-bill" element={<PrivateRouter />}>
-        {" "}
         <Route path="admin-bill" element={<AdminBill />} />
-      </Route>
-      <Route path="admin-banner" element={<PrivateRouter />}>
-        {" "}
         <Route path="admin-banner" element={<AdminBanner />} />
-      </Route>
-      <Route path="admin-brand" element={<PrivateRouter />}>
-        {" "}
         <Route path="admin-brand" element={<AdminBrand />} />
       </Route>
     </Routes>

@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 
 const PrivateRouter = () => {
-  const jsonData = localStorage.getItem("userLogin");
+  const jsonData = localStorage.getItem("admin");
   const parsedData = jsonData ? JSON.parse(jsonData) : null;
  
 
