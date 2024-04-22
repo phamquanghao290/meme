@@ -47,13 +47,6 @@ function AdminProduct() {
         setBrands(response.data);
     };
 
-    // const handleGetOneProduct = async (id) => {
-    //     const response = await publicAxios.get(
-    //         `/api/product/${products[id - 1].id}`
-    //     );
-    //     setOneProduct(response.data);
-    // };
-
     const handleGetProducts = async () => {
         const response = await publicAxios.get("/api/product");
         setProducts(response.data);
@@ -90,7 +83,6 @@ function AdminProduct() {
                 category_id: categories[0].id,
             });
             setProducts(response.data.data);
-            // setOneProduct(response.data.data);
             success(response.data.message);
             setEdit(false);
             setPreview("");
@@ -109,22 +101,14 @@ function AdminProduct() {
     }
 
     const handleEdit = async () => {
-        const body = {
-            nameProduct: newProduct.nameProduct,
-            price: newProduct.price,
-            image: newProduct.image,
-            category_id: newProduct.category_id,
-            brand_id: newProduct.brand_id,
-            stock: newProduct.stock,
-            rate: newProduct.rate
-        }
-        console.log(body);
+        console.log(newProduct);
         try {
             if (!selectedMedia) {
                 const response = await publicAxios.put(`/api/product/${newProduct.id}`,
                     { ...newProduct,
-                     image: preview,
-                     
+                        image: preview,
+                        category_id: categories[0].id,
+                        brand_id: brands[0].id,
                     }
                 );
                 setProducts(response.data.data);
@@ -145,11 +129,11 @@ function AdminProduct() {
                 {
                     ...newProduct,
                     image: media,
+                    category_id: categories[0].id,
+                    brand_id: brands[0].id,
                 }
             );
             setFlag(true);
-
-            
             setProducts(response.data.data);
             success(response.data.message);
             setEdit(false);
@@ -169,10 +153,19 @@ function AdminProduct() {
     };
 
     const handleEditProduct = async (item) => {
-        setNewProduct(item);
+        setNewProduct({
+            ...newProduct,
+            id: item.id,
+            nameProduct: item.nameProduct,
+            price: item.price,
+            category_id: item.category.nameCategory,
+            brand_id: item.brand.id,
+            stock: item.stock,
+        });
         setPreview(item.image);
         setEdit(true);
     };
+
     const handleDeleteProduct = async (id) => {
         try {
             if (window.confirm("Bạn có chắc muốn xóa sản phẩm này ?")) {
@@ -496,13 +489,9 @@ function AdminProduct() {
                                                     {categories.map(
                                                         (category) => (
                                                             <option
-                                                                value={
-                                                                    category.category_id
-                                                                }
+                                                                value={category.category_id}     
                                                             >
-                                                                {
-                                                                    category.nameCategory
-                                                                }
+                                                                { category.nameCategory}   
                                                             </option>
                                                         )
                                                     )}

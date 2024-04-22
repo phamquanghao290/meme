@@ -26,10 +26,9 @@ function AdminBill() {
     };
 
     const handleGetDetailBill = async (id) => {
-        // console.log(id);
-        // const res = await publicAxios.get(`/api/order-detail/${id}`);
-        // console.log(res.data.data);
-        // setInforDetail(res.data);
+        const res = await publicAxios.get(`/api/order-detail/${id}`);
+        console.log(res.data.data);
+        setInforDetail(res.data);
     };
 
     const handleSuccessBill = async (id, status) => {
@@ -43,7 +42,7 @@ function AdminBill() {
         await handleGetBills();
     };
     const handleCancelBill = async (id, status) => {
-        if (window.confirm("Hủa đơn hàng này")) {
+        if (window.confirm("Hủy đơn hàng này")) {
             await publicAxios.patch(`/order/cancelOrder/${id}`, {
                 status_order: status,
             });
