@@ -88,14 +88,11 @@ export default function SignInPage() {
         return;
       }
       if (response.data.user.email === "admin@gmail.com") {
+        localStorage.setItem("admin",JSON.stringify(response.data.user));
         success("Hello Admin");
         setTimeout(() => {
           window.location.href = "/admin";
-        }, 1500);
-        localStorage.setItem(
-          "admin",
-          JSON.stringify(response.data.user)
-        );
+        }, 1500);     
         return;
       }
 

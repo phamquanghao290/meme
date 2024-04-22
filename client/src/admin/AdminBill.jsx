@@ -60,16 +60,17 @@ function AdminBill() {
 
     const handleClose = () => setShow(false);
     const handleShow = async (item) => {
-
         setShow(true);
         try {
-            const res = await axios.get(`http://localhost:8080/order-detail/${item.id}`);
+            const res = await axios.get(
+                `http://localhost:8080/order-detail/${item.id}`
+            );
             setInfoDetail(res.data);
         } catch (error) {
             console.log(error);
         }
     };
-    console.log(infoDetail)
+    console.log(infoDetail);
     return (
         <div>
             <div className="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary ">
@@ -96,7 +97,7 @@ function AdminBill() {
                                             className="nav-link active"
                                             style={{ color: "red" }}
                                             id="choose-infor"
-                                        // onClick="returnListOrder()"
+                                            // onClick="returnListOrder()"
                                         >
                                             Information
                                         </a>
@@ -263,100 +264,96 @@ function AdminBill() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {bill.map(
-                                                (item, index) => (
-                                                    <tr key={index}>
-                                                        <th scope="col">
-                                                            {index + 1}
-                                                        </th>
-                                                        <th scope="col">
-                                                            {item.phone}
-                                                        </th>
-                                                        {/* <th scope="col">
+                                            {bill.map((item, index) => (
+                                                <tr key={index}>
+                                                    <th scope="col">
+                                                        {index + 1}
+                                                    </th>
+                                                    <th scope="col">
+                                                        {item.phone}
+                                                    </th>
+                                                    {/* <th scope="col">
                                                             {item.orderId}
                                                         </th> */}
-                                                        <th scope="col">
-                                                            {USDollar.format(
-                                                                item.total
-                                                            )}
-                                                        </th>
-                                                        <th scope="col">
-                                                            {item.status_order ==
-                                                                0 ? (
-                                                                <span
-                                                                    style={{
-                                                                        color: "green",
-                                                                    }}
-                                                                >
-                                                                    Đang Chờ
-                                                                </span>
-                                                            ) : item.status_order ==
-                                                                1 ? (
-                                                                <span
-                                                                    style={{
-                                                                        color: "blue",
-                                                                    }}
+                                                    <th scope="col">
+                                                        {USDollar.format(
+                                                            item.total
+                                                        )}
+                                                    </th>
+                                                    <th scope="col">
+                                                        {item.status_order ==
+                                                        0 ? (
+                                                            <span
+                                                                style={{
+                                                                    color: "green",
+                                                                }}
+                                                            >
+                                                                Đang Chờ
+                                                            </span>
+                                                        ) : item.status_order ==
+                                                          1 ? (
+                                                            <span
+                                                                style={{
+                                                                    color: "blue",
+                                                                }}
+                                                            >
+                                                                Xác nhận
+                                                            </span>
+                                                        ) : (
+                                                            <span
+                                                                style={{
+                                                                    color: "red",
+                                                                }}
+                                                            >
+                                                                Từ chối
+                                                            </span>
+                                                        )}
+                                                    </th>
+                                                    <th
+                                                        scope="col"
+                                                        onClick={() => {
+                                                            handleShow(item);
+                                                        }}
+                                                        className="cursor-pointer"
+                                                    >
+                                                        View
+                                                    </th>
+                                                    <th
+                                                        scope="col"
+                                                        className="gap-10"
+                                                    >
+                                                        {item.status_order ===
+                                                        0 ? (
+                                                            <div className="flex justify-evenly m-auto">
+                                                                <Button
+                                                                    variant="contained"
+                                                                    onClick={() =>
+                                                                        handleSuccessBill(
+                                                                            item.id,
+                                                                            "Xác nhận"
+                                                                        )
+                                                                    }
                                                                 >
                                                                     Xác nhận
-                                                                </span>
-                                                            ) : (
-                                                                <span
-                                                                    style={{
-                                                                        color: "red",
-                                                                    }}
+                                                                </Button>
+                                                                <Button
+                                                                    variant="contained"
+                                                                    onClick={() =>
+                                                                        handleCancelBill(
+                                                                            item.id,
+                                                                            "Đã Hủy"
+                                                                        )
+                                                                    }
                                                                 >
-                                                                    Từ chối
-                                                                </span>
-                                                            )}
-                                                        </th>
-                                                        <th
-                                                            scope="col"
-                                                            onClick={() => {
-                                                                handleShow(
-                                                                    item
-                                                                );
-                                                            }}
-                                                            className="cursor-pointer"
-                                                        >
-                                                            View
-                                                        </th>
-                                                        <th
-                                                            scope="col"
-                                                            className="gap-10"
-                                                        >
-                                                            {item.status_order ===
-                                                                0 ? (
-                                                                <div className="flex justify-evenly m-auto">
-                                                                    <Button
-                                                                        variant="contained"
-                                                                        onClick={() =>
-                                                                            handleSuccessBill(
-                                                                                item.id,
-                                                                                "Xác nhận"
-                                                                            )
-                                                                        }
-                                                                    >
-                                                                        Xác nhận
-                                                                    </Button>
-                                                                    <Button
-                                                                        variant="contained"
-                                                                        onClick={() =>
-                                                                            handleCancelBill(
-                                                                                item.id,
-                                                                                "Đã Hủy"
-                                                                            )
-                                                                        }
-                                                                    >
-                                                                        Hủy
-                                                                    </Button>
-                                                                </div>
-                                                            ) : (
-                                                                <></>
-                                                            )}
-                                                        </th>
-                                                    </tr>
-                                                )
-                                            )}
+                                                                    Hủy
+                                                                </Button>
+                                                            </div>
+                                                        ) : (
+                                                            <></>
+                                                        )}
+                                                    </th>
+                                                </tr>
+                                            ))}
                                         </tbody>
                                     </table>
                                 </div>
@@ -374,13 +371,26 @@ function AdminBill() {
                                     <div className="flex  p-5 bg-slate-200 mt-4 rounded-lg">
                                         <div>
                                             <div className="flex gap-5 ">
-                                                <img className="w-[100px]" src={item.product.image} alt="" />
+                                                <img
+                                                    className="w-[100px]"
+                                                    src={item.product.image}
+                                                    alt=""
+                                                />
                                                 <div>
                                                     <h3 className="font-bold">
-                                                        Name : {item.product.nameProduct}
+                                                        Name :{" "}
+                                                        {
+                                                            item.product
+                                                                .nameProduct
+                                                        }
                                                     </h3>
-                                                    <p>Stock : {item.quantity}</p>
-                                                    <p>Price : ${item.product.price}</p>
+                                                    <p>
+                                                        Stock : {item.quantity}
+                                                    </p>
+                                                    <p>
+                                                        Price : $
+                                                        {item.product.price}
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -564,9 +574,7 @@ function AdminBill() {
                                                     <u id="id-order">2222</u>
                                                 </strong>
                                             </span>
-                                            <div>
-
-                                            </div>
+                                            <div></div>
                                         </div>
                                     </div>
                                 </div>
