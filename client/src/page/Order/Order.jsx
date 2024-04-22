@@ -287,11 +287,19 @@ function Order() {
                           >
                             Cancel
                           </button>
-                        ) : (
-                          <p className=" text-[#ee4c4c] rounded-lg px-4 py-2">
-                            Canceled
-                          </p>
-                        )}
+
+                        ) :
+                          item.status_order === 1 ? (
+                            <p className="text-white bg-[#5b45eb] rounded-lg px-4 py-2">
+                              Xác Nhận
+                            </p>
+                          ):
+                          (
+                            <p className="text-white bg-[#ee4c4c] rounded-lg px-4 py-2">
+                              Cancel
+                            </p>
+                          )}
+
                       </div>
                     </div>
                   </div>
@@ -317,7 +325,7 @@ function Order() {
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
-        className="mt-20"
+        className=""
       >
         {infoDetail?.map((item, index) => {
           return (
