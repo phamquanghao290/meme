@@ -53,8 +53,20 @@ function App() {
       <Route path="/sign-in" element={<SignIn />} />
       <Route path="/verification" element={<Verification />} />
       <Route path="/forgot-password" element={<ResetPassword />} />
-      
-      <Route path="/admin" element={<div style={{ display: 'flex' }}><Admin /><div style={{ width: '100%' }}><PrivateRouter><Outlet /></PrivateRouter></div></div>}>
+
+      <Route
+        path="/admin"
+        element={
+          <div style={{ display: "flex" }}>
+            <Admin />
+            <div style={{ width: "100%" }}>
+              <PrivateRouter>
+                <Outlet />
+              </PrivateRouter>
+            </div>
+          </div>
+        }
+      >
         <Route path="/admin" element={<AdminUser />} />
         <Route path="admin-product" element={<AdminProduct />} />
         <Route path="admin-category" element={<AdminCategory />} />

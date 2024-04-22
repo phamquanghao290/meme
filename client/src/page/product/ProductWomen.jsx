@@ -34,7 +34,15 @@ function ProductWomen() {
   }, []);
 
   const handleChange = (value) => {
-    console.log(value); // { value: "lucy", key: "lucy", label: "Lucy (101)" }
+    // console.log(value.value, "value");
+    if (value.value == "prices gradually increase") {
+      const sortedProducts = [...product].sort((a, b) => a.price - b.price);
+      setProduct(sortedProducts);
+    }
+    if (value.value == "prices gradually decrease") {
+      const sortedProducts = [...product].sort((a, b) => b.price - a.price);
+      setProduct(sortedProducts);
+    }
   };
 
   const [categories, setCategories] = React.useState([]);
@@ -185,7 +193,7 @@ function ProductWomen() {
                 <div key={index} className="rounded-lg border h-[430px]">
                   <button
                     onClick={() => handleAddToWishList(item)}
-                    className="w-8 h-8 relative left-[230px] "
+                    className="w-8 h-8 relative left-[180px] "
                   >
                     <AiOutlineHeart className="text-red-500 w-7 h-7 " />
                   </button>

@@ -4,9 +4,10 @@ import Rectangle21 from '../../../public/images/Rectangle 21.png'
 import axios from 'axios';
 import { successNoti } from '../../utils/noti';
 import { useNavigate } from 'react-router-dom';
+import Heart from '../../../public/images/Frame 505.png'
 export default function Wishlist() {
     const [listProduct, setListProduct] = useState([])
-    const [flag,setFlag] = useState(false)
+    const [flag, setFlag] = useState(false)
     const navigate = useNavigate()
     const userLogin = JSON.parse(localStorage.getItem("userLogin"));
     const handleGetWishlist = async () => {
@@ -74,41 +75,49 @@ export default function Wishlist() {
                     </div>
                 </div>
 
-                <div className='main-content-wishlist-right'>
-                    <div>
-                        <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#3C4242', lineHeight: '33px' }}>Wishlist</h2>
-                    </div>
-                    {listProduct?.map((item, index) => (
-                        <>
-                            <div className='main-content-wishlist-right-item'>
-                                <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
-                                    <i onClick={() => handleDeleteWishlist(item.id)} class="fa-solid fa-x"></i>
+                {listProduct.length == 0 ?
+                    <div className= 'mt-5 text-center mb-[100px]'>
+                        <img className='m-auto' src={Heart} alt="" />
+                        <p className='text-xl mt-3'>Your Wishlist is empty.</p>
+                        <p className='mt-3'>You don’t have any products in the wishlist yet. You will find a lot
+                            of interesting products on our Shop page.</p>
+                        <button onClick={() => navigate('/product-women')} className='rounded-sm border p-3 mt-3 bg-[#8A33FD] text-white'>Continue Shopping</button>
+                    </div> :
+                    <div className='main-content-wishlist-right'>
+                        <div>
+                            <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#3C4242', lineHeight: '33px' }}>Wishlist</h2>
+                        </div>
+                        {listProduct?.map((item, index) => (
+                            <>
+                                <div className='main-content-wishlist-right-item mb-[200px]'>
+                                    <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+                                        <i onClick={() => handleDeleteWishlist(item.id)} class="fa-solid fa-x"></i>
+                                    </div>
+
+                                    <div className='main-content-wishlist-right-image'>
+                                        <img className='image-wishlist' src={item.product.image} alt="" />
+                                    </div>
+
+                                    <div className='main-content-wishlist-right-info'>
+                                        <p>{item.product.nameProduct} </p>
+                                        {/* <p>Color : <span style={{ color: '#807D7E', fontWeight: '500' }}>Yellow</span></p> */}
+                                        <p>Quantity : <span style={{ color: '#807D7E', fontWeight: '500' }}>1</span></p>
+                                    </div>
+
+                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                        <h4 style={{ fontSize: '20px', fontWeight: '700', color: '#807D7E', lineHeight: '26px' }}>${item.product.price}</h4>
+                                    </div>
+
+                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                        <button className='main-content-wishlist-right-button' onClick={() => navigate(`/product-detail/${item.product.id}`)}>Add to cart</button>
+                                    </div>
+
                                 </div>
+                                <hr style={{ width: '100%', color: '#807D7E', opacity: '0.6', marginTop: '30px' }} />
+                            </>
+                        ))}
 
-                                <div className='main-content-wishlist-right-image'>
-                                    <img className='image-wishlist' src={item.product.image} alt="" />
-                                </div>
-
-                                <div className='main-content-wishlist-right-info'>
-                                    <p>{item.product.nameProduct} </p>
-                                    {/* <p>Color : <span style={{ color: '#807D7E', fontWeight: '500' }}>Yellow</span></p> */}
-                                    <p>Quantity : <span style={{ color: '#807D7E', fontWeight: '500' }}>1</span></p>
-                                </div>
-
-                                <div style={{ display: 'flex', alignItems: 'center' }}>
-                                    <h4 style={{ fontSize: '20px', fontWeight: '700', color: '#807D7E', lineHeight: '26px' }}>${item.product.price}</h4>
-                                </div>
-
-                                <div style={{ display: 'flex', alignItems: 'center' }}>
-                                    <button className='main-content-wishlist-right-button' onClick={() => navigate(`/product-detail/${item.product.id}`)}>Add to cart</button>
-                                </div>
-
-                            </div>
-                            <hr style={{ width: '100%', color: '#807D7E', opacity: '0.6', marginTop: '30px' }} />
-                        </>
-                    ))}
-
-                </div>
+                    </div>}
 
             </div>
 
