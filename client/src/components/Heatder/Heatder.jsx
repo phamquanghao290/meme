@@ -47,7 +47,7 @@ export default function Heatder() {
       >
         <div className="container-fluid">
           {" "}
-          <Link to="/product-women">
+          <Link to="/">
             <div className="Logo_Heatder">
               <img src={logo} alt="" />
             </div>
@@ -119,7 +119,9 @@ export default function Heatder() {
                       }}
                     >
                       <MenuItem onClick={handleClose}>Profile</MenuItem>
-                      <MenuItem onClick={()=> navigate("/order")}>My cart</MenuItem>
+                      <MenuItem onClick={() => navigate("/order")}>
+                        My cart
+                      </MenuItem>
                       <MenuItem onClick={handleLogout}>Logout</MenuItem>
                     </Menu>
                   </div>

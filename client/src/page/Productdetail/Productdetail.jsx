@@ -25,10 +25,15 @@ import Footer from "../../components/Foodter/Footer";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import publicAxios from "../../config/PublicAxios";
-import { failed, success } from "../../components/Modal/NotificationModal";
+
 import privateAxios from "../../config/PrivateAxios";
+import { failed, success } from "../../components/Modal/NotificationModal";
+
 
 export default function Productdetail() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const userLogin = JSON.parse(localStorage.getItem("userLogin") || "{}");
   const { id } = useParams();
   const onChange = (key) => {
@@ -40,9 +45,7 @@ export default function Productdetail() {
 
     setProductAll(response.data);
   };
-  const [size, setSize] = useState([]);
-  const [color, setColor] = useState([]);
-  const [flag, setFlag] = useState(false);
+
   const [product, setProduct] = useState({});
   const handleGetProduct = async () => {
     const response = await publicAxios.get(`/api/product/${id}`);
@@ -85,8 +88,6 @@ export default function Productdetail() {
     handleGetProduct();
 
     handleGetProducts();
-    window.scrollTo(0, 0);
-    document.title = "Product Detail";
   }, []);
 
   return (
@@ -102,7 +103,7 @@ export default function Productdetail() {
               product: {product.id}
             </h4>
             <h2>{product.nameProduct}</h2>
-            <h3>Stock : {product.stock}</h3>
+            <h3>Stock : {product.stock ? product.stock : "Out of stock"}</h3>
             <hr />
             <div>
               <h3>brand : {product?.brand?.nameBrand}</h3>
@@ -116,10 +117,15 @@ export default function Productdetail() {
               <button className="buttonaddtocart">
                 <button
                   onClick={() => handlCLickAddtoCart(product)}
-                  className="flex items-center px-5 py-2 bg-[#8a33fd] rounded-lg gap-3 text-white"
+                  className={`btn_category_producsts ${
+                    product.stock === 0 ? "disabled" : ""
+                  }`}
+                  disabled={product.stock === 0 ? true : false}
                 >
                   <BsCart style={{ color: "white" }} />
-                  <h6 className="border-1 font-bold text-white">Add to cart</h6>
+                  <h6 className="border-1 font-bold text-white ">
+                    Add to cart
+                  </h6>
                 </button>
               </button>
               <p>${product.price}</p>
@@ -268,7 +274,7 @@ export default function Productdetail() {
 
           <div className="grid grid-cols-4 mt-10 gap-5 drop-shadow-xl ">
             {productAll
-              .filter((products) => products.brand.id == product.brand.id)
+              .filter((products) => products.brand.id == products.brand.id)
               .map((item, index) => (
                 <div className="Limelight max-w-[220px] m-auto pt-3 h-[260px] hover:scale-105 transition-all duration-300">
                   <img src={item.image} alt="" />

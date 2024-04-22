@@ -229,7 +229,9 @@ function AdminUser() {
                                                                 unCheckedChildren={
                                                                     <CloseOutlined />
                                                                 }
-                                                                defaultChecked
+                                                                defaultChecked={
+                                                                    user.status == 0
+                                                                }
                                                                 onChange={() =>
                                                                     handleChangeStatus(
                                                                         user
