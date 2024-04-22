@@ -25,10 +25,6 @@ function AdminProduct() {
     const [edit, setEdit] = React.useState(false);
     // const [colors, setColors] = React.useState([]);
     const [flag, setFlag] = React.useState(false);
-    // const handleGetColor = async () => {
-    //     const response = await publicAxios.get("/api/color");
-    //     setColors(response.data);
-    // }
     const [options, setOptions] = useState([]);
 
     const [newProduct, setNewProduct] = React.useState({
@@ -51,10 +47,13 @@ function AdminProduct() {
         setBrands(response.data);
     };
 
-    // const handleGetOneProduct = async (id) => {
-    //     const response = await publicAxios.get(`/api/product/${products[id - 1].id}`);
-    //     setOneProduct(response.data);
-    // };
+    const handleGetOneProduct = async (id) => {
+        const response = await publicAxios.get(
+            `/api/product/${products[id - 1].id}`
+        );
+        setOneProduct(response.data);
+    };
+
     const handleGetProducts = async () => {
         const response = await publicAxios.get("/api/product");
         setProducts(response.data);
@@ -107,58 +106,10 @@ function AdminProduct() {
         } catch (error) {
             failed("Vui lòng điền đầy đủ thông tin");
         }
-    };
-
-    const handleEditProduct = async (item) => {
-      setOneProduct(item);
-      setEdit(true);
-      setNewProduct({
-        ...newProduct,
-        nameProduct: item.nameProduct,
-        price: item.price,
-        stock: item.stock,
-      });
-      setPreview(item.image);
-    };
+    }
 
     const handleEdit = async () => {
-        // const updateProduct = {
-        //     ...newProduct,
-        //     image: preview,
-        //     category_id: categories[0].id,
-        // }
-        // console.log(updateProduct);
-        // if (selectedMedia) { 
-        //     const formData = new FormData();
-        //     formData.append("file", selectedMedia);
-        //     formData.append("upload_preset", "project");
-        //     const [uploadMedia] = await Promise.all([
-        //         axios.post(
-        //             "https://api.cloudinary.com/v1_1/dixzrnjbq/image/upload",
-        //             formData
-        //         ),
-        //     ]);
-        //     const media = uploadMedia.data.secure_url;
-        //     updateProduct.image = media;
-        //     const response = await publicAxios.put(`/api/product/${updateProduct.id}`,
-        //         updateProduct
-        //     );
-        //     setProducts(response.data.data);
-        //     // setOneProduct(response.data.data);
-        //     success(response.data.message);
-        //     setEdit(false);
-        //     setPreview("");
-        //     setNewProduct({
-        //         nameProduct: "",
-        //         price: 0,
-        //         image: "",
-        //         category_id: 0,
-        //         brand_id: 0,
-        //         stock: 0,
-        //         rate: 5,
-        //     });
-        //     return
-        // }
+        console.log(newProduct);
         try {
             if (!selectedMedia) {
                 const response = await publicAxios.put(`/api/product/${oneProduct.id}`,
@@ -184,7 +135,9 @@ function AdminProduct() {
                     image: media,
                 }
             );
-            console.log(response.data);
+            setFlag(true);
+
+            
             setProducts(response.data.data);
             setOneProduct(response.data.data);
             success(response.data.message);
@@ -194,8 +147,8 @@ function AdminProduct() {
                 nameProduct: "",
                 price: 0,
                 image: "",
-                brand_id: 0,
                 category_id: 0,
+                brand_id: 0,
                 stock: 0,
                 rate: 5,
             });
@@ -204,6 +157,30 @@ function AdminProduct() {
         }
     };
 
+    const handleEditProduct = async (item) => {
+        setNewProduct({
+            ...newProduct,
+            nameProduct: item.nameProduct,
+            price: item.price,
+            category_id: item.category_id,
+            brand_id: item.brand_id,
+            stock: item.stock,
+            rate: item.rate,
+            id: item.id,
+        });
+        setOneProduct({
+            ...newProduct,
+            nameProduct: item.nameProduct,
+            price: item.price,
+            category_id: item.category_id,
+            brand_id: item.brand_id,
+            stock: item.stock,
+            rate: item.rate,
+            id: item.id,
+        });
+        setPreview(item.image);
+        setEdit(true);
+    };
     const handleDeleteProduct = async (id) => {
         try {
             if (window.confirm("Bạn có chắc muốn xóa sản phẩm này ?")) {
@@ -253,34 +230,20 @@ function AdminProduct() {
         handleGetCategories();
         handleGetAllBrand();
         handleGetProducts();
+
+        handleGetOneProduct(1);
+        // handleGetColor();
+
         // handleGetOneProduct(1);
-        // // handleGetColor();
+
         document.title = "Admin - Product";
-        // let value = colors.map((item) => {
-        //     return item.nameColor;
-        // });
-        // setOptions(value);
-        // console.log(options)
     }, [flag]);
+    const [isModalOpen, setIsModalOpen] = React.useState(false);
+    const showModal = () => {
+        setIsModalOpen(!isModalOpen);
+        setFlag(!flag);
+    };
 
-    // console.log(options)
-
-    // const [isModalOpen, setIsModalOpen] = React.useState(false);
-    // const showModal = () => {
-    //     setIsModalOpen(!isModalOpen);
-    //     setFlag(!flag);
-    // };
-    // const handleAddInfor = async () => {
-    //     const response = await publicAxios.post(`/api/product/${id}`);
-    //     setFlag(!flag);
-    //     success(response.data.message);
-    //     setIsModalOpen(false);
-    // };
-    // const handleCancel = () => {
-    //     setIsModalOpen(false);
-    // };
-
-   
     const tagRender = (props) => {
         const { label, value, closable, onClose } = props;
         const onPreventMouseDown = (event) => {
@@ -301,9 +264,23 @@ function AdminProduct() {
             </Tag>
         );
     };
-   const options2 = options.map((item) => {
-       return { value: item };
-   });
+    const options2 = options.map((item) => {
+        return { value: item };
+    });
+
+    const [previewList, setPreviewList] = useState([]);
+    const [selectedMediaList, setSelectedMediaList] = useState(null);
+
+    const handleAddMedia = (event) => {
+        setSelectedMediaList(event.target.files[0]);
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.onload = function (event) {
+            setPreviewList(event.target.result);
+        };
+        reader.readAsDataURL(file);
+    };
+
     return (
         <>
             {/* Dashboard */}
@@ -740,31 +717,7 @@ function AdminProduct() {
                     </main>
                 </div>
             </div>
-            {/* <Modal
-                title="Add Information Product"
-                open={isModalOpen}
-                // onOk={handlaAddInfor}
-                onCancel={handleCancel}
-            >
-                <div>
-                    {products.map((item, index) => (
-                        <div key={index}>
-                            <p>Name: {item.nameProduct}</p>
-                            <p>{USDollar.format(item.price)}</p>
-                            <p>{item.category_id}</p>
-                        </div>
-                    ))}
-                </div>
-                <Select
-                    mode="multiple"
-                    tagRender={tagRender}
-                    defaultValue={["gold", "cyan"]}
-                    style={{
-                        width: "100%",
-                    }}
-                    options={options2}
-                />
-            </Modal> */}
+            
         </>
     );
 }

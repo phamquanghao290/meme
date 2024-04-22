@@ -80,7 +80,6 @@ function Cart() {
     handleGetProduct();
     document.title = "Checkout";
   }, [flag]);
-
   useEffect(() => {
     handleTotalPrice();
     setFlag(!flag);

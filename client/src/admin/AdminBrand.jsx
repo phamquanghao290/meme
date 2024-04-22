@@ -11,7 +11,7 @@ export default function AdminBrand() {
         image_brand: "",
     });
     const [brands, setBrands] = React.useState([]);
-    const [preview, setPreview] = React.useState("");
+    const [preview, setPreview] = React.useState(nill || "");
     const [selectedMedia, setSelectedMedia] = React.useState(null);
     const [flag, setFlag] = React.useState(false);
     const handleGetBrands = async () => {
@@ -19,6 +19,7 @@ export default function AdminBrand() {
         setBrands(response.data);
     }
 
+    //add
     const [isModalOpen, setIsModalOpen] = useState(false);
     const showModal = () => {
         setIsModalOpen(true);
@@ -27,17 +28,55 @@ export default function AdminBrand() {
         setIsModalOpen(false);
     };
 
+    //edit
     const [isModalOpenEdit, setIsModalOpenEdit] = useState(false);
-    const showModalEdit = () => {
-        setIsModalOpenEdit(!isModalOpenEdit);
+    const [edit, setEdit] = useState(false);
+    const showModalEdit = (item) => {
+        setIsModalOpenEdit(true);
+        setNewBrand(item);
+        setPreview(item.image_brand);
     };
-    const handleOkEdit = () => {
+    const handleOkEdit = async () => {
         setIsModalOpenEdit(false);
+        try {
+            if(!selectedMedia){
+                const response = await publicAxios.patch(`/api/brand/${newBrand.id}`, newBrand);
+                setFlag(true);
+                setNewBrand({
+                    nameBrand: "",
+                    image_brand: "",
+                })
+                setPreview(null || "");
+                return
+            }
+            const formData = new FormData();
+            formData.append("file", selectedMedia);
+            formData.append("upload_preset", "project");
+            const [uploadMedia] = await Promise.all([
+                axios.post("https://api.cloudinary.com/v1_1/dixzrnjbq/image/upload", formData),
+            ])
+            const media = uploadMedia.data.secure_url;
+            const response = await publicAxios.patch(`/api/brand/${newBrand.id}`, {
+                ...newBrand,
+                image_brand: media
+            })
+            setFlag(true);
+            success(response.data.message);
+            setNewBrand({
+                nameBrand: "",
+                image_brand: "",
+            })
+            setPreview(null || "");
+        }catch (error) {
+            failed("Sửa thất bại");
+        }
     };
+
     const handleCancelEdit = () => {
         setIsModalOpenEdit(false)
     };
 
+    //delete
     const [isModalOpenDelete, setIsModalOpenDelete] = useState(false);
     const showModalDelete = () => {
         setIsModalOpenDelete(!isModalOpenDelete);
@@ -341,9 +380,7 @@ export default function AdminBrand() {
                                                     </td>
                                                     <td className="">
                                                         <Button
-                                                            onClick={
-                                                                showModalEdit
-                                                            }
+                                                            onClick={() => showModalEdit(item)}
                                                             variant="danger"
                                                         >
                                                             <i className="fa-regular fa-pen-to-square text-md"></i>
@@ -366,7 +403,14 @@ export default function AdminBrand() {
                                                                     className="mt-2 rounded px-2 py-4 bg-[#eeeded] outline-none w-full"
                                                                     type="text"
                                                                     placeholder="Brand Name"
+                                                                    name='nameBrand'
+                                                                    value={newBrand.nameBrand}
+                                                                    onChange={handleGetValue}
                                                                 />
+                                                                <label htmlFor="image" className="max-w-[200px] w-full m-auto max-h-[100px] border-2 border-dashed border-blue-600 rounded-lg flex justify-center items-center ">
+                                                                    <img src={preview} alt="" />
+                                                                </label>
+
                                                             </Modal>
                                                         </Button>
 
@@ -401,6 +445,7 @@ export default function AdminBrand() {
                                                                     cannot be
                                                                     undo.
                                                                 </p>
+                                                                <img src={preview} alt="" />
                                                             </Modal>
                                                         </Button>
                                                     </td>

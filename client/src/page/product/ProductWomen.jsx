@@ -16,6 +16,7 @@ import { Select } from "antd";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { successNoti } from "../../utils/noti";
+
 function ProductWomen() {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -67,6 +68,7 @@ function ProductWomen() {
   const handleClick_brand = (id) => {
     setSelectedBrand(id);
   };
+
 
   const userLogin = JSON.parse(localStorage.getItem("userLogin"));
   const handleAddToWishList = async (item) => {
