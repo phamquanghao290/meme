@@ -66,25 +66,25 @@ function Order() {
     setIsModalOpen(false);
   };
 
-    const handleChangStatus = async (id, status) => {
-        const confirm = window.confirm(
-          "Are you sure you want to cancel your order?"
-        );
+  const handleChangStatus = async (id, status) => {
+    const confirm = window.confirm(
+      "Are you sure you want to cancel your order?"
+    );
     if (confirm) {
-        try {
-          const res = await axios.patch(
-            `http://localhost:8080/order/cancelOrder/${id}`,
-            {
-              status_order: status,
-            }
-          );
-          handleGetbills();
-        } catch (error) {
-          console.log(error);
-        }
+      try {
+        const res = await axios.patch(
+          `http://localhost:8080/order/cancelOrder/${id}`,
+          {
+            status_order: status,
+          }
+        );
+        handleGetbills();
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
-  const numbers= 0;
+  const numbers = 0;
   useEffect(() => {
     handleGetbills();
   }, []);
@@ -288,11 +288,17 @@ function Order() {
                           <button className="text-white bg-[#4166f8] rounded-lg px-4 py-2">
                             Pending
                           </button>
-                        ) : (
-                          <p className="text-white bg-[#ee4c4c] rounded-lg px-4 py-2">
-                            Cancel
-                          </p>
-                        )}
+                        ) :
+                          item.status_order === 1 ? (
+                            <p className="text-white bg-[#5b45eb] rounded-lg px-4 py-2">
+                              Xác Nhận
+                            </p>
+                          ):
+                          (
+                            <p className="text-white bg-[#ee4c4c] rounded-lg px-4 py-2">
+                              Cancel
+                            </p>
+                          )}
                       </div>
                     </div>
                   </div>
@@ -318,7 +324,7 @@ function Order() {
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
-        className="mt-20"
+        className=""
       >
         {infoDetail?.map((item, index) => {
           return (

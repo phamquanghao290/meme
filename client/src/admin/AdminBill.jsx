@@ -4,9 +4,10 @@ import publicAxios from "../config/PublicAxios";
 import { success, failed } from "../components/Modal/NotificationModal";
 import Modal from "react-bootstrap/Modal";
 import "./admin.css";
+import axios from "axios";
 
 function AdminBill() {
-    const [infoDetail, setInforDetail] = React.useState([]);
+    const [infoDetail, setInfoDetail] = React.useState([]);
     const [bill, setBill] = React.useState([]);
     const [errorInput, setErrorInput] = React.useState({
         errName: "",
@@ -20,21 +21,21 @@ function AdminBill() {
     });
 
     const handleGetBills = async () => {
-        const res = await publicAxios.get("/api/orders");
+        const res = await publicAxios.get("/order");
         setBill(res.data);
     };
 
     const handleGetDetailBill = async (id) => {
-        console.log(id);
-        const res = await publicAxios.get(`/api/order-detail/${id}`);
-        console.log(res.data.data);
-        setInforDetail(res.data);
+        // console.log(id);
+        // const res = await publicAxios.get(`/api/order-detail/${id}`);
+        // console.log(res.data.data);
+        // setInforDetail(res.data);
     };
 
     const handleSuccessBill = async (id, status) => {
         console.log(id, status);
         if (window.confirm("Xác nhận đơn cho khách hàng")) {
-            await publicAxios.patch(`/api/orders/success/${id}`, {
+            await publicAxios.patch(`/order/acceptOrder/${id}`, {
                 status_order: status,
             });
         }
@@ -43,7 +44,7 @@ function AdminBill() {
     };
     const handleCancelBill = async (id, status) => {
         if (window.confirm("Hủa đơn hàng này")) {
-            await publicAxios.patch(`/api/orders/canceled/${id}`, {
+            await publicAxios.patch(`/order/cancelOrder/${id}`, {
                 status_order: status,
             });
         }
@@ -58,17 +59,18 @@ function AdminBill() {
 
     const [show, setShow] = React.useState(false);
 
-    console.log(infoDetail);
     const handleClose = () => setShow(false);
     const handleShow = async (item) => {
-        console.log(item);
+
         setShow(true);
-        const response = await publicAxios.get(
-            `/api/order-detail/${item.orderId}`
-        );
-        console.log(response.data);
-        setInforDetail(response.data);
+        try {
+            const res = await axios.get(`http://localhost:8080/order-detail/${item.id}`);
+            setInfoDetail(res.data);
+        } catch (error) {
+            console.log(error);
+        }
     };
+    console.log(infoDetail)
     return (
         <div>
             <div className="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary ">
@@ -95,7 +97,7 @@ function AdminBill() {
                                             className="nav-link active"
                                             style={{ color: "red" }}
                                             id="choose-infor"
-                                            // onClick="returnListOrder()"
+                                        // onClick="returnListOrder()"
                                         >
                                             Information
                                         </a>
@@ -255,11 +257,10 @@ function AdminBill() {
                                                 <th scope="col">
                                                     Phone number
                                                 </th>
-                                                <th scope="col">Id Order</th>
+                                                {/* <th scope="col">Id Order</th> */}
                                                 <th scope="col">Price</th>
                                                 <th scope="col">Status</th>
                                                 <th scope="col">View</th>
-                                                {/* <th scope="col"></th> */}
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -272,9 +273,9 @@ function AdminBill() {
                                                         <th scope="col">
                                                             {item.phone}
                                                         </th>
-                                                        <th scope="col">
+                                                        {/* <th scope="col">
                                                             {item.orderId}
-                                                        </th>
+                                                        </th> */}
                                                         <th scope="col">
                                                             {USDollar.format(
                                                                 item.total
@@ -282,7 +283,7 @@ function AdminBill() {
                                                         </th>
                                                         <th scope="col">
                                                             {item.status_order ==
-                                                            0 ? (
+                                                                0 ? (
                                                                 <span
                                                                     style={{
                                                                         color: "green",
@@ -291,7 +292,7 @@ function AdminBill() {
                                                                     Đang Chờ
                                                                 </span>
                                                             ) : item.status_order ==
-                                                              1 ? (
+                                                                1 ? (
                                                                 <span
                                                                     style={{
                                                                         color: "blue",
@@ -325,14 +326,14 @@ function AdminBill() {
                                                             className="gap-10"
                                                         >
                                                             {item.status_order ===
-                                                            0 ? (
+                                                                0 ? (
                                                                 <div className="flex justify-evenly m-auto">
                                                                     <Button
                                                                         variant="contained"
                                                                         onClick={() =>
                                                                             handleSuccessBill(
-                                                                                item.orderId,
-                                                                                1
+                                                                                item.id,
+                                                                                "Xác nhận"
                                                                             )
                                                                         }
                                                                     >
@@ -342,7 +343,7 @@ function AdminBill() {
                                                                         variant="contained"
                                                                         onClick={() =>
                                                                             handleCancelBill(
-                                                                                item.orderId,
+                                                                                item.id,
                                                                                 "Đã Hủy"
                                                                             )
                                                                         }
@@ -369,24 +370,24 @@ function AdminBill() {
                             <Modal.Title>Sản Phẩm</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            {bill.map((item) => (
-                                <div className="titles_produsctsx">
-                                    <hr />
-                                    <p>Tên:{item.name}</p>
-                                    <p>
-                                        Ảnh:
-                                        <img
-                                            src={item.image}
-                                            className="w-[100px] h-[100px]"
-                                        />
-                                    </p>
-                                    <p>Số Lượng:{item.quantity}</p>
-                                    <p>
-                                        Giá Sản Phẩm:
-                                        {USDollar.format(item.price)}
-                                    </p>
-                                </div>
-                            ))}
+                            {infoDetail?.map((item, index) => {
+                                return (
+                                    <div className="flex  p-5 bg-slate-200 mt-4 rounded-lg">
+                                        <div>
+                                            <div className="flex gap-5 ">
+                                                <img className="w-[100px]" src={item.product.image} alt="" />
+                                                <div>
+                                                    <h3 className="font-bold">
+                                                        Name : {item.product.nameProduct}
+                                                    </h3>
+                                                    <p>Stock : {item.quantity}</p>
+                                                    <p>Price : ${item.product.price}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                );
+                            })}
                         </Modal.Body>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={handleClose}>
@@ -565,14 +566,7 @@ function AdminBill() {
                                                 </strong>
                                             </span>
                                             <div>
-                                                {/* <img
-                                                    src={}
-                                                    alt=""
-                                                    style={{
-                                                        width: 400,
-                                                        height: 100,
-                                                    }}
-                                                /> */}
+
                                             </div>
                                         </div>
                                     </div>

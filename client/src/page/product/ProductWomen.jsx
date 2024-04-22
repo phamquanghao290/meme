@@ -185,7 +185,7 @@ function ProductWomen() {
                 <div key={index} className="rounded-lg border h-[430px]">
                   <button
                     onClick={() => handleAddToWishList(item)}
-                    className="w-8 h-8 relative left-[230px] "
+                    className="w-8 h-8 relative left-[180px] "
                   >
                     <AiOutlineHeart className="text-red-500 w-7 h-7 " />
                   </button>
