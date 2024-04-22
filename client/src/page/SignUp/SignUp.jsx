@@ -185,7 +185,7 @@ export default function SignUp() {
                         Password
                     </p>
                     <input
-                        type="text"
+                        type="password"
                         placeholder="Qwerty@123"
                         name="password"
                         onChange={handleGetValue}
