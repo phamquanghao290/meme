@@ -3,9 +3,11 @@ import '../wishlist/Wishlist.scss'
 import Rectangle21 from '../../../public/images/Rectangle 21.png'
 import axios from 'axios';
 import { successNoti } from '../../utils/noti';
+import { useNavigate } from 'react-router-dom';
 export default function Wishlist() {
     const [listProduct, setListProduct] = useState([])
     const [flag,setFlag] = useState(false)
+    const navigate = useNavigate()
     const userLogin = JSON.parse(localStorage.getItem("userLogin"));
     const handleGetWishlist = async () => {
         const res = await axios.get(`http://localhost:8080/api/v1/favorite-product/${userLogin.id}`)
@@ -98,7 +100,7 @@ export default function Wishlist() {
                                 </div>
 
                                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                                    <button className='main-content-wishlist-right-button'>Add to cart</button>
+                                    <button className='main-content-wishlist-right-button' onClick={() => navigate(`/product-detail/${item.product.id}`)}>Add to cart</button>
                                 </div>
 
                             </div>

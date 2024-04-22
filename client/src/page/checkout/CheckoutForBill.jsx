@@ -148,15 +148,15 @@ function CheckoutForBill() {
       return acc + item.product.price * item.quantity;
     }, 0);
     setTotal(result);
-   
-    
   };
+
   useEffect(() => {
     handleTotalCart();
   }, [cart]);
   useEffect(() => {
     handleGetDataCity();
     handleGetCart();
+
     document.title = "Checkout";
   }, []);
 
