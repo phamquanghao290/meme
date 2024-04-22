@@ -58,7 +58,6 @@ export default function SignInPage() {
       role: 0,
       status: 0,
     };
-    console.log("data1", data1);
     try {
       const res = await publicAxios.post("/api/login-facebook", data1);
       console.log(res);
@@ -93,9 +92,13 @@ export default function SignInPage() {
         setTimeout(() => {
           window.location.href = "/admin";
         }, 1500);
-        localStorage.setItem("admin_token", response.data.token);
+        localStorage.setItem(
+          "admin",
+          JSON.stringify(response.data.user)
+        );
         return;
       }
+
       if (response.data.user.status === 1) {
         failed("Your account has been locked");
         return;
@@ -139,7 +142,7 @@ export default function SignInPage() {
 
         <div className="mainButton">
           <img className="mainButtonImage" src={Google} alt="" />
-          <button className="google-button-signin" onClick={handleLoginGoogle}>Continue With Google</button>
+          <button onClick={handleLoginGoogle}>Continue With Google</button>
 
           <div className="mainButton2">
 

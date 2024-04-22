@@ -2,6 +2,8 @@ import React from "react";
 import { Carousel } from "antd";
 import banner from "../../../public/images/banner.jpg";
 import banner2 from "../../../public/images/banner2.jpg";
+import banner3 from "../../../public/images/addidas/originals_fw24_adicolor_lavender_glpm_mh_d_dc0e51ca90.avif";
+import banner4 from "../../../public/images/Aristino/online_1920x900.png";
 import "./banner.scss";
 import { Link, useNavigate } from "react-router-dom";
 const contentStyle = {
@@ -15,7 +17,7 @@ const Banner = () => (
   <Carousel autoplay>
     <div>
       <div style={contentStyle} className="img_banner2">
-        <img src={banner} alt="" className="img_banner" />
+        <img src={banner4} alt="" className="img_banner" />
       </div>
       <div className="textBanner_css">
         <p>T-shirt / Tops</p>
@@ -32,7 +34,7 @@ const Banner = () => (
 
     <div>
       <div style={contentStyle}>
-        <img src={banner2} alt="" style={{ width: "100%", height: "100%" }} />
+        <img src={banner3} alt="" style={{ width: "100%", height: "100%" }} />
       </div>
 
       <div className="textBanner_css">

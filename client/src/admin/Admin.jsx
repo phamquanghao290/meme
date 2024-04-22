@@ -20,6 +20,8 @@ function Admin() {
     const handleLogout = () => {
         if (window.confirm("Admin muốn đăng xuất?")) {
             localStorage.removeItem("userLogin");
+            localStorage.removeItem("token");
+            localStorage.removeItem("admin");
             navigate("/");
             return;
         }
@@ -103,7 +105,7 @@ function Admin() {
                             </li>
                             <li
                                 className="nav-item"
-                                // onClick={() => handleLogout()}
+                                onClick={() => handleLogout()}
                             >
                                 <Link to="/sign-in" className="nav-link">
                                     <i className="bi bi-box-arrow-left" />{" "}
