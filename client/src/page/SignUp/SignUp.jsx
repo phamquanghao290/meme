@@ -6,6 +6,7 @@ import Divider from "../../../public/images/divider.png";
 import { Link, useNavigate } from "react-router-dom";
 import publicAxios from "../../config/PublicAxios";
 import { success, failed } from "../../components/Modal/NotificationModal";
+import { register, login } from "../../apis/auth.services";
 import "./SignUp.scss";
 
 export default function SignUp() {
@@ -74,8 +75,7 @@ export default function SignUp() {
             setErrorInput(err);
             return;
         } else {
-            console.log(newUser);
-            const response = await publicAxios.post("/api/register", newUser);
+            const res = await register(newUser);
             success("Đăng ký thành công");
             setNewUser({
                 name: "",

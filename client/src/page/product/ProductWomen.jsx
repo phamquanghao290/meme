@@ -25,7 +25,6 @@ function ProductWomen() {
 
   const handleGetProducts = async () => {
     const response = await publicAxios.get("/api/product");
-
     setProduct(response.data);
   };
 
@@ -193,7 +192,7 @@ function ProductWomen() {
                 <div key={index} className="rounded-lg border h-[430px]">
                   <button
                     onClick={() => handleAddToWishList(item)}
-                    className="w-8 h-8 relative left-[180px] "
+                    className="w-8 h-8 relative left-[220px] top-2 cursor-pointer"
                   >
                     <AiOutlineHeart className="text-red-500 w-7 h-7 " />
                   </button>
@@ -208,7 +207,7 @@ function ProductWomen() {
 
                     <br />
                     <p className="text-[18px] font-bold px-3">
-                      {item.nameProduct}
+                      {item.name_product}
                     </p>
                     <div className="flex items-end justify-between px-3">
                       <p className="text-md line-clamp-2 font-bold">

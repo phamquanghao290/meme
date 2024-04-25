@@ -106,12 +106,9 @@ function CheckoutForBill() {
       addresscity,
       phone,
       address,
-
-      // // orderDetails: cart,
       status: 0,
       total,
     };
-    console.log(orders, "gfghdfgdhfds");
     try {
       const response = await axios.post(
         "http://localhost:8080/order/createOrder",
@@ -308,7 +305,7 @@ function CheckoutForBill() {
                     className="max-w-[90px] w-full max-h-[100px] h-full"
                   />
                   <div>
-                    <p>{item.product.nameProduct}</p>
+                    <p>{item.product.name_product}</p>
                     <p>Quantity: {item.quantity}</p>
                   </div>
                   <p>${item.product.price}</p>
