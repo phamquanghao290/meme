@@ -1,13 +1,16 @@
-.footer { 
+.footer {
   background-color: #3c4242;
   color: #ffffff;
   font-size: 20px;
+ 
   .iconTille_footer {
     display: flex;
     gap: 9px;
     margin-top: 80px;
     margin-left: 10px;
     .icon_footer {
+      position: relative;
+      left: 40px;
       width: 50px;
       height: 50px;
       cursor: pointer;
@@ -18,7 +21,7 @@
     }
     .icon_footer:hover {
       background-color: #c6c4c4;
-    
+
       transition: 0.5s;
     }
   }
@@ -26,11 +29,16 @@
   .container2 {
     max-width: 1440px;
     width: 100%;
+    
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
-    p{
+    h2{
+      margin-left: 10px;
+    }
+    p {
       margin-top: 20px;
+      margin-left: 20px;
     }
     padding: 50px 0 50px 0;
     font-size: 18px;
@@ -40,7 +48,6 @@
     .downloadapp {
       display: flex;
       margin-top: 50px;
-      
     }
 
     .appstore {
@@ -62,7 +69,7 @@
       h5 {
         font-size: 9px;
         position: relative;
-      
+
         right: 125px;
       }
     }
@@ -72,8 +79,7 @@
     width: 100%;
     margin: 0 auto;
     h2 {
-      
-      margin: 15px 0 15px 0;
+      margin: 15px 20px 15px 20px;
     }
     h4 {
       padding: 20px 0 20px 0;
@@ -85,95 +91,91 @@
   }
 }
 @media (max-width: 768px) {
-   .footer { 
-  background-color: #3c4242;
-  color: #ffffff;
-  font-size: 15px;
-  .iconTille_footer {
-    display: flex;
-    gap: 9px;
-    margin-top: 80px;
-    margin-left: 10px;
-    .icon_footer {
-      width: 50px;
-      height: 50px;
-      cursor: pointer;
-      background-color: #f6f6f6;
-      color: #3c4242;
-      padding: 16px;
-      border-radius: 10px;
-    }
-    .icon_footer:hover {
-      background-color: #c6c4c4;
-    
-      transition: 0.5s;
-    }
-  }
-
-  .container2 {
-    max-width: 1440px;
-   
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    p{
-      margin-top: 20px;
-      font-size: 10px;
-    }
-    padding: 50px 0 50px 0;
+  .footer {
+    background-color: #3c4242;
+    color: #ffffff;
     font-size: 15px;
-    .download {
+    .iconTille_footer {
+      display: flex;
+      gap: 9px;
       margin-top: 80px;
-    }
-    .downloadapp {
-    width: 100%;
- 
-    }
-    .location_2{
-      width: 300px;
-    }
+      margin-left: 10px;
+      .icon_footer {
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
+        background-color: #f6f6f6;
+        color: #3c4242;
+        padding: 16px;
+        border-radius: 10px;
+      }
+      .icon_footer:hover {
+        background-color: #c6c4c4;
 
-    .appstore {
-
-    
-      height: 51px;
-      display: flex;
- 
-      h5 {
-        font-size: 9px;
-        position: relative;
-        right: 79px;
+        transition: 0.5s;
       }
     }
-    .chplay {
-      width: 120px;
-      height: 51px;
+
+    .container2 {
+      max-width: 1440px;
+
+      margin: 0 auto;
       display: flex;
+      justify-content: space-between;
       gap: 20px;
-      h5 {
-        font-size: 9px;
-        position: relative;
-      
-        right: 79px;
+      p {
+        margin-top: 20px;
+        font-size: 10px;
+      }
+      padding: 50px 0 50px 0;
+      font-size: 15px;
+      .download {
+        margin-top: 80px;
+      }
+      .downloadapp {
+        width: 100%;
+      }
+      .location_2 {
+        width: 300px;
+      }
+
+      .appstore {
+        height: 51px;
+        display: flex;
+
+        h5 {
+          font-size: 9px;
+          position: relative;
+          right: 79px;
+        }
+      }
+      .chplay {
+        width: 120px;
+        height: 51px;
+        display: flex;
+        gap: 20px;
+        h5 {
+          font-size: 9px;
+          position: relative;
+
+          right: 79px;
+        }
+      }
+    }
+    .footer2 {
+      max-width: 1440px;
+      width: 100%;
+      margin: 0 auto;
+      h2 {
+        margin: 15px 0 15px 0;
+      }
+      h4 {
+        padding: 20px 0 20px 0;
+        text-align: center;
+      }
+      hr {
+        border: 1px solid #f6f6f6;
       }
     }
   }
-  .footer2 {
-    max-width: 1440px;
-    width: 100%;
-    margin: 0 auto;
-    h2 {
-      
-      margin: 15px 0 15px 0;
-    }
-    h4 {
-      padding: 20px 0 20px 0;
-      text-align: center;
-    }
-    hr {
-      border: 1px solid #f6f6f6;
-    }
-  }
-}
 }

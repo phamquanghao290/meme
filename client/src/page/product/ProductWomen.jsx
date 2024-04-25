@@ -15,14 +15,18 @@ import anh1 from "../../../public/images/product13.png";
 import { Select } from "antd";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { successNoti } from "../../utils/noti";
+import { failedNoti, successNoti } from "../../utils/noti";
 
 function ProductWomen() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   const [product, setProduct] = useState([]);
-
+  const [categories, setCategories] = React.useState([]);
+  const [brands, setBrands] = React.useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedBrand, setSelectedBrand] = useState("");
+  const userLogin = JSON.parse(localStorage.getItem("userLogin"));
   const handleGetProducts = async () => {
     const response = await publicAxios.get("/api/product");
     setProduct(response.data);
@@ -44,7 +48,7 @@ function ProductWomen() {
     }
   };
 
-  const [categories, setCategories] = React.useState([]);
+
   const handleGetAllCate = async () => {
     try {
       const response = await publicAxios.get("/api/category");
@@ -61,25 +65,28 @@ function ProductWomen() {
     handleGetBrands();
   }, []);
 
-  const [brands, setBrands] = React.useState([]);
+ 
   const handleGetBrands = async () => {
     const response = await publicAxios.get("/api/brand");
     setBrands(response.data);
   };
-  const [selectedCategory, setSelectedCategory] = useState("");
+ 
   const handleClick_category = (id) => {
     setSelectedCategory(id);
   };
 
-  const [selectedBrand, setSelectedBrand] = useState("");
+ 
   const handleClick_brand = (id) => {
     setSelectedBrand(id);
   };
 
 
-  const userLogin = JSON.parse(localStorage.getItem("userLogin"));
+  
   const handleAddToWishList = async (item) => {
-    console.log(item);
+    if (!userLogin) {
+      failedNoti("Please login to add product to wish list");
+      return;
+    }
     const res = await axios.post(
       `http://localhost:8080/api/v1/favorite-product/${userLogin.id}`,
       item
@@ -117,7 +124,7 @@ function ProductWomen() {
                 }}
                 onClick={() => handleClick_category(item.id)}
               >
-                {item.nameCategory}
+                {item.name_category}
               </p>
             ))}
 
@@ -162,7 +169,7 @@ function ProductWomen() {
               </p>
               {brands.map((item) => (
                 <p
-                  className="text-xl ml-6 flex items-center  mt-7"
+                  className="text-xl ml-6 flex items-center  mt-7 cursor-pointer"
                   style={{
                     borderColor: `${selectedBrand == item.id ? "black" : ""}`,
                     borderWidth: `${selectedBrand == item.id ? "2px" : "1px"}`,
@@ -170,7 +177,7 @@ function ProductWomen() {
                   }}
                   onClick={() => handleClick_brand(item.id)}
                 >
-                  {item.nameBrand}
+                  {item.name_brand}
                 </p>
               ))}
             </div>
@@ -192,7 +199,7 @@ function ProductWomen() {
                 <div key={index} className="rounded-lg border h-[430px]">
                   <button
                     onClick={() => handleAddToWishList(item)}
-                    className="w-8 h-8 relative left-[220px] top-2 cursor-pointer"
+                    className="w-8 h-8 relative left-[200px] top-2 cursor-pointer"
                   >
                     <AiOutlineHeart className="text-red-500 w-7 h-7 " />
                   </button>
@@ -213,7 +220,7 @@ function ProductWomen() {
                       <p className="text-md line-clamp-2 font-bold">
                         {item.price}
                       </p>
-                      <Rate disabled defaultValue={item.rate} />
+                      <Rate disabled defaultValue={item.rating} />
                     </div>
                   </Link>
                 </div>
