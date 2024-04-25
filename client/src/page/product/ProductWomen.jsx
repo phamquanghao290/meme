@@ -15,7 +15,7 @@ import anh1 from "../../../public/images/product13.png";
 import { Select } from "antd";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { successNoti } from "../../utils/noti";
+import { failedNoti, successNoti } from "../../utils/noti";
 
 function ProductWomen() {
   useEffect(() => {
@@ -29,7 +29,6 @@ function ProductWomen() {
   const userLogin = JSON.parse(localStorage.getItem("userLogin"));
   const handleGetProducts = async () => {
     const response = await publicAxios.get("/api/product");
-
     setProduct(response.data);
   };
 
@@ -84,7 +83,10 @@ function ProductWomen() {
 
   
   const handleAddToWishList = async (item) => {
-    
+    if (!userLogin) {
+      failedNoti("Please login to add product to wish list");
+      return;
+    }
     const res = await axios.post(
       `http://localhost:8080/api/v1/favorite-product/${userLogin.id}`,
       item
@@ -122,7 +124,7 @@ function ProductWomen() {
                 }}
                 onClick={() => handleClick_category(item.id)}
               >
-                {item.nameCategory}
+                {item.name_category}
               </p>
             ))}
 
@@ -175,7 +177,7 @@ function ProductWomen() {
                   }}
                   onClick={() => handleClick_brand(item.id)}
                 >
-                  {item.nameBrand}
+                  {item.name_brand}
                 </p>
               ))}
             </div>
@@ -197,7 +199,7 @@ function ProductWomen() {
                 <div key={index} className="rounded-lg border h-[430px]">
                   <button
                     onClick={() => handleAddToWishList(item)}
-                    className="w-8 h-8 relative left-[210px] "
+                    className="w-8 h-8 relative left-[200px] top-2 cursor-pointer"
                   >
                     <AiOutlineHeart className="text-red-500 w-7 h-7 " />
                   </button>
@@ -212,13 +214,13 @@ function ProductWomen() {
 
                     <br />
                     <p className="text-[18px] font-bold px-3">
-                      {item.nameProduct}
+                      {item.name_product}
                     </p>
                     <div className="flex items-end justify-between px-3">
                       <p className="text-md line-clamp-2 font-bold">
                         {item.price}
                       </p>
-                      <Rate disabled defaultValue={item.rate} />
+                      <Rate disabled defaultValue={item.rating} />
                     </div>
                   </Link>
                 </div>

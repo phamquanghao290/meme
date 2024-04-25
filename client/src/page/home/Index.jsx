@@ -63,6 +63,7 @@ export default function Index() {
     handleGetAllCate();
   }, []);
   const topFourProducts = product.sort((a, b) => b.id - a.id).slice(0, 4);
+  
    
   const sortedProducts = product.sort((a, b) => a.stock - b.stock);
   const lowestStockProducts = sortedProducts.slice(0, 4);
@@ -95,7 +96,7 @@ export default function Index() {
               <>
                 <div>
                   <img src={item.image} alt="" />
-                  <p>{item.nameProduct}</p>
+                  <p>{item.name_product}</p>
                 </div>
               </>
             ))}
@@ -216,7 +217,7 @@ export default function Index() {
                 <h3 style={{ color: "white" }}>
                   WE MADE YOUR EVERYDAY <br /> FASHION BETTER!
                 </h3>
-                <p >
+                <p>
                   In our journey to improve everyday fashion, <br />
                   euphoria presents EVERYDAY wear range <br />- Comfortable &
                   Affordable fashion 24/7
@@ -236,12 +237,12 @@ export default function Index() {
         </div>
         <div className="NewArrivalProducts">
           {categories
-            ?.filter((categories) => categories.id == 3)
+            ?.filter((categories) => categories.id == 2)
             .map((categories) => (
-              <h2>{categories.nameCategory}</h2>
+              <h2>{categories.name_category}</h2>
             ))}
 
-          <div className="productshome">
+          <div className="products_Categoryid">
             {product
               ?.filter((products) => products.category.id == 2)
               .slice(0, 4)
@@ -250,15 +251,15 @@ export default function Index() {
                   <img src={product.image} alt="" />{" "}
                   <div className="titleProducts">
                     <div>
-                      <h4>{product.nameProduct}</h4>{" "}
-                      <p>{product.brand.nameBrand}</p>
+                      <h4>{product.name_product}</h4>{" "}
+                      <p>{product.brand.name_brand}</p>
                     </div>
 
                     <div>
                       {" "}
                       <Link to={`/product-detail/${product.id}`}>
                         <GrLinkNext
-                          style={{ marginLeft: "220px", marginTop: "22px" }}
+                          style={{ marginLeft: "20px", marginTop: "22px" }}
                         />
                       </Link>
                     </div>
@@ -269,13 +270,13 @@ export default function Index() {
         </div>
         <div className="NewArrivalProducts">
           {categories
-            ?.filter((categories) => categories.id == 2)
+            ?.filter((categories) => categories.id == 3)
 
             .map((categories) => (
-              <h2>{categories.nameCategory}</h2>
+              <h2>{categories.name_category}</h2>
             ))}
 
-          <div className="productshome">
+          <div className="products_Categoryid">
             {product
               ?.filter((products) => products.category.id == 3)
               .slice(0, 4)
@@ -284,15 +285,15 @@ export default function Index() {
                   <img src={product.image} alt="" />{" "}
                   <div className="titleProducts">
                     <div>
-                      <h4>{product.nameProduct}</h4>{" "}
-                      <p>{product.brand.nameBrand}</p>
+                      <h4>{product.name_product}</h4>{" "}
+                      <p>{product.brand.name_brand}</p>
                     </div>
 
                     <div>
                       {" "}
                       <Link to={`/product-detail/${product.id}`}>
                         <GrLinkNext
-                          style={{ marginLeft: "220px", marginTop: "22px" }}
+                          style={{ marginLeft: "20px", marginTop: "22px" }}
                         />
                       </Link>
                     </div>
@@ -305,10 +306,10 @@ export default function Index() {
           {categories
             ?.filter((categories) => categories.id == 1)
             .map((categories) => (
-              <h2>{categories.nameCategory}</h2>
+              <h2>{categories.name_category}</h2>
             ))}
 
-          <div className="productshome">
+          <div className="products_Categoryid">
             {product
               ?.filter((products) => products.category.id == 1)
               .slice(0, 4)
@@ -317,15 +318,15 @@ export default function Index() {
                   <img src={product.image} alt="" />{" "}
                   <div className="titleProducts">
                     <div>
-                      <h4>{product.nameProduct}</h4>{" "}
-                      <p>{product.brand.nameBrand}</p>
+                      <h4>{product.name_product}</h4>{" "}
+                      <p>{product.brand.name_brand}</p>
                     </div>
 
                     <div>
                       {" "}
                       <Link to={`/product-detail/${product.id}`}>
                         <GrLinkNext
-                          style={{ marginLeft: "220px", marginTop: "22px" }}
+                          style={{ marginLeft: "20px", marginTop: "22px" }}
                         />
                       </Link>
                     </div>
@@ -410,7 +411,7 @@ export default function Index() {
         </div>
         <div className="NewArrivalProducts">
           <h2>In The Limelight</h2>
-          <div className="productshome">
+          <div className="products_Categoryid">
             {lowestStockProducts.map((product) => (
               <div>
                 <Link to={`/product-detail/${product.id}`}>
@@ -421,8 +422,10 @@ export default function Index() {
                   />
                   <div className="titleProducts">
                     <div>
-                      <h4>{product.nameProduct}</h4>{" "}
-                      <p>{product.brand.nameBrand}</p>
+                      <h4>{product.name_product}</h4>{" "}
+                      <p style={{ color: "black" }}>
+                        {product.brand.name_brand}
+                      </p>
                     </div>
 
                     <div
