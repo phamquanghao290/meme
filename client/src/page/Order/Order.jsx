@@ -233,11 +233,12 @@ function Order() {
           <div>
             <h2
               style={{
-                fontSize: "24px",
-                fontWeight: "700",
+                width: "6px",
+                height: "30px",
                 color: "#3C4242",
                 lineHeight: "33px",
                 borderLeft: "5px solid #8A33FD",
+                borderRadius: "5px"
               }}
             >
               <h2 style={{ marginLeft: "20px" }}>My Order</h2>
@@ -287,6 +288,7 @@ function Order() {
                           >
                             Cancel
                           </button>
+
                         ) : item.status_order === 1 ? (
                           <p className="text-[#5b45eb] rounded-lg px-4 py-2">
                             Confirm
@@ -296,6 +298,7 @@ function Order() {
                             Canceled
                           </p>
                         )}
+
                       </div>
                     </div>
                   </div>

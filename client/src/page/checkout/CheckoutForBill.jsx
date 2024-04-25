@@ -72,6 +72,7 @@ function CheckoutForBill() {
   };
 
   const handleOrderCart = async () => {
+    
     let addresscity = city + "," + district + "," + ward;
     if (cart.length == 0) {
       failed("No Products to Pay for");
@@ -169,16 +170,16 @@ function CheckoutForBill() {
               borderRadius: "7px",
             }}
           ></div>
-          <h2 className="text-2xl">Checkout</h2>
+          <h2 className="text-2xl font-bold">Checkout</h2>
         </div>
         <br />
-        <h3>Billing Details</h3>
+        <h3 className="font-bold text-md">Billing Details</h3>
         <br />
         <div className="Bill">
           <div>
             <div className="Form_bill">
               <div>
-                <label>Phone *</label>
+                <label className="font-bold text-[#3C4242]">Phone *</label>
                 <br />
                 <input
                   type="number"
@@ -188,7 +189,7 @@ function CheckoutForBill() {
               </div>
 
               <div className="position-relative right-[150px]">
-                <label>Address *</label>
+                <label className="font-bold text-[#3C4242]">Address *</label>
                 <br />
                 <input
                   type="text"
@@ -216,7 +217,7 @@ function CheckoutForBill() {
                     height: "30px",
                   }}
                 >
-                  <option value="">Chọn thành phố</option>
+                  <option value="">Chọn Thành Phố</option>
                   {dataCity.map((item, index) => (
                     <option key={index} value={item.province_id}>
                       {item.province_name}
@@ -265,21 +266,21 @@ function CheckoutForBill() {
                 </select>
               </div>
             </div>
-            <div className="flex items-center justify-around mt-[100px]">
-              <div style={{ marginTop: "30px" }}>
-                <h3>Payment method</h3>
+            <div className="flex items-center gap-[150px] mt-[30px]">
+              <div >
+                <h3 className="font-bold text-[#3C4242] text-lg">Payment method</h3>
 
                 <p>All transactions are secure and encrypted.</p>
               </div>
               <div>
-                <div style={{ paddingLeft: "15px", marginTop: "10px" }}>
-                  <h4>Cash on delivery</h4>
+                <div >
+                  <h4 className="font-bold text-[#3C4242] text-lg">Cash on delivery</h4>
                   <p>Pay with cash upon delivery.</p>
                 </div>
               </div>
             </div>
             <button
-              className="cursor-pointer bg-[#8a33fd] text-white font-bold py-2 px-4 rounded mt-[100px] ml-[100px]"
+              className="cursor-pointer bg-[#8a33fd] text-white font-bold py-2 px-4 rounded mt-[30px] "
               onClick={handleOrderCart}
             >
               Pay Now

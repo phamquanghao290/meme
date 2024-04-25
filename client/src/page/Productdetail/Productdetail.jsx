@@ -73,7 +73,7 @@ export default function Productdetail() {
 
   const handlCLickAddtoCart = async (product) => {
     if (!(userLogin && userLogin.id)) {
-      failed("Need to Login to Purchase");
+      failed("Cần đăng nhập để mua hàng");
       return;
     }
 
