@@ -5,91 +5,76 @@ import p1 from "../../../public/images/Rectangle 734.png";
 import deletecon from "../../../public/images/deletecon.png";
 import { Input } from "antd";
 import { failed, success } from "../../components/Modal/NotificationModal";
-import publicAxios from "../../config/PublicAxios";
-import CheckoutForBill from "../checkout/CheckoutForBill";
+import { handleDecreaseCartAPI, handleDeleteCartAPI, handleGetCartAPI, handleGetProductAPI, handleIncreaseCartAPI } from "../../apis/cart";
+import { formatMoney } from "../../utils/formatMoney";
 
 function Cart() {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-  const userLogin = JSON.parse(localStorage.getItem("userLogin") || "{}");
-  const USD = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
   const [cart, setCart] = useState([]);
   const [product, setProduct] = useState([]);
   const [flag, setFlag] = useState(false);
   const [total, setTotal] = useState(0);
   const [allCart, setAllCart] = useState([]);
-
-  const handleGetCart = async () => {
-    const response = await publicAxios.get("A/all-cart");
-    setAllCart(response.data);
-  };
   const navigate = useNavigate();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  const userLogin = JSON.parse(localStorage.getItem("userLogin") || "{}");
   const handleGetCartByUserId = async () => {
-    const response = await publicAxios.get(
-      `/api/cart/getCartByUserId/${userLogin.id}`
-    );
+    const response = await handleGetCartAPI(userLogin?.id);
     setCart(response.data);
   };
-
   const handleGetProduct = async () => {
-    const response = await publicAxios.get(`/api/product`);
-    setProduct(response.data);
-  };
-
-  const handleDeleteCart = async (id) => {
-    if (window.confirm("Are you sure you want to delete this item?")) {
-      const response = await publicAxios.delete(`/api/cart/${id}`);
-      setFlag(!flag);
-      success("Xóa sản phẩm thành công");
+    try {
+      const res = await handleGetProductAPI()
+      setProduct(res.data);
+    } catch (error) {
+      console.log(error)
     }
   };
-
+  const handleDeleteCart = async (id) => {
+    if (window.confirm("Are you sure you want to delete this item?")) {
+      await handleDeleteCartAPI(id);
+      setFlag(!flag);
+      success("Cart deleted successfully");
+    }
+  };
   const handleTotalPrice = () => {
     let totalPrice = cart?.reduce((total, item) => {
       return total + item.product.price * item.quantity;
     }, 0);
     setTotal(totalPrice);
   };
-
   const handleIncrease = async (item) => {
     if (item.quantity >= item.product.stock) {
-      failed("Không đủ số lượng trong kho");
+      failed("Not enough quantity in stock");
       return;
     }
-    const response = await publicAxios.put("/api/cart/increase", item);
+    await handleIncreaseCartAPI(item);
     setFlag(!flag);
   };
-
   const handleDecrease = async (item) => {
     if (item.quantity <= 1) {
       handleDeleteCart(item.id);
       setFlag(!flag);
     } else {
-      const response = await publicAxios.put("/api/cart/decrease", item);
+      await handleDecreaseCartAPI(item);
       setFlag(!flag);
     }
   };
-
   useEffect(() => {
     handleGetCartByUserId();
-    handleGetCart();
     handleGetProduct();
     document.title = "Checkout";
   }, [flag]);
   useEffect(() => {
     handleTotalPrice();
-    setFlag(!flag);
   }, [cart]);
   const numberCart = 0;
   const handlOder = () => {
     if (cart.length > 0) {
       success("Order Success");
       navigate(`/checkout/${userLogin.id}`);
-    } 
+    }
     else {
       failed("There are no orders yet");
     }
@@ -104,7 +89,6 @@ function Cart() {
             Please fill in the fields below and click place order to complete your
             purchase!
           </p>
-          {/* <p>Already register ?</p> <Link to="/login"> Please login here</Link> */}
         </div>
       </div>
       <div className="table_cart">
@@ -134,7 +118,7 @@ function Cart() {
                       />
                     </td>
                     <td>{item.product.nameProduct}</td>
-                    <td>{USD.format(item.product.price)}</td>
+                    <td>{formatMoney(item.product.price)}</td>
                     <td className="">
                       <button
                         className="mr-5"
@@ -150,7 +134,7 @@ function Cart() {
                         +
                       </button>
                     </td>
-                    <td>{USD.format(item.product.price * item.quantity)}</td>
+                    <td>{formatMoney(item.product.price * item.quantity)}</td>
                     <td className="cursor-pointer">
                       <img
                         className="m-auto"
@@ -204,7 +188,7 @@ function Cart() {
               }}
             >
               <p>Subtotal</p>
-              <p>{USD.format(total)}</p>
+              <p>{formatMoney(total)}</p>
             </div>
             <div
               style={{
@@ -225,11 +209,10 @@ function Cart() {
               }}
             >
               <p>Grand Total</p>
-              <p>{USD.format(total)}</p>
+              <p>{formatMoney(total)}</p>
             </div>
           </div>
           <hr />
-
           <button className="continue" onClick={handlOder}>
             Place Order
           </button>
