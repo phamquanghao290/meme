@@ -6,21 +6,20 @@
 
 .container {
   font-family: "Montserrat", sans-serif;
-  margin-top: 50px;
   padding-left: 100px;
   width: 100%;
   .title {
-    font-size: 30px;
-    font-optical-sizing: auto;
+    font-size: 40px;
+    // font-optical-sizing: auto;
     font-weight: bold;
-    font-style: normal;
+    // font-style: normal;
   }
 }
 
 .table_cart {
   font-family: "Montserrat", sans-serif;
   width: 100%;
-  margin-top: 50px;
+  margin-top: 30px;
   min-height: 76px;
   .table_cart_info {
     width: 100%;
