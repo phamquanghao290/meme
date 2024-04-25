@@ -260,7 +260,7 @@ function Order() {
                 <div className="w-100 h-40 p-7 bg-slate-100 rounded-lg drop-shadow-lg mt-10">
                   <div className="flex justify-between items-center">
                     <h3 className="text-lg font-semibold">
-                      NameUser : {item.user_name}
+                      Name : {item.user_name}
                     </h3>
                     <button
                       className="text-white bg-[#8A33FD] rounded-lg px-[40px] py-2"
@@ -287,19 +287,15 @@ function Order() {
                           >
                             Cancel
                           </button>
-
-                        ) :
-                          item.status_order === 1 ? (
-                            <p className="text-white bg-[#5b45eb] rounded-lg px-4 py-2">
-                              Xác Nhận
-                            </p>
-                          ):
-                          (
-                            <p className="text-white bg-[#ee4c4c] rounded-lg px-4 py-2">
-                              Cancel
-                            </p>
-                          )}
-
+                        ) : item.status_order === 1 ? (
+                          <p className="text-[#5b45eb] rounded-lg px-4 py-2">
+                            Confirm
+                          </p>
+                        ) : (
+                          <p className="text-[red] rounded-lg px-4 py-2">
+                            Canceled
+                          </p>
+                        )}
                       </div>
                     </div>
                   </div>

@@ -216,7 +216,7 @@ export default function Index() {
                 <h3 style={{ color: "white" }}>
                   WE MADE YOUR EVERYDAY <br /> FASHION BETTER!
                 </h3>
-                <p>
+                <p >
                   In our journey to improve everyday fashion, <br />
                   euphoria presents EVERYDAY wear range <br />- Comfortable &
                   Affordable fashion 24/7
@@ -236,7 +236,7 @@ export default function Index() {
         </div>
         <div className="NewArrivalProducts">
           {categories
-            ?.filter((categories) => categories.id == 2)
+            ?.filter((categories) => categories.id == 3)
             .map((categories) => (
               <h2>{categories.nameCategory}</h2>
             ))}
@@ -269,7 +269,7 @@ export default function Index() {
         </div>
         <div className="NewArrivalProducts">
           {categories
-            ?.filter((categories) => categories.id == 3)
+            ?.filter((categories) => categories.id == 2)
 
             .map((categories) => (
               <h2>{categories.nameCategory}</h2>

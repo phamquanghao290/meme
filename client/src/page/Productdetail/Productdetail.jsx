@@ -270,11 +270,11 @@ export default function Productdetail() {
           </div>
         </div>
         <div className="NewArrivalProducts">
-          <h2>In The Limelight</h2>
+          <h2>In The Category</h2>
 
           <div className="grid grid-cols-4 mt-10 gap-5 drop-shadow-xl ">
             {productAll
-              .filter((products) => products.brand.id == product.brand.id)
+              .filter((products) => products?.brand?.id == product?.brand?.id)
               .map((item, index) => (
                 <div className="Limelight max-w-[220px] m-auto pt-3 h-[260px] hover:scale-105 transition-all duration-300">
                   <img src={item.image} alt="" />

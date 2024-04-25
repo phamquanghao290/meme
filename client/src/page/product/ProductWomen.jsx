@@ -22,7 +22,11 @@ function ProductWomen() {
     window.scrollTo(0, 0);
   }, []);
   const [product, setProduct] = useState([]);
-
+  const [categories, setCategories] = React.useState([]);
+  const [brands, setBrands] = React.useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedBrand, setSelectedBrand] = useState("");
+  const userLogin = JSON.parse(localStorage.getItem("userLogin"));
   const handleGetProducts = async () => {
     const response = await publicAxios.get("/api/product");
 
@@ -45,7 +49,7 @@ function ProductWomen() {
     }
   };
 
-  const [categories, setCategories] = React.useState([]);
+
   const handleGetAllCate = async () => {
     try {
       const response = await publicAxios.get("/api/category");
@@ -62,25 +66,25 @@ function ProductWomen() {
     handleGetBrands();
   }, []);
 
-  const [brands, setBrands] = React.useState([]);
+ 
   const handleGetBrands = async () => {
     const response = await publicAxios.get("/api/brand");
     setBrands(response.data);
   };
-  const [selectedCategory, setSelectedCategory] = useState("");
+ 
   const handleClick_category = (id) => {
     setSelectedCategory(id);
   };
 
-  const [selectedBrand, setSelectedBrand] = useState("");
+ 
   const handleClick_brand = (id) => {
     setSelectedBrand(id);
   };
 
 
-  const userLogin = JSON.parse(localStorage.getItem("userLogin"));
+  
   const handleAddToWishList = async (item) => {
-    console.log(item);
+    
     const res = await axios.post(
       `http://localhost:8080/api/v1/favorite-product/${userLogin.id}`,
       item
@@ -163,7 +167,7 @@ function ProductWomen() {
               </p>
               {brands.map((item) => (
                 <p
-                  className="text-xl ml-6 flex items-center  mt-7"
+                  className="text-xl ml-6 flex items-center  mt-7 cursor-pointer"
                   style={{
                     borderColor: `${selectedBrand == item.id ? "black" : ""}`,
                     borderWidth: `${selectedBrand == item.id ? "2px" : "1px"}`,
@@ -193,7 +197,7 @@ function ProductWomen() {
                 <div key={index} className="rounded-lg border h-[430px]">
                   <button
                     onClick={() => handleAddToWishList(item)}
-                    className="w-8 h-8 relative left-[180px] "
+                    className="w-8 h-8 relative left-[210px] "
                   >
                     <AiOutlineHeart className="text-red-500 w-7 h-7 " />
                   </button>
