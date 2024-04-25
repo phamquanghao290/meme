@@ -16,6 +16,7 @@ import { Select } from "antd";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { failedNoti, successNoti } from "../../utils/noti";
+import { getProductsAPI } from "../../apis/products.services";
 
 function ProductWomen() {
   useEffect(() => {
@@ -28,8 +29,8 @@ function ProductWomen() {
   const [selectedBrand, setSelectedBrand] = useState("");
   const userLogin = JSON.parse(localStorage.getItem("userLogin"));
   const handleGetProducts = async () => {
-    const response = await publicAxios.get("/api/product");
-    setProduct(response.data);
+    const res = await getProductsAPI();
+    setProduct(res.data)
   };
 
   useEffect(() => {
