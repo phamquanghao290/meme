@@ -5,6 +5,7 @@ const success = (type) => {
         message: type,
         style: {
             top: 50,
+            zIndex: 10000000,
         },
     });
 };
@@ -14,6 +15,8 @@ const failed = (type) => {
         message: type,
         style: {
             top: 50,
+            position:"sticky",
+            zIndex: 9999999999999,
         },
     });
 };
