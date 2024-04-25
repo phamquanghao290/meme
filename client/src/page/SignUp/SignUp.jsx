@@ -75,7 +75,8 @@ export default function SignUp() {
             setErrorInput(err);
             return;
         } else {
-            const res = await register(newUser);
+            console.log(newUser);
+            const response = await publicAxios.post("/api/register", newUser);  
             success("Đăng ký thành công");
             setNewUser({
                 name: "",
@@ -238,7 +239,7 @@ export default function SignUp() {
                             onClick={handleRegister}
                             className="main-button-signin"
                         >
-                            Sign Upp
+                            Sign Up
                         </button>
                     </div>
 
