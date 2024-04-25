@@ -233,11 +233,12 @@ function Order() {
           <div>
             <h2
               style={{
-                fontSize: "24px",
-                fontWeight: "700",
+                width: "6px",
+                height: "30px",
                 color: "#3C4242",
                 lineHeight: "33px",
                 borderLeft: "5px solid #8A33FD",
+                borderRadius: "5px"
               }}
             >
               <h2 style={{ marginLeft: "20px" }}>My Order</h2>
@@ -293,12 +294,12 @@ function Order() {
                             <p className="text-white bg-[#5b45eb] rounded-lg px-4 py-2">
                               Xác Nhận
                             </p>
-                          ):
-                          (
-                            <p className="text-white bg-[#ee4c4c] rounded-lg px-4 py-2">
-                              Cancel
-                            </p>
-                          )}
+                          ) :
+                            (
+                              <p className="text-white bg-[#ee4c4c] rounded-lg px-4 py-2">
+                                Cancel
+                              </p>
+                            )}
 
                       </div>
                     </div>

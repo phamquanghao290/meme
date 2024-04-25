@@ -24,7 +24,7 @@ function Cart() {
   const [allCart, setAllCart] = useState([]);
 
   const handleGetCart = async () => {
-    const response = await publicAxios.get("/api/cart/all-cart");
+    const response = await publicAxios.get("A/all-cart");
     setAllCart(response.data);
   };
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ function Cart() {
     );
     setCart(response.data);
   };
-  
+
   const handleGetProduct = async () => {
     const response = await publicAxios.get(`/api/product`);
     setProduct(response.data);
@@ -44,7 +44,7 @@ function Cart() {
     if (window.confirm("Are you sure you want to delete this item?")) {
       const response = await publicAxios.delete(`/api/cart/${id}`);
       setFlag(!flag);
-      success("Deleted successfully");
+      success("Xóa sản phẩm thành công");
     }
   };
 
@@ -57,7 +57,7 @@ function Cart() {
 
   const handleIncrease = async (item) => {
     if (item.quantity >= item.product.stock) {
-      failed("Quantity in stock is not enough");
+      failed("Không đủ số lượng trong kho");
       return;
     }
     const response = await publicAxios.put("/api/cart/increase", item);
@@ -89,20 +89,23 @@ function Cart() {
     if (cart.length > 0) {
       success("Order Success");
       navigate(`/checkout/${userLogin.id}`);
-    } else {
+    } 
+    else {
       failed("There are no orders yet");
     }
   };
   return (
     <div>
       <div className="container">
-        <h1 className="title">Cart</h1>
+        <h1 className="text-xl font-bold mt-3 ml-4">Cart</h1>
         <br />
-        <p>
-          Please fill in the fields below and click place order to complete your
-          purchase!
-        </p>
-        <p>Already register ?</p> <Link to="/login"> Please login here</Link>
+        <div className="ml-4">
+          <p className="mt-[-20px]">
+            Please fill in the fields below and click place order to complete your
+            purchase!
+          </p>
+          {/* <p>Already register ?</p> <Link to="/login"> Please login here</Link> */}
+        </div>
       </div>
       <div className="table_cart">
         <table className="table_cart_info">
