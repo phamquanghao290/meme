@@ -9,6 +9,8 @@ import { success, failed } from "../../components/Modal/NotificationModal";
 import "./SignInPage.scss";
 import { Link } from "react-router-dom";
 import { signInWithFacebook, signInWithGoogle } from "../../firebase/firebase";
+import { login, login_google } from "../../apis/auth.services";
+
 export default function SignInPage() {
   const [user, setUser] = React.useState({
     email: "",
@@ -28,7 +30,7 @@ export default function SignInPage() {
     };
     console.log(data);
     try {
-      const res = await publicAxios.post("/api/login-google", data);
+      const res = await login_google(data);
       console.log(res);
       if (res.data.data) {
         localStorage.setItem("token", res.data.data.token);
@@ -59,7 +61,7 @@ export default function SignInPage() {
       status: 0,
     };
     try {
-      const res = await publicAxios.post("/api/login-facebook", data1);
+      const res = 
       console.log(res);
       if (res.data.data) {
         localStorage.setItem("token", res.data.data.token);
@@ -82,7 +84,7 @@ export default function SignInPage() {
 
   const handleLogin = async () => {
     try {
-      const response = await publicAxios.post("/api/login", user);
+      const response = await login(user);
       if (!user.email || !user.password) {
         failed("Please enter complete information");
         return;
