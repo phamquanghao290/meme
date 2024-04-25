@@ -75,7 +75,6 @@ export default function SignUp() {
             setErrorInput(err);
             return;
         } else {
-            console.log(newUser);
             const response = await publicAxios.post("/api/register", newUser);  
             success("Đăng ký thành công");
             setNewUser({
