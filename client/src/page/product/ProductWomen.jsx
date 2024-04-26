@@ -41,7 +41,6 @@ function ProductWomen() {
   }, []);
 
   const handleChange = (value) => {
-    // console.log(value.value, "value");
     if (value.value == "prices gradually increase") {
       const sortedProducts = [...product].sort((a, b) => a.price - b.price);
       setProduct(sortedProducts);
@@ -51,7 +50,6 @@ function ProductWomen() {
       setProduct(sortedProducts);
     }
   };
-
 
   const handleGetAllCate = async () => {
     try {
@@ -69,7 +67,6 @@ function ProductWomen() {
     handleGetBrands();
   }, []);
 
- 
   const handleGetBrands = async () => {
     const response = await getAllBrandAPI();
     setBrands(response.data);
@@ -79,21 +76,15 @@ function ProductWomen() {
     setSelectedCategory(id);
   };
 
- 
   const handleClick_brand = (id) => {
     setSelectedBrand(id);
   };
-
-
-  
   const handleAddToWishList = async (item) => {
     if (!userLogin) {
       failedNoti("Please login to add product to wish list");
       return;
     }
     const res = await AddToWishListAPI(userLogin.id, item.id);
-    console.log(res);
-    
     successNoti(res.data.message);
   };
   return (

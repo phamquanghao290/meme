@@ -35,7 +35,6 @@ function AdminProduct() {
   // const [colors, setColors] = React.useState([]);
   const [flag, setFlag] = React.useState(false);
   const [options, setOptions] = useState([]);
-
   const [newProduct, setNewProduct] = React.useState({
     nameProduct: "",
     price: 0,
@@ -45,26 +44,21 @@ function AdminProduct() {
     stock: 0,
     rate: 5,
   });
-
   const handleGetCategories = async () => {
     const response = await getAllCateAPI();
     setCategories(response.data);
   };
-
   const handleGetAllBrand = async () => {
     const response = await getAllBrandAPI();
     setBrands(response.data);
   };
-
   const handleGetProducts = async () => {
     const response = await getProductsAPI();
     setProducts(response.data);
   };
-
   const handleGetValue = (e) => {
     setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
   };
-
   const changeImage = (event) => {
     setSelectedMedia(event.target.files[0]);
     const file = event.target.files[0];
@@ -90,7 +84,6 @@ function AdminProduct() {
         ...newProduct,
         image: media,
       });
-      console.log(response);
       setProducts(response.data);
       success(response.message);
       setEdit(false);
@@ -114,10 +107,7 @@ function AdminProduct() {
         const response = await putProductsAPI(newProduct.id, {
           ...newProduct,
           image: preview,
-        
-        
         });
-
         setProducts(response.data);
         return;
       }
@@ -136,7 +126,6 @@ function AdminProduct() {
         image: media,
      
       });
-
       setFlag(true);
       setProducts(response.data);
       success(response.message);
@@ -155,9 +144,7 @@ function AdminProduct() {
       failed("Sửa thất bại");
     }
   };
-
   const handleEditProduct = async (item) => {
-    console.log(item);
     setNewProduct({
       ...newProduct,
       id: item.id,
@@ -170,7 +157,6 @@ function AdminProduct() {
     setPreview(item.image);
     setEdit(true);
   };
-
   const handleDeleteProduct = async (id) => {
     try {
       if (window.confirm("Bạn có chắc muốn xóa sản phẩm này ?")) {
@@ -219,7 +205,6 @@ function AdminProduct() {
     handleGetProducts();
     // handleGetColor();
     // handleGetOneProduct(1);
-
     document.title = "Admin - Product";
   }, [flag]);
   // const [isModalOpen, setIsModalOpen] = React.useState(false);

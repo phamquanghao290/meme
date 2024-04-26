@@ -6,7 +6,6 @@ import './admin.css'
 import { addCategoryAPI, deletCategoryIdAPI, editCategoryAPI, getAllCateAPI } from '../apis/category.services'
 
 function AdminCategory() {
-    
     const [newCate, setNewCate] = React.useState({
         nameCategory: "",
     })
@@ -45,7 +44,6 @@ const handleEdit = (item) => {
             failed("Update failed");
         }
     }
-
     const handleDelete = async (id) => {
             if (window.confirm("You definitely want to delete this category?")) {
                 const response = await deletCategoryIdAPI(id);

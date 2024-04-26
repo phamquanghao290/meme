@@ -45,13 +45,11 @@ export default function Productdetail() {
 
   const handleGetProducts = async () => {
     const response = await getProductsAPI();
-
     setProductAll(response.data);
   };
 
   const handleGetProduct = async () => {
     const response = await getProductsIDAPI(id);
-   
     setProduct(response.data);
   };
   const items = [
@@ -90,7 +88,7 @@ export default function Productdetail() {
     handleGetProduct();
     handleGetProducts();
   }, [product]);
-
+  
   return (
     <>
       <div className="Product_detail">

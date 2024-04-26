@@ -64,8 +64,6 @@ export default function Index() {
     handleGetAllCate();
   }, []);
   const topFourProducts = product.sort((a, b) => b.id - a.id).slice(0, 4);
-  
-   
   const sortedProducts = product.sort((a, b) => a.stock - b.stock);
   const lowestStockProducts = sortedProducts.slice(0, 4);
   const handleGetAllCate = async () => {
