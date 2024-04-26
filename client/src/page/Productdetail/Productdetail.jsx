@@ -28,6 +28,7 @@ import publicAxios from "../../config/PublicAxios";
 
 import privateAxios from "../../config/PrivateAxios";
 import { failed, success } from "../../components/Modal/NotificationModal";
+import { getProductsAPI, getProductsIDAPI } from "../../apis/products.services";
 
 export default function Productdetail() {
     const [product, setProduct] = useState({});
@@ -43,13 +44,14 @@ export default function Productdetail() {
   };
 
   const handleGetProducts = async () => {
-    const response = await publicAxios.get("/api/product");
+    const response = await getProductsAPI();
 
     setProductAll(response.data);
   };
 
   const handleGetProduct = async () => {
-    const response = await publicAxios.get(`/api/product/${id}`);
+    const response = await getProductsIDAPI(id);
+   
     setProduct(response.data);
   };
   const items = [

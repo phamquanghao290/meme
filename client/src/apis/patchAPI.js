@@ -1,2 +1,9 @@
 export const API_CART = "/api/cart";
 export const API_PRODUCT = "/api/product";
+export const API_BRAND = "/api/brand";
+export const API_CATEGORY = "/api/category";
+export const API_FAVORITE = "/api/v1/favorite-product";
+export const API_PRODUCTID = "/api/product"
+export const API_FAVORITID = "/api/v1/favorite-product"
+export const API_DELETEFAVORIT = "/api/v1/favorite-product"
+export const API_DELETECATEGORYID = "/api/category"
