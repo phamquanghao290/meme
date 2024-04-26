@@ -1,16 +1,55 @@
 import publicAxios from "../config/PublicAxios";
+import { success, failed } from "../components/Modal/NotificationModal";
+import { API_REGISTER } from "./patchAPI";
+import { useAuth } from "../utils/authLogic";
 
-export const login = async (data) => {
-    const response = await publicAxios.post("/api/login", data);
-    return response.data;
+export const registerService = async () => {
+    const {
+        name,
+        setName,
+        setEmail,
+        setPhone,
+        setPassword,
+        email,
+        phone,
+        password,
+        nameError,
+        emailError,
+        phoneError,
+        passwordError,
+        confirmPasswordError
+    } = useAuth(true);
+
+    const handleRegister = async () => {
+        const response = await publicAxios.post(API_REGISTER, {
+            name,
+            email,
+            phone,
+            password,
+        })
+        console.log(response);
+        success(response.data.message);
+        setTimeout(() => {
+            window.location.href = "/sign-in";
+        })
+    }
+
+    return {
+        name,
+        setName,
+        setEmail,
+        setPhone,
+        setPassword,
+        email,
+        phone,
+        password,
+        nameError,
+        emailError,
+        phoneError,
+        passwordError,
+        confirmPasswordError,
+        handleRegister
+    }
 }
 
-export const register = async (data) => {
-    const response = await publicAxios.post("/api/register", data);
-    return response.data;
-}
 
-export const login_google = async (data) => {
-    const response = await publicAxios.post("/api/login-google", data);
-    return response.data;
-}

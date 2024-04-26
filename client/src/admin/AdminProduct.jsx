@@ -298,43 +298,7 @@ function AdminProduct() {
               </div>
             </div>
           </header>
-          <Select
-            defaultValue="lucy"
-            style={{
-              width: 200,
-            }}
-            onChange={handleChange}
-            options={[
-              {
-                label: <span>manager</span>,
-                title: "manager",
-                options: [
-                  {
-                    label: <span>Jack</span>,
-                    value: "Jack",
-                  },
-                  {
-                    label: <span>Lucy</span>,
-                    value: "Lucy",
-                  },
-                ],
-              },
-              {
-                label: <span>engineer</span>,
-                title: "engineer",
-                options: [
-                  {
-                    label: <span>Chloe</span>,
-                    value: "Chloe",
-                  },
-                  {
-                    label: <span>Lucas</span>,
-                    value: "Lucas",
-                  },
-                ],
-              },
-            ]}
-          />
+         
           {/* Main */}
           <main className="pt-3 bg-surface-secondary ">
             <div className="container-fluid">
