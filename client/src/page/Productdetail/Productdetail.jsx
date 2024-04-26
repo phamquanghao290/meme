@@ -30,11 +30,12 @@ import privateAxios from "../../config/PrivateAxios";
 import { failed, success } from "../../components/Modal/NotificationModal";
 
 export default function Productdetail() {
+    const [product, setProduct] = useState({});
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   const userLogin = JSON.parse(localStorage.getItem("userLogin") || "{}");
-  const [product, setProduct] = useState({});
+
   const [productAll, setProductAll] = useState([]);
   const { id } = useParams();
   const onChange = (key) => {
@@ -51,7 +52,6 @@ export default function Productdetail() {
     const response = await publicAxios.get(`/api/product/${id}`);
     setProduct(response.data);
   };
-
   const items = [
     {
       key: "1",
@@ -86,9 +86,8 @@ export default function Productdetail() {
   };
   useEffect(() => {
     handleGetProduct();
-
     handleGetProducts();
-  }, []);
+  }, [product]);
 
   return (
     <>
@@ -102,15 +101,15 @@ export default function Productdetail() {
               Shop <GrNext />
               product: {product.id}
             </h4>
-            <h2>{product.nameProduct}</h2>
+            <h2>{product.name_product}</h2>
             <h3>Stock : {product.stock ? product.stock : "Out of stock"}</h3>
             <hr />
             <div>
-              <h3>brand : {product?.brand?.nameBrand}</h3>
+              <h3>brand : {product?.brand?.name_brand}</h3>
             </div>
             <hr />
             <div>
-              <h3>style : {product?.category?.nameCategory}</h3>
+              <h3>style : {product?.category?.name_category}</h3>
             </div>{" "}
             <hr />
             <div className="addtocart">
@@ -270,22 +269,29 @@ export default function Productdetail() {
           </div>
         </div>
         <div className="NewArrivalProducts">
-          <h2>In The Limelight</h2>
+          <h2>In The Brand</h2>
 
-          <div className="grid grid-cols-4 mt-10 gap-5 drop-shadow-xl ">
+          <div className="classProducts_incategory">
             {productAll
-              .filter((products) => products.brand?.id == product.brand?.id)
+
+              .filter((products) => products?.brand?.id == product?.brand?.id)
+
               .map((item, index) => (
-                <div className="Limelight max-w-[220px] m-auto pt-3 h-[260px] hover:scale-105 transition-all duration-300">
-                  <img src={item.image} alt="" />
-                  <div className="titleProducts">
-                    <div>
-                      {" "}
-                      <h4>{item.nameProduct}</h4> <p>{item.brand.nameBrand}</p>
+                <Link to={`/product-detail/${item.id}`}>
+                  <div className="Limelight max-w-[250px] m-auto pt-3 h-[60px] hover:scale-105 transition-all duration-300">
+                    <img src={item.image} alt="" />
+                    <div className="titleProducts">
+                      <div className="nametitleProducts">
+                        {" "}
+                        <h4>{item.name_product}</h4>{" "}
+                        <p style={{ color: "black" }}>
+                          {item.brand.name_brand}
+                        </p>
+                      </div>
+                      <div className="pricebutton">{item.price}</div>
                     </div>
-                    <div className="pricebutton">{item.price}</div>
                   </div>
-                </div>
+                </Link>
               ))}
           </div>
         </div>

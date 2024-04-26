@@ -16,7 +16,7 @@ export default function Wishlist() {
     }
 
     const handleDeleteWishlist = async (id) => {
-        const confirm = window.confirm("Bạn có chắc muốn xóa?")
+        const confirm = window.confirm("Are you sure you want to delete?");
         if (confirm) {
             const res = await axios.delete(`http://localhost:8080/api/v1/favorite-product/${id}`)
             successNoti(res.data.message)

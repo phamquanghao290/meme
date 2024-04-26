@@ -21,6 +21,7 @@ function AdminProduct() {
     const [categories, setCategories] = React.useState([]);
     const [brands, setBrands] = React.useState([]);
     const [products, setProducts] = React.useState([]);
+   
     // const [oneProduct, setOneProduct] = React.useState([]);
     const [edit, setEdit] = React.useState(false);
     // const [colors, setColors] = React.useState([]);
@@ -101,7 +102,7 @@ function AdminProduct() {
     }
 
     const handleEdit = async () => {
-        console.log(newProduct);
+       
         try {
             if (!selectedMedia) {
                 const response = await publicAxios.put(`/api/product/${newProduct.id}`,
@@ -196,7 +197,7 @@ function AdminProduct() {
             return products;
         } else {
             const result = products.filter((item) => {
-                return item.nameProduct.toLowerCase().includes(searchProduct);
+                return item.name_product.toLowerCase().includes(searchProduct);
             });
             return result;
         }
@@ -300,131 +301,10 @@ function AdminProduct() {
                         </div>
                     </header>
                     {/* Main */}
-                    <main className="pt-3 bg-surface-secondary">
+                    <main className="pt-3 bg-surface-secondary ">
                         <div className="container-fluid">
                             {/* Card stats */}
-                            <div className="row g-6">
-                                <div className="col-xl-3 col-sm-6 col-12">
-                                    <div className="card shadow border-0">
-                                        <div className="card-body">
-                                            <div className="row">
-                                                <div className="col">
-                                                    <span className="h6 font-semibold text-muted text-sm d-block mb-2">
-                                                        Budget
-                                                    </span>
-                                                    <span className="h3 font-bold mb-0">
-                                                        $750.90
-                                                    </span>
-                                                </div>
-                                                <div className="col-auto">
-                                                    <div className="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
-                                                        <i className="bi bi-credit-card" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="mt-2 mb-0 text-sm">
-                                                <span className="badge badge-pill bg-soft-success text-success me-2">
-                                                    <i className="bi bi-arrow-up me-1" />
-                                                    13%
-                                                </span>
-                                                <span className="text-nowrap text-xs text-muted">
-                                                    Since last month
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-xl-3 col-sm-6 col-12">
-                                    <div className="card shadow border-0">
-                                        <div className="card-body">
-                                            <div className="row">
-                                                <div className="col">
-                                                    <span className="h6 font-semibold text-muted text-sm d-block mb-2">
-                                                        New projects
-                                                    </span>
-                                                    <span className="h3 font-bold mb-0">
-                                                        215
-                                                    </span>
-                                                </div>
-                                                <div className="col-auto">
-                                                    <div className="icon icon-shape bg-primary text-white text-lg rounded-circle">
-                                                        <i className="bi bi-people" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="mt-2 mb-0 text-sm">
-                                                <span className="badge badge-pill bg-soft-success text-success me-2">
-                                                    <i className="bi bi-arrow-up me-1" />
-                                                    30%
-                                                </span>
-                                                <span className="text-nowrap text-xs text-muted">
-                                                    Since last month
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-xl-3 col-sm-6 col-12">
-                                    <div className="card shadow border-0">
-                                        <div className="card-body">
-                                            <div className="row">
-                                                <div className="col">
-                                                    <span className="h6 font-semibold text-muted text-sm d-block mb-2">
-                                                        Total hours
-                                                    </span>
-                                                    <span className="h3 font-bold mb-0">
-                                                        1.400
-                                                    </span>
-                                                </div>
-                                                <div className="col-auto">
-                                                    <div className="icon icon-shape bg-info text-white text-lg rounded-circle">
-                                                        <i className="bi bi-clock-history" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="mt-2 mb-0 text-sm">
-                                                <span className="badge badge-pill bg-soft-danger text-danger me-2">
-                                                    <i className="bi bi-arrow-down me-1" />
-                                                    -5%
-                                                </span>
-                                                <span className="text-nowrap text-xs text-muted">
-                                                    Since last month
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-xl-3 col-sm-6 col-12">
-                                    <div className="card shadow border-0">
-                                        <div className="card-body">
-                                            <div className="row">
-                                                <div className="col">
-                                                    <span className="h6 font-semibold text-muted text-sm d-block mb-2">
-                                                        Work load
-                                                    </span>
-                                                    <span className="h3 font-bold mb-0">
-                                                        95%
-                                                    </span>
-                                                </div>
-                                                <div className="col-auto">
-                                                    <div className="icon icon-shape bg-warning text-white text-lg rounded-circle">
-                                                        <i className="bi bi-minecart-loaded" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="mt-2 mb-0 text-sm">
-                                                <span className="badge badge-pill bg-soft-success text-success me-2">
-                                                    <i className="bi bi-arrow-up me-1" />
-                                                    10%
-                                                </span>
-                                                <span className="text-nowrap text-xs text-muted">
-                                                    Since last month
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                       
                             <div className="mt-5 mx-3">
                                 <div className="row grid gap-3 ">
                                     <div className="g-col-3 card shadow border-0 ">
@@ -615,7 +495,7 @@ function AdminProduct() {
                                                 <tbody>
                                                     {displayedProducts
                                                         .filter((item) =>
-                                                            item.nameProduct
+                                                            item.name_product
                                                                 .toLowerCase()
                                                                 .includes(
                                                                     searchProduct
@@ -640,7 +520,7 @@ function AdminProduct() {
                                                                 </td>
                                                                 <td className="max-w-[200px] text-wrap">
                                                                     {
-                                                                        item.nameProduct
+                                                                        item.name_product
                                                                     }
                                                                 </td>
                                                                 <td>
