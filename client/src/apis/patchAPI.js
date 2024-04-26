@@ -1,1 +1,11 @@
 export const API_CART = "/api/cart";
+export const API_PRODUCT = "/api/product";
+export const API_USER = "/api/user";
+export const API_BILL = "/api/bill";
+export const API_BANNER = "/api/banner";
+export const API_BRAND = "/api/brand";
+export const API_CATEGORY = "/api/category";
+export const API_ORDER = "/api/order";
+export const API_WISHLIST = "/api/wishlist";
+export const API_REGISTER = "/api/register";
+export const API_LOGIN = "/api/login";
