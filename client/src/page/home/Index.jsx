@@ -47,6 +47,8 @@ import "../home/Index.scss";
 import Star from "./star/star";
 import { Link } from "react-router-dom";
 import publicAxios from "../../config/PublicAxios";
+import { getAllCateAPI } from "../../apis/category.services";
+import { getProductsAPI } from "../../apis/products.services";
 export default function Index() {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -54,8 +56,7 @@ export default function Index() {
   const [product, setProduct] = useState([]);
   const [categories, setCategories] = React.useState([]);
   const handleGetProducts = async () => {
-    const response = await publicAxios.get("/api/product");
-
+    const response = await getProductsAPI();
     setProduct(response.data);
   };
   useEffect(() => {
@@ -63,13 +64,11 @@ export default function Index() {
     handleGetAllCate();
   }, []);
   const topFourProducts = product.sort((a, b) => b.id - a.id).slice(0, 4);
-  
-   
   const sortedProducts = product.sort((a, b) => a.stock - b.stock);
   const lowestStockProducts = sortedProducts.slice(0, 4);
   const handleGetAllCate = async () => {
     try {
-      const response = await publicAxios.get("/api/category");
+      const response = await getAllCateAPI();
 
       setCategories(response.data);
     } catch (error) {
@@ -244,7 +243,7 @@ export default function Index() {
 
           <div className="products_Categoryid">
             {product
-              ?.filter((products) => products.category.id == 2)
+              ?.filter((products) => products?.category?.id == 2)
               .slice(0, 4)
               .map((product) => (
                 <div>
@@ -270,7 +269,7 @@ export default function Index() {
         </div>
         <div className="NewArrivalProducts">
           {categories
-            ?.filter((categories) => categories.id == 3)
+            ?.filter((categories) => categories?.id == 3)
 
             .map((categories) => (
               <h2>{categories.name_category}</h2>
@@ -278,7 +277,7 @@ export default function Index() {
 
           <div className="products_Categoryid">
             {product
-              ?.filter((products) => products.category.id == 3)
+              ?.filter((products) => products?.category?.id == 3)
               .slice(0, 4)
               .map((product) => (
                 <div>
@@ -304,14 +303,14 @@ export default function Index() {
         </div>
         <div className="NewArrivalProducts">
           {categories
-            ?.filter((categories) => categories.id == 1)
+            ?.filter((categories) => categories?.id == 1)
             .map((categories) => (
               <h2>{categories.name_category}</h2>
             ))}
 
           <div className="products_Categoryid">
             {product
-              ?.filter((products) => products.category.id == 1)
+              ?.filter((products) => products?.category?.id == 1)
               .slice(0, 4)
               .map((product) => (
                 <div>

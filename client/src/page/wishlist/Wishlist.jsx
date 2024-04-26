@@ -5,20 +5,21 @@ import axios from 'axios';
 import { successNoti } from '../../utils/noti';
 import { useNavigate } from 'react-router-dom';
 import Heart from '../../../public/images/Frame 505.png'
+import { deleteWishListAPI, getWishListAPIID } from '../../apis/favorite-product.services';
 export default function Wishlist() {
     const [listProduct, setListProduct] = useState([])
     const [flag, setFlag] = useState(false)
     const navigate = useNavigate()
     const userLogin = JSON.parse(localStorage.getItem("userLogin"));
     const handleGetWishlist = async () => {
-        const res = await axios.get(`http://localhost:8080/api/v1/favorite-product/${userLogin.id}`)
+        const res = await getWishListAPIID(userLogin.id);
         setListProduct(res.data)
     }
 
     const handleDeleteWishlist = async (id) => {
         const confirm = window.confirm("Are you sure you want to delete?");
         if (confirm) {
-            const res = await axios.delete(`http://localhost:8080/api/v1/favorite-product/${id}`)
+            const res = await deleteWishListAPI(id);
             successNoti(res.data.message)
             setFlag(!flag)
         }
@@ -31,7 +32,7 @@ export default function Wishlist() {
 
     return (
         <div className='main-body-wishlist' >
-            <div className='main-nav-wishlist'  >
+            <div className='main-nav-wishlist ml-10'  >
                 <p style={{ fontSize: '18px', fontWeight: '500', color: '#807D7E', lineHeight: '22px' }}>Home
                     <span> <i class="fa-solid fa-chevron-right" style={{ fontSize: '12px', marginLeft: '5px' }}></i> </span>
                     <span style={{ marginLeft: '5px' }}>My account</span>
@@ -43,7 +44,7 @@ export default function Wishlist() {
             </div>
 
             <div className='main-content-wishlist'>
-                <div className='main-content-wishlist-left'>
+                <div className='main-content-wishlist-left ml-10'>
                     <div style={{ display: 'flex', gap: '10px' }} >
                         <img src={Rectangle21} alt="" />
                         <p style={{ fontSize: '24px', fontWeight: '700', color: '#3C4242', lineHeight: '33px' }}>Hello Jhanvi</p>
@@ -89,7 +90,7 @@ export default function Wishlist() {
                         </div>
                         {listProduct?.map((item, index) => (
                             <>
-                                <div className='main-content-wishlist-right-item mb-[200px]'>
+                                <div className='main-content-wishlist-right-item mb-[80px]'>
                                     <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
                                         <i onClick={() => handleDeleteWishlist(item.id)} class="fa-solid fa-x"></i>
                                     </div>
@@ -98,12 +99,16 @@ export default function Wishlist() {
                                         <img className='image-wishlist' src={item.product.image} alt="" />
                                     </div>
 
-                                    <div className='main-content-wishlist-right-info'>
+                                    <div className='main-content-wishlist-right-info mt-10'>
                                         <p>{item.product.nameProduct} </p>
                                         {/* <p>Color : <span style={{ color: '#807D7E', fontWeight: '500' }}>Yellow</span></p> */}
                                         <p>Quantity : <span style={{ color: '#807D7E', fontWeight: '500' }}>1</span></p>
                                     </div>
-
+                                    <div style={{ display: 'flex', alignItems: 'center' ,position:"relative",right:"170px"}}>
+                                        <h2 style={{fontSize:'20px',fontWeight:'700',color:'#807D7E',lineHeight:'26px'}}>
+                                            {item.product.name_product}
+                                        </h2>
+                                    </div>
                                     <div style={{ display: 'flex', alignItems: 'center' }}>
                                         <h4 style={{ fontSize: '20px', fontWeight: '700', color: '#807D7E', lineHeight: '26px' }}>${item.product.price}</h4>
                                     </div>
