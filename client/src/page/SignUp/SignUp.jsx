@@ -6,88 +6,108 @@ import Divider from "../../../public/images/divider.png";
 import { Link, useNavigate } from "react-router-dom";
 import publicAxios from "../../config/PublicAxios";
 import { success, failed } from "../../components/Modal/NotificationModal";
-import { register, login } from "../../apis/auth.services";
+import { registerService } from "../../apis/auth.services";
 import "./SignUp.scss";
 
 export default function SignUp() {
     const navigate = useNavigate();
-    const [newUser, setNewUser] = useState({
-        name: "",
-        email: "",
-        phone: "",
-        password: "",
-        confirmPassword: "",
-        role: 0,
-        status: 0,
-    });
 
-    const [errorInput, setErrorInput] = React.useState({
-        errName: "",
-        errEmail: "",
-        errPhone: "",
-        errPass: "",
-        errConfirm: "",
-    });
+    const {
+        name,
+        setName,
+        email,
+        setEmail,
+        phone,
+        setPhone,
+        password,
+        setPassword,
+        confirmPassword,
+        setConfirmPassword,
+        nameError,
+        emailError,
+        phoneError,
+        passwordError,
+        confirmPasswordError,
+        handleRegister,
+    } = registerService();
 
-    const handleGetValue = (e) => {
-        setNewUser({ ...newUser, [e.target.name]: e.target.value });
-    };
+    // const [newUser, setNewUser] = useState({
+    //     name: "",
+    //     email: "",
+    //     phone: "",
+    //     password: "",
+    //     confirmPassword: "",
+    //     role: 0,
+    //     status: 0,
+    // });
 
-    const handleRegister = async () => {
-        const err = {
-            errName: "",
-            errEmail: "",
-            errPhone: "",
-            errPass: "",
-            errConfirm: "",
-        };
-        const regexName = /^.{4,}$/;
-        const regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-        const regexPhone = /^(0|\+84)\d{9,10}$/;
-        const regexPass = /^(?=.*[A-Za-z])(?=.*\d).{6,}$/;
-        let check = true;
+    // const [errorInput, setErrorInput] = React.useState({
+    //     errName: "",
+    //     errEmail: "",
+    //     errPhone: "",
+    //     errPass: "",
+    //     errConfirm: "",
+    // });
 
-        if (!regexName.test(newUser.name)) {
-            err.errName = "Tên phải có 6 kí tự trở nên";
-            check = false;
-        }
+    // const handleGetValue = (e) => {
+    //     setNewUser({ ...newUser, [e.target.name]: e.target.value });
+    // };
 
-        if (!regexEmail.test(newUser.email)) {
-            err.errEmail = "Email chưa đúng định dạng";
-            check = false;
-        }
+    // const handleRegister = async () => {
+    //     const err = {
+    //         errName: "",
+    //         errEmail: "",
+    //         errPhone: "",
+    //         errPass: "",
+    //         errConfirm: "",
+    //     };
+    //     const regexName = /^.{4,}$/;
+    //     const regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    //     const regexPhone = /^(0|\+84)\d{9,10}$/;
+    //     const regexPass = /^(?=.*[A-Za-z])(?=.*\d).{6,}$/;
+    //     let check = true;
 
-        if (!regexPhone.test(newUser.phone)) {
-            err.errPhone = "Số điện thoại chưa đúng định dạng";
-            check = false;
-        }
+    //     if (!regexName.test(newUser.name)) {
+    //         err.errName = "Tên phải có 6 kí tự trở nên";
+    //         check = false;
+    //     }
 
-        if (!regexPass.test(newUser.password)) {
-            err.errPass = "Mật khẩu phải có 6 kí tự trở lên và có cả chữ số";
-            check = false;
-        }
+    //     if (!regexEmail.test(newUser.email)) {
+    //         err.errEmail = "Email chưa đúng định dạng";
+    //         check = false;
+    //     }
 
-        if (!(newUser.password == newUser.confirmPassword)) {
-            err.errConfirm = "Mật khẩu không khớp";
-            check = false;
-        }
-        if (!check) {
-            setErrorInput(err);
-            return;
-        } else {
-            const response = await publicAxios.post("/api/register", newUser);  
-            success("Đăng ký thành công");
-            setNewUser({
-                name: "",
-                email: "",
-                phone: "",
-                password: "",
-                role: 0,
-                status: 0,
-            });
-            navigate("/sign-in");
-        }
-    };
+    //     if (!regexPhone.test(newUser.phone)) {
+    //         err.errPhone = "Số điện thoại chưa đúng định dạng";
+    //         check = false;
+    //     }
+
+    //     if (!regexPass.test(newUser.password)) {
+    //         err.errPass = "Mật khẩu phải có 6 kí tự trở lên và có cả chữ số";
+    //         check = false;
+    //     }
+
+    //     if (!(newUser.password == newUser.confirmPassword)) {
+    //         err.errConfirm = "Mật khẩu không khớp";
+    //         check = false;
+    //     }
+    //     if (!check) {
+    //         setErrorInput(err);
+    //         return;
+    //     } else {
+    //         const response = await publicAxios.post("/api/register", newUser);
+    //         success("Đăng ký thành công");
+    //         setNewUser({
+    //             name: "",
+    //             email: "",
+    //             phone: "",
+    //             password: "",
+    //             role: 0,
+    //             status: 0,
+    //         });
+    //         navigate("/sign-in");
+    //     }
+    // };
     useEffect(() => {
         document.title = "Sign Up";
         window.scrollTo(0, 0);
@@ -110,13 +130,6 @@ export default function SignUp() {
                 >
                     Sign up for free to access to in any of our products{" "}
                 </p>
-
-              
-
-                {/* <div className='divider'>
-                    <img src={Divider} alt="" />
-                </div> */}
-
                 <div className="mainInput1">
                     <p
                         style={{
@@ -130,11 +143,13 @@ export default function SignUp() {
                     <input
                         type="text"
                         placeholder="Ngyuen Van A"
-                        name="name"
-                        onChange={handleGetValue}
-                        value={newUser.name}
+                        onChange={setName}
+                        required
+                        value={name}
                     />
-                    <p className="error-content">{errorInput.errName}</p>
+                    {nameError && name !== "" && (
+                        <p className="error-content">{nameError}</p>
+                    )}
                 </div>
                 <div className="mainInput1">
                     <p
@@ -149,11 +164,13 @@ export default function SignUp() {
                     <input
                         type="text"
                         placeholder="designer@gmail.com"
-                        name="email"
-                        onChange={handleGetValue}
-                        value={newUser.email}
+                        onChange={setEmail}
+                        required
+                        value={email}
                     />
-                    <p className="error-content">{errorInput.errEmail}</p>
+                    {emailError && email !== "" && (
+                        <p className="error-content">{emailError}</p>
+                    )}
                 </div>
                 <div className="mainInput1">
                     <p
@@ -168,11 +185,13 @@ export default function SignUp() {
                     <input
                         type="text"
                         placeholder="0123456789"
-                        name="phone"
-                        onChange={handleGetValue}
-                        value={newUser.phone}
+                        onChange={setPhone}
+                        required
+                        value={phone}
                     />
-                    <p className="error-content">{errorInput.errPhone}</p>
+                    {phoneError && phone !== "" && (
+                        <p className="error-content">{phoneError}</p>
+                    )}
                 </div>
                 <div className="mainInput1">
                     <p
@@ -187,11 +206,13 @@ export default function SignUp() {
                     <input
                         type="password"
                         placeholder="Qwerty@123"
-                        name="password"
-                        onChange={handleGetValue}
-                        value={newUser.password}
+                        onChange={setPassword}
+                        required
+                        value={password}
                     />
-                    <p className="error-content">{errorInput.errPass}</p>
+                    {passwordError && password !== "" && (
+                        <p className="error-content">{passwordError}</p>
+                    )}
                 </div>
                 <div className="mainInput1">
                     <p
@@ -206,11 +227,12 @@ export default function SignUp() {
                     <input
                         type="password"
                         placeholder="Qwerty@123"
-                        name="confirmPassword"
-                        onChange={handleGetValue}
-                        value={newUser.confirmPassword}
+                        onChange={setConfirmPassword}
+                        value={confirmPassword}
                     />
-                    <p className="error-content">{errorInput.errConfirm}</p>
+                    {confirmPasswordError && confirmPassword !== "" && (
+                        <p className="error-content">{confirmPasswordError}</p>
+                    )}
                 </div>
 
                 {/* <div>
