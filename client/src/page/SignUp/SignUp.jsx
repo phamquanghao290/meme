@@ -264,7 +264,7 @@ export default function SignUp() {
                                         textDecoration: "underline",
                                     }}
                                 >
-                                    Log in
+                                    Login
                                 </span>
                             </Link>
                         </p>
