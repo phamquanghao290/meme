@@ -27,7 +27,6 @@ export const registerService = async () => {
             phone,
             password,
         })
-        console.log(response);
         success(response.data.message);
         setTimeout(() => {
             window.location.href = "/sign-in";

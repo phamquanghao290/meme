@@ -9,14 +9,11 @@ export const API_REGISTER = "/api/register";
 export const API_LOGIN = "/api/login";
 export const API_CART = "/api/cart";
 export const API_PRODUCT = "/api/product";
-
-
 export const API_FAVORITE = "/api/v1/favorite-product";
 export const API_PRODUCTID = "/api/product"
 export const API_FAVORITID = "/api/v1/favorite-product"
 export const API_DELETEFAVORIT = "/api/v1/favorite-product"
 export const API_DELETECATEGORYID = "/api/category"
-
 export const API_CART_BY_USER = "/api/cart/getCartByUserId";
 export const API_INCREASE_CART = "/api/cart/increase";
 export const API_DECREASE_CART = "/api/cart/decrease";

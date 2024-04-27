@@ -21,12 +21,8 @@ export default function AdminBrand() {
 
     //add
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const showModal = () => {
-        setIsModalOpen(true);
-    };
-    const handleCancel = () => {
-        setIsModalOpen(false);
-    };
+    const showModal = () => {setIsModalOpen(true)};
+    const handleCancel = () => {setIsModalOpen(false)};
 
     //edit
     const [isModalOpenEdit, setIsModalOpenEdit] = useState(false);
@@ -71,25 +67,18 @@ export default function AdminBrand() {
             failed("Sửa thất bại");
         }
     };
-
-    const handleCancelEdit = () => {
-        setIsModalOpenEdit(false)
-    };
+    const handleCancelEdit = () => {setIsModalOpenEdit(false)};
 
     //delete
     const [isModalOpenDelete, setIsModalOpenDelete] = useState(false);
-    const showModalDelete = () => {
-        setIsModalOpenDelete(!isModalOpenDelete);
-    };
+    const showModalDelete = () => {setIsModalOpenDelete(!isModalOpenDelete)};  
     const handleOkDelete = async (id) => {
         const response = await publicAxios.delete(`/api/brand/${id}`);
         setFlag(!flag);
         success(response.data.message);
         setIsModalOpenDelete(false);
     };
-    const handleCancelDelete = () => {
-        setIsModalOpenDelete(false)
-    };
+    const handleCancelDelete = () => {setIsModalOpenDelete(false)};
 
     const changeImage = (event) => {
         setSelectedMedia(event.target.files[0]);
@@ -150,7 +139,6 @@ export default function AdminBrand() {
                                         <h1 className="h2 mb-0 ls-tight">
                                             Brand
                                         </h1>
-
                                         <Button
                                             variant="contained"
                                             className="w-full max-w-[200px] h-[40px] p-[12px] rounded-lg ml-16 border-2 border-[#F5BB40]"
@@ -171,12 +159,7 @@ export default function AdminBrand() {
                                             <p className="text-[#575757] text-[14px] font-[700]">
                                                 Brand Image
                                             </p>
-                                            <label
-                                                htmlFor="formFileSm"
-                                                // className=" mt-2 w-[100px] h-[100px] border-2 border-dashed border-blue-600 rounded-lg flex justify-center items-center "
-                                            >
-                                                Upload
-                                            </label>
+                                            <label htmlFor="formFileSm">Upload</label>
                                             <input
                                                 id="formFileSm"
                                                 type="file"
@@ -346,12 +329,9 @@ export default function AdminBrand() {
                             </div>
                             <div className="card shadow border-0 mb-7">
                                 <div className="card-header flex items-center gap-[60%] relative">
-
                                     <h5 className="mb-0">List Brand</h5>
                                     {/* <input type="text" placeholder='Search for brand' className='outline-0 border-1 shadow-sm p-2 max-w-[300px] ' />
                                     <p className='absolute ml-[80%]'><i className="fa-solid fa-magnifying-glass text-[#575757] text-md"></i></p> */}
-
-
                                 </div>
                                 <div className="table-responsive">
                                     <table className="table table-hover table-nowrap">
@@ -373,14 +353,23 @@ export default function AdminBrand() {
                                                         scope="col"
                                                         className="flex justify-center items-center max-w-[200px] w-full m-auto max-h-[100px]"
                                                     >
-                                                        <img src={brand.image_brand} alt="" />
+                                                        <img
+                                                            src={
+                                                                brand.image_brand
+                                                            }
+                                                            alt=""
+                                                        />
                                                     </td>
                                                     <td scope="col">
                                                         {brand.nameBrand}
                                                     </td>
                                                     <td className="">
                                                         <Button
-                                                            onClick={() => showModalEdit(item)}
+                                                            onClick={() =>
+                                                                showModalEdit(
+                                                                    item
+                                                                )
+                                                            }
                                                             variant="danger"
                                                         >
                                                             <i className="fa-regular fa-pen-to-square text-md"></i>
@@ -403,14 +392,25 @@ export default function AdminBrand() {
                                                                     className="mt-2 rounded px-2 py-4 bg-[#eeeded] outline-none w-full"
                                                                     type="text"
                                                                     placeholder="Brand Name"
-                                                                    name='nameBrand'
-                                                                    value={newBrand.nameBrand}
-                                                                    onChange={handleGetValue}
+                                                                    name="nameBrand"
+                                                                    value={
+                                                                        newBrand.nameBrand
+                                                                    }
+                                                                    onChange={
+                                                                        handleGetValue
+                                                                    }
                                                                 />
-                                                                <label htmlFor="image" className="max-w-[200px] w-full m-auto max-h-[100px] border-2 border-dashed border-blue-600 rounded-lg flex justify-center items-center ">
-                                                                    <img src={preview} alt="" />
+                                                                <label
+                                                                    htmlFor="image"
+                                                                    className="max-w-[200px] w-full m-auto max-h-[100px] border-2 border-dashed border-blue-600 rounded-lg flex justify-center items-center "
+                                                                >
+                                                                    <img
+                                                                        src={
+                                                                            preview
+                                                                        }
+                                                                        alt=""
+                                                                    />
                                                                 </label>
-
                                                             </Modal>
                                                         </Button>
 
@@ -423,8 +423,14 @@ export default function AdminBrand() {
                                                             <i className="fa-regular fa-trash-can  text-md"></i>
                                                             <Modal
                                                                 title="Delete"
-                                                                open={isModalOpenDelete}
-                                                                onOk={() => handleOkDelete(brand.id)}                                       
+                                                                open={
+                                                                    isModalOpenDelete
+                                                                }
+                                                                onOk={() =>
+                                                                    handleOkDelete(
+                                                                        brand.id
+                                                                    )
+                                                                }
                                                                 onCancel={
                                                                     handleCancelDelete
                                                                 }
@@ -445,7 +451,12 @@ export default function AdminBrand() {
                                                                     cannot be
                                                                     undo.
                                                                 </p>
-                                                                <img src={preview} alt="" />
+                                                                <img
+                                                                    src={
+                                                                        preview
+                                                                    }
+                                                                    alt=""
+                                                                />
                                                             </Modal>
                                                         </Button>
                                                     </td>
