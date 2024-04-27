@@ -8,106 +8,107 @@ import publicAxios from "../../config/PublicAxios";
 import { success, failed } from "../../components/Modal/NotificationModal";
 import { registerService } from "../../apis/auth.services";
 import "./SignUp.scss";
+import { API_REGISTER } from "../../apis/patchAPI";
 
 export default function SignUp() {
     const navigate = useNavigate();
+    // const {
+    //     name,
+    //     setName,
+    //     email,
+    //     setEmail,
+    //     phone,
+    //     setPhone,
+    //     password,
+    //     setPassword,
+    //     confirmPassword,
+    //     setConfirmPassword,
+    //     nameError,
+    //     emailError,
+    //     phoneError,
+    //     passwordError,
+    //     confirmPasswordError,
+    //     handleRegister
+    // } = registerService();
 
-    const {
-        name,
-        setName,
-        email,
-        setEmail,
-        phone,
-        setPhone,
-        password,
-        setPassword,
-        confirmPassword,
-        setConfirmPassword,
-        nameError,
-        emailError,
-        phoneError,
-        passwordError,
-        confirmPasswordError,
-        handleRegister,
-    } = registerService();
+    const [newUser, setNewUser] = useState({
+        name: "",
+        email: "",
+        phone: "",
+        password: "",
+        confirmPassword: "",
+        role: 0,
+        status: 0,
+    });
 
-    // const [newUser, setNewUser] = useState({
-    //     name: "",
-    //     email: "",
-    //     phone: "",
-    //     password: "",
-    //     confirmPassword: "",
-    //     role: 0,
-    //     status: 0,
-    // });
+    const [errorInput, setErrorInput] = React.useState({
+        errName: "",
+        errEmail: "",
+        errPhone: "",
+        errPass: "",
+        errConfirm: "",
+    });
 
-    // const [errorInput, setErrorInput] = React.useState({
-    //     errName: "",
-    //     errEmail: "",
-    //     errPhone: "",
-    //     errPass: "",
-    //     errConfirm: "",
-    // });
+    const handleRegister = async () => {
+        const err = {
+            errName: "",
+            errEmail: "",
+            errPhone: "",
+            errPass: "",
+            errConfirm: "",
+        };
+        const regexName = /^.{4,}$/;
+        const regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        const regexPhone = /^(0|\+84)\d{9,10}$/;
+        const regexPass = /^(?=.*[A-Za-z])(?=.*\d).{6,}$/;
+        let check = true;
 
-    // const handleGetValue = (e) => {
-    //     setNewUser({ ...newUser, [e.target.name]: e.target.value });
-    // };
+        if (!regexName.test(newUser.name)) {
+            err.errName = "Tên phải có 6 kí tự trở nên";
+            check = false;
+        }
 
-    // const handleRegister = async () => {
-    //     const err = {
-    //         errName: "",
-    //         errEmail: "",
-    //         errPhone: "",
-    //         errPass: "",
-    //         errConfirm: "",
-    //     };
-    //     const regexName = /^.{4,}$/;
-    //     const regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    //     const regexPhone = /^(0|\+84)\d{9,10}$/;
-    //     const regexPass = /^(?=.*[A-Za-z])(?=.*\d).{6,}$/;
-    //     let check = true;
+        if (!regexEmail.test(newUser.email)) {
+            err.errEmail = "Email chưa đúng định dạng";
+            check = false;
+        }
 
-    //     if (!regexName.test(newUser.name)) {
-    //         err.errName = "Tên phải có 6 kí tự trở nên";
-    //         check = false;
-    //     }
+        if (!regexPhone.test(newUser.phone)) {
+            err.errPhone = "Số điện thoại chưa đúng định dạng";
+            check = false;
+        }
 
-    //     if (!regexEmail.test(newUser.email)) {
-    //         err.errEmail = "Email chưa đúng định dạng";
-    //         check = false;
-    //     }
+        if (!regexPass.test(newUser.password)) {
+            err.errPass = "Mật khẩu phải có 6 kí tự trở lên và có cả chữ số";
+            check = false;
+        }
 
-    //     if (!regexPhone.test(newUser.phone)) {
-    //         err.errPhone = "Số điện thoại chưa đúng định dạng";
-    //         check = false;
-    //     }
-
-    //     if (!regexPass.test(newUser.password)) {
-    //         err.errPass = "Mật khẩu phải có 6 kí tự trở lên và có cả chữ số";
-    //         check = false;
-    //     }
-
-    //     if (!(newUser.password == newUser.confirmPassword)) {
-    //         err.errConfirm = "Mật khẩu không khớp";
-    //         check = false;
-    //     }
-    //     if (!check) {
-    //         setErrorInput(err);
-    //         return;
-    //     } else {
-    //         const response = await publicAxios.post("/api/register", newUser);
-    //         success("Đăng ký thành công");
-    //         setNewUser({
-    //             name: "",
-    //             email: "",
-    //             phone: "",
-    //             password: "",
-    //             role: 0,
-    //             status: 0,
-    //         });
-    //         navigate("/sign-in");
-    //     }
-    // };
+        if (!(newUser.password == newUser.confirmPassword)) {
+            err.errConfirm = "Mật khẩu không khớp";
+            check = false;
+        }
+        if (!check) {
+            setErrorInput(err);
+            return;
+        } else {
+            const response = await publicAxios.post(API_REGISTER, {
+                name: newUser.name,
+                email: newUser.email,
+                phone: newUser.phone,
+                password: newUser.password,
+            });
+            success("Đăng ký thành công");
+            setNewUser({
+                name: "",
+                email: "",
+                phone: "",
+                password: "",
+                role: 0,
+                status: 0,
+            });
+            navigate("/sign-in");
+        }
+    };
     useEffect(() => {
         document.title = "Sign Up";
         window.scrollTo(0, 0);
@@ -117,7 +118,6 @@ export default function SignUp() {
             <div className="mainImage">
                 <img src={ImageSu} className="image" alt="" />
             </div>
-
             <div className="mainContent">
                 <div className="mainTitle">Sign Up</div>
                 <p
@@ -130,7 +130,7 @@ export default function SignUp() {
                 >
                     Sign up for free to access to in any of our products{" "}
                 </p>
-                <div className="mainInput1">
+                <div className="mainInput1" id="name">
                     <p
                         style={{
                             fontSize: "16px",
@@ -143,15 +143,16 @@ export default function SignUp() {
                     <input
                         type="text"
                         placeholder="Ngyuen Van A"
-                        onChange={setName}
+                        name="name"
+                        onChange={(e) => {
+                            setNewUser({ ...newUser, name: e.target.value });
+                        }}
                         required
-                        value={name}
+                        value={newUser.name}
                     />
-                    {nameError && name !== "" && (
-                        <p className="error-content">{nameError}</p>
-                    )}
+                    <p className="error-content">{errorInput.errName}</p>
                 </div>
-                <div className="mainInput1">
+                <div className="mainInput1" id="email">
                     <p
                         style={{
                             fontSize: "16px",
@@ -164,15 +165,16 @@ export default function SignUp() {
                     <input
                         type="text"
                         placeholder="designer@gmail.com"
-                        onChange={setEmail}
+                        name="email"
+                        onChange={(e) => {
+                            setNewUser({ ...newUser, email: e.target.value });
+                        }}
                         required
-                        value={email}
+                        value={newUser.email}
                     />
-                    {emailError && email !== "" && (
-                        <p className="error-content">{emailError}</p>
-                    )}
+                    <p className="error-content">{errorInput.errEmail}</p>
                 </div>
-                <div className="mainInput1">
+                <div className="mainInput1" id="phone">
                     <p
                         style={{
                             fontSize: "16px",
@@ -185,15 +187,16 @@ export default function SignUp() {
                     <input
                         type="text"
                         placeholder="0123456789"
-                        onChange={setPhone}
+                        name="phone"
+                        onChange={(e) => {
+                            setNewUser({ ...newUser, phone: e.target.value });
+                        }}
                         required
-                        value={phone}
+                        value={newUser.phone}
                     />
-                    {phoneError && phone !== "" && (
-                        <p className="error-content">{phoneError}</p>
-                    )}
+                    <p className="error-content">{errorInput.errPhone}</p>
                 </div>
-                <div className="mainInput1">
+                <div className="mainInput1" id="password">
                     <p
                         style={{
                             fontSize: "16px",
@@ -206,15 +209,16 @@ export default function SignUp() {
                     <input
                         type="password"
                         placeholder="Qwerty@123"
-                        onChange={setPassword}
+                        name="password"
+                        onChange={(e) => {
+                            setNewUser({ ...newUser, password: e.target.value });
+                        }}
                         required
-                        value={password}
+                        value={newUser.password}
                     />
-                    {passwordError && password !== "" && (
-                        <p className="error-content">{passwordError}</p>
-                    )}
+                    <p className="error-content">{errorInput.errPass}</p>
                 </div>
-                <div className="mainInput1">
+                <div className="mainInput1" id="confirmPassword">
                     <p
                         style={{
                             fontSize: "16px",
@@ -227,33 +231,14 @@ export default function SignUp() {
                     <input
                         type="password"
                         placeholder="Qwerty@123"
-                        onChange={setConfirmPassword}
-                        value={confirmPassword}
+                        name="confirmPassword"
+                        onChange={(e) => {
+                            setNewUser({ ...newUser, confirmPassword: e.target.value });
+                        }}
+                        value={newUser.confirmPassword}
                     />
-                    {confirmPasswordError && confirmPassword !== "" && (
-                        <p className="error-content">{confirmPasswordError}</p>
-                    )}
+                    <p className="error-content">{errorInput.errConfirm}</p>
                 </div>
-
-                {/* <div>
-                    <div className='mainInput2-sign-up'>
-                        <div style={{ display: 'flex', alignItems: 'center', width: '90%' }}>
-                            <p style={{fontSize: '16px', fontWeight: '400', color: '#3c4242' }}>Password</p>
-                        </div>
-
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                            <i class="fa-regular fa-eye-slash" style={{ marginBottom: '10px', fontSize: '16px', fontWeight: '400', color: '#3c4242' }}></i>
-                            <p style={{ fontSize: '16px', fontWeight: '400', color: '#3c4242' }}>Hide</p>
-                        </div>
-                    </div>
-
-                    <div className='mainInput3-sign-up'>
-                        <input type="text" />
-                        <p style={{ fontSize: '14px', fontWeight: '500', color: '#666666', marginTop: '10px' }}>Use 8 or </p>
-                    </div>
-
-                </div> */}
-
                 <div className="main-button">
                     <div className="main-button-sign-up">
                         <button
@@ -263,7 +248,6 @@ export default function SignUp() {
                             Sign Up
                         </button>
                     </div>
-
                     <div className="main-content-end">
                         <p
                             style={{

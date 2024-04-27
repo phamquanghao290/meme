@@ -9,14 +9,16 @@ import { success, failed } from "../../components/Modal/NotificationModal";
 import "./SignInPage.scss";
 import { Link } from "react-router-dom";
 import { signInWithFacebook, signInWithGoogle } from "../../firebase/firebase";
+import { API_LOGIN } from "../../apis/patchAPI";
+
 export default function SignInPage() {
   const [user, setUser] = React.useState({
     email: "",
     password: "",
   });
+
   const handleLoginGoogle = async () => {
     const authGoogle = await signInWithGoogle();
-    console.log(authGoogle);
     const user = authGoogle.user;
     let data = {
       email: user.email,
@@ -26,29 +28,17 @@ export default function SignInPage() {
       role: 0,
       status: 0,
     };
-    console.log(data);
-    try {
-      const res = await publicAxios.post("/api/login-google", data);
-      console.log(res);
-      if (res.data.data) {
-        localStorage.setItem("token", res.data.data.token);
-        localStorage.setItem(
-          "userLogin",
-          JSON.stringify(res.data.data.user)
-        );
-        success(res.data.message);
-        setTimeout(() => {
-          window.location.href = "/";
-        }, 1500);
-      }
-    } catch (error) {
-      console.log(error);
+    const res = await publicAxios.post("/api/login-google", data);
+    if (res.data.data) {
+      localStorage.setItem("token", res.data.data.token);
+      localStorage.setItem("userLogin",JSON.stringify(res.data.data.user));
+      success(res.data.message);    
+      setTimeout(() => {window.location.href = "/"}, 1500);         
     }
   };
+
   const handleLoginFacebook = async () => {
     const authFacebook = await signInWithFacebook();
-    console.log(authFacebook);
-
     const user = authFacebook.user;
     let data1 = {
       email: user.email,
@@ -58,31 +48,18 @@ export default function SignInPage() {
       role: 0,
       status: 0,
     };
-    try {
-      const res = await publicAxios.post("/api/login-facebook", data1);
-      console.log(res);
-      if (res.data.data) {
-        localStorage.setItem("token", res.data.data.token);
-        localStorage.setItem(
-          "userLogin",
-          JSON.stringify(res.data.data.user)
-        );
-        success(res.data.message);
-        setTimeout(() => {
-          window.location.href = "/";
-        }, 1500);
-      }
-    } catch (error) {
-      console.log(error);
+    const res = await publicAxios.post("/api/login-facebook", data1);
+    if (res.data.data) {
+      localStorage.setItem("token", res.data.data.token);
+      localStorage.setItem("userLogin", JSON.stringify(res.data.data.user));
+      success(res.data.message);  
+      setTimeout(() => { window.location.href = "/"}, 1500)     
     }
-  };
-  const handleGetValueLogin = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
   };
 
   const handleLogin = async () => {
     try {
-      const response = await publicAxios.post("/api/login", user);
+      const response = await publicAxios.post(API_LOGIN, user);
       if (!user.email || !user.password) {
         failed("Please enter complete information");
         return;
@@ -101,27 +78,12 @@ export default function SignInPage() {
         return;
       }
       localStorage.setItem("token", response.data.token);
-      localStorage.setItem(
-        "userLogin",
-        JSON.stringify(response.data.user)
-      );
+      localStorage.setItem("userLogin", JSON.stringify(response.data.user));
       success(response.data.message);
-      setTimeout(() => {
-        window.location.href = "/";
-      }, 1500);
+      setTimeout(() => {window.location.href = "/"}, 1500);
     } catch (error) {
       failed("Account or password is incorrect");
     }
-  };
-
-  const userLogin = JSON.parse(localStorage.getItem("userLogin"));
-  const handleLogout = () => {
-    localStorage.removeItem("userLogin");
-    localStorage.removeItem("token");
-    localStorage.removeItem("admin_token");
-    setTimeout(() => {
-      window.location.href = "/";
-    }, 1500);
   };
 
   useEffect(() => {
@@ -133,16 +95,12 @@ export default function SignInPage() {
       <div className="mainImage">
         <img src={Image} className="image" alt="" />
       </div>
-
       <div className="mainContent">
         <div className="mainTitle">Sign In Page</div>
-
         <div className="mainButton">
           <img className="mainButtonImage" src={Google} alt="" />
           <button onClick={handleLoginGoogle}>Continue With Google</button>
-
           <div className="mainButton2">
-
             <button
               onClick={handleLoginFacebook}
               className="continue-button-signin"
@@ -151,11 +109,9 @@ export default function SignInPage() {
             </button>
           </div>
         </div>
-
         <div className="divider">
           <img src={Divider} alt="" />
         </div>
-
         <div className="mainInput-sign-in">
           <p
             style={{
@@ -171,11 +127,12 @@ export default function SignInPage() {
             className="input-sign-in"
             type="text"
             name="email"
-            onChange={handleGetValueLogin}
+            onChange={(e) => {
+              setUser({ ...user, email: e.target.value });
+            }}
             value={user.email}
           />
         </div>
-
         <div>
           <div className="mainInput2">
             <div
@@ -225,17 +182,17 @@ export default function SignInPage() {
               </p>
             </div>
           </div>
-
           <div className="mainInput3">
             <input
               className="input3-sign-in"
               type="password"
               name="password"
-              onChange={handleGetValueLogin}
+              onChange={(e) => {
+                setUser({ ...user, password: e.target.value });
+              }}
               value={user.password}
             />
           </div>
-
           <div>
             <Link to="/forgot-password">
               <p
@@ -253,13 +210,11 @@ export default function SignInPage() {
             </Link>
           </div>
         </div>
-
         <div className="main-button">
           <button onClick={handleLogin} className="main-button-signin">
             Sign In
           </button>
         </div>
-
         <div className="main-content-end">
           <p
             style={{
