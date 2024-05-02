@@ -9,6 +9,7 @@ import axios from "axios";
 function AdminBill() {
   const [infoDetail, setInfoDetail] = React.useState([]);
   const [bill, setBill] = React.useState([]);
+  const [show, setShow] = React.useState(false);
   const [errorInput, setErrorInput] = React.useState({
     errName: "",
     errEmail: "",
@@ -59,7 +60,6 @@ function AdminBill() {
     handleGetDetailBill(1);
   }, []);
 
-  const [show, setShow] = React.useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = async (item) => {

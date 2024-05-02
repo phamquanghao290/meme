@@ -19,4 +19,9 @@ export const API_INCREASE_CART = "/api/cart/increase";
 export const API_DECREASE_CART = "/api/cart/decrease";
 export const API_GETPRODUCT_CART = "/api/product";
 export const API_DELETE_CART = "/api/cart";
+export const API_CREATE_ORDER = "/order/createOrder";
+export const API_CREATE_ORDER_DETAIL = "/order-detail/createBillDetails";
+export const APT_DELETE_CART_USER = "/api/cart/all";
+export const API_GET_ORDER = "/order/getorderById";
+export const API_GET_ORDER_DETAIL = "/order-detail"
 
