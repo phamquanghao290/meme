@@ -11,6 +11,7 @@ import Paypass from "../../../public/images/Paypass.png";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { success, failed } from "../../components/Modal/NotificationModal";
 import "./checkout.scss";
+import { handleCreateOrderAPI, handleCreateOrderDetailAPI, handleDeleteCartUser, handleGetCartByUserAPI } from "../../apis/checkout";
 
 function CheckoutForBill() {
   useEffect(() => {
@@ -36,8 +37,7 @@ function CheckoutForBill() {
   const navigate = useNavigate();
   const { id } = useParams();
   const handleGetCart = async () => {
-    const res = await publicAxios.get(`/api/cart/getCartByUserId/${id}`);
-
+    const res = await handleGetCartByUserAPI(id)
     setCart(res.data);
   };
 
@@ -72,8 +72,7 @@ function CheckoutForBill() {
   };
 
   const handleOrderCart = async () => {
-    
-    let addresscity = city + "," + district + "," + ward;
+    let address_city = city + "," + district + "," + ward;
     if (cart.length == 0) {
       failed("No Products to Pay for");
       return;
@@ -102,37 +101,32 @@ function CheckoutForBill() {
       return;
     }
     const orders = {
-      userID: currentUser.id,
-      user_name: currentUser.name,
-      addresscity,
+      user_id: currentUser.id,
+      address_city,
       phone,
       address,
-      status: 0,
+      status_order: 0,
       total,
+      created_at: new Date(),
     };
     try {
-      const response = await axios.post(
-        "http://localhost:8080/order/createOrder",
-        orders
-      );
-
+      // const response = await axios.post("http://localhost:8080/order/createOrder", orders);
+      const response = await handleCreateOrderAPI(orders);
+      // console.log(response)
       await Promise.all(
         cart.map(async (item) => {
           const datadetail = {
             order_id: response.data.id,
-            productsId: item.product.id,
+            product_id: item.product?.id,
             quantity: item.quantity,
           };
 
-          await axios.post(
-            "http://localhost:8080/order-detail/createBillDetails",
-            datadetail
-          );
+          // await axios.post("http://localhost:8080/order-detail/createBillDetails", datadetail);
+          await handleCreateOrderDetailAPI(datadetail);
         })
       );
-      await axios.delete(
-        `http://localhost:8080/api/cart/all/${currentUser.id}`
-      );
+      // await axios.delete(`http://localhost:8080/api/cart/all/${currentUser.id}`);
+      await handleDeleteCartUser(currentUser.id);
       setCart([]);
       success("Đã Thanh Toán");
       // dispatch(getCart(currentUser?.id));
@@ -154,7 +148,6 @@ function CheckoutForBill() {
   useEffect(() => {
     handleGetDataCity();
     handleGetCart();
-
     document.title = "Checkout";
   }, []);
 

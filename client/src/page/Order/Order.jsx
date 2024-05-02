@@ -8,6 +8,7 @@ import { Menu } from "antd";
 import { Button, Modal } from "antd";
 import "./order.scss";
 import axios from "axios";
+import { handleGetOrderAPI, handleGetOrderDetailAPI } from "../../apis/order";
 
 const items = [
   {
@@ -30,16 +31,14 @@ const items = [
 
 function Order() {
   const currentUser = JSON.parse(localStorage.getItem("userLogin") || "{}");
-  const [bills, setBills] = useState([]);
-  const handleGetbills = async () => {
-    const response = await axios.get(
-      `http://localhost:8080/order/getorderById/${currentUser.id}`
-    );
-    setBills(response.data);
-  };
+  const [order, setOrder] = useState([]);
   const [current, setCurrent] = useState("mail");
   const [infoDetail, setInfoDetail] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleGetOrder = async () => {
+    const response = await handleGetOrderAPI(currentUser.id);
+    setOrder(response.data);
+  };
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -51,13 +50,12 @@ function Order() {
   const showModal = async (id) => {
     setIsModalOpen(true);
     try {
-      const res = await axios.get(`http://localhost:8080/order-detail/${id}`);
+      const res = await handleGetOrderDetailAPI(id);
       setInfoDetail(res.data);
     } catch (error) {
       console.log(error);
     }
   };
-  console.log(infoDetail);
   const handleOk = () => {
     setIsModalOpen(false);
   };
@@ -77,7 +75,7 @@ function Order() {
             status_order: status,
           }
         );
-        handleGetbills();
+        handleGetOrder();
       } catch (error) {
         console.log(error);
       }
@@ -85,7 +83,7 @@ function Order() {
   };
   const numbers = 0;
   useEffect(() => {
-    handleGetbills();
+    handleGetOrder();
   }, []);
   return (
     <div className="main-body-info">
@@ -230,7 +228,7 @@ function Order() {
         </div>
 
         <div className="main-content-info-right">
-          <div>
+          <div className="flex gap-[30px]">
             <h2
               style={{
                 width: "6px",
@@ -241,27 +239,28 @@ function Order() {
                 borderRadius: "5px"
               }}
             >
-              <h2 style={{ marginLeft: "20px" }}>My Order</h2>
             </h2>
-            <h2
-              style={{
-                fontSize: "18px",
-                fontWeight: "600",
-                color: "#3C4242",
-                lineHeight: "33px",
-                marginLeft: "20px",
-              }}
-            >
-              Contact Details
-            </h2>
+            <h2 className="text-xl font-bold" >My Order</h2>
           </div>
-          {!bills?.length == numbers ? (
+          <h2
+            style={{
+              fontSize: "18px",
+              fontWeight: "600",
+              color: "#3C4242",
+              lineHeight: "33px",
+              marginLeft: "20px",
+            }}
+            className="mt-3"
+          >
+            Contact Details
+          </h2>
+          {!order?.length == numbers ? (
             <>
-              {bills.map((item, key) => (
-                <div className="w-100 h-40 p-7 bg-slate-100 rounded-lg drop-shadow-lg mt-10">
+              {order?.map((item, key) => (
+                <div className="w-100 h-[180px] p-7 bg-slate-100 rounded-lg drop-shadow-lg mt-5">
                   <div className="flex justify-between items-center">
                     <h3 className="text-lg font-semibold">
-                      Name : {item.user_name}
+                      Username : {currentUser.name}
                     </h3>
                     <button
                       className="text-white bg-[#8A33FD] rounded-lg px-[40px] py-2"
@@ -270,14 +269,13 @@ function Order() {
                       View Detail
                     </button>
                   </div>
-                  <div className="flex  items-center mt-2">
+                  <div className="flex items-center mt-2">
                     <p>Address : {item.address},</p>
-                    <p>{item.addressCity}</p>
+                    <p>{item.address_city}</p>
                   </div>
                   <div className="flex justify-between items-center mt-2">
-                    <p>Phone Number:{item.phone}</p>
+                    <p>Phone Number: {item.phone}</p>
                     <div className="flex items-center gap-3">
-                      <p>${item.total}</p>
                       <div>
                         {item.status_order === 0 ? (
                           <button
@@ -302,6 +300,8 @@ function Order() {
                       </div>
                     </div>
                   </div>
+                  <p> Total : ${item.total}</p>
+                        
                 </div>
               ))}
             </>
@@ -334,7 +334,7 @@ function Order() {
                   <img className="w-[100px]" src={item.product.image} alt="" />
                   <div>
                     <h3 className="font-bold">
-                      Name : {item.product.nameProduct}
+                      Product : {item.product.name_product}
                     </h3>
                     <p>Stock : {item.quantity}</p>
                     <p>Price : ${item.product.price}</p>
