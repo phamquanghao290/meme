@@ -96,6 +96,8 @@ export default function SignUp() {
                 email: newUser.email,
                 phone: newUser.phone,
                 password: newUser.password,
+                role: 0,
+                status: 0,
             });
             success("Đăng ký thành công");
             setNewUser({
