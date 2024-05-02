@@ -17,6 +17,9 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { failedNoti, successNoti } from "../../utils/noti";
 import { getProductsAPI } from "../../apis/products.services";
+import { getAllCateAPI } from "../../apis/category.services";
+import { getAllBrandAPI } from "../../apis/brand.services";
+import { AddToWishListAPI } from "../../apis/favorite-product.services";
 
 function ProductWomen() {
   useEffect(() => {
@@ -38,7 +41,6 @@ function ProductWomen() {
   }, []);
 
   const handleChange = (value) => {
-    // console.log(value.value, "value");
     if (value.value == "prices gradually increase") {
       const sortedProducts = [...product].sort((a, b) => a.price - b.price);
       setProduct(sortedProducts);
@@ -49,11 +51,10 @@ function ProductWomen() {
     }
   };
 
-
   const handleGetAllCate = async () => {
     try {
-      const response = await publicAxios.get("/api/category");
-      console.log(response.data);
+      const response = await getAllCateAPI();
+     
       setCategories(response.data);
     } catch (error) {
       console.log(error);
@@ -66,9 +67,8 @@ function ProductWomen() {
     handleGetBrands();
   }, []);
 
- 
   const handleGetBrands = async () => {
-    const response = await publicAxios.get("/api/brand");
+    const response = await getAllBrandAPI();
     setBrands(response.data);
   };
  
@@ -76,22 +76,15 @@ function ProductWomen() {
     setSelectedCategory(id);
   };
 
- 
   const handleClick_brand = (id) => {
     setSelectedBrand(id);
   };
-
-
-  
   const handleAddToWishList = async (item) => {
     if (!userLogin) {
       failedNoti("Please login to add product to wish list");
       return;
     }
-    const res = await axios.post(
-      `http://localhost:8080/api/v1/favorite-product/${userLogin.id}`,
-      item
-    );
+    const res = await AddToWishListAPI(userLogin.id, item.id);
     successNoti(res.data.message);
   };
   return (
@@ -193,8 +186,8 @@ function ProductWomen() {
             {product
               ?.filter(
                 (products) =>
-                  products.category.id.toString().includes(selectedCategory) &&
-                  products.brand.id.toString().includes(selectedBrand)
+                  products?.category?.id.toString().includes(selectedCategory) &&
+                  products?.brand?.id.toString().includes(selectedBrand)
               )
               .map((item, index) => (
                 <div key={index} className="rounded-lg border h-[430px]">

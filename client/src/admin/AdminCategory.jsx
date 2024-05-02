@@ -3,6 +3,7 @@ import { Button } from '@mui/material'
 import publicAxios from '../config/PublicAxios'
 import { success, failed } from '../components/Modal/NotificationModal'
 import './admin.css'
+import { addCategoryAPI, deletCategoryIdAPI, editCategoryAPI, getAllCateAPI } from '../apis/category.services'
 
 function AdminCategory() {
     const [newCate, setNewCate] = React.useState({
@@ -10,52 +11,44 @@ function AdminCategory() {
     })
     const [categories, setCategories] = React.useState([])
     const handleGetAllCate = async () => {
-            const response = await publicAxios.get("/api/category")
+            const response = await getAllCateAPI();
             setCategories(response.data)
     }
-
     React.useEffect(() => {
         document.title = "Danh mục"
         handleGetAllCate()
     }, [])
-
     const handleAdd = async () => {
             try {
-                const response = await publicAxios.post("/api/category", newCate)
+                const response = await addCategoryAPI(newCate);
                 await handleGetAllCate()
-                setCategories(response.data.data)
-                success(response.data.message)
-                setNewCate({ nameCategory: "" })
+                setCategories(response.data)
+                success(response.message)
+                setNewCate({ name_category: "" })
             } catch (error) {
                 failed(error.response.data.message)
             }
-        
-
     }
-
-    const handleEdit = (item) => {
-        console.log(item)
-        setNewCate(item)
-    }
-
-    const handleSave = async () => {
+const handleEdit = (item) => {
+  setNewCate(item);
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+   const handleSave = async () => {
         try {
-            const response = await publicAxios.patch(`/api/category/${newCate.categoryId}`, newCate)
+            const response = await editCategoryAPI(newCate.id, newCate);
             await handleGetAllCate()
-            setCategories(response.data.data)
+            setCategories(response.data)
             success("Update successful");
-            setNewCate({ nameCategory: "" })
+            setNewCate({ name_category: "" })
         } catch (error) {
             failed("Update failed");
         }
     }
-
     const handleDelete = async (id) => {
             if (window.confirm("You definitely want to delete this category?")) {
-                const response = await publicAxios.delete(`/api/category/${id}`)
-                console.log(response.data);
-                setCategories(response.data.data)
-                success(response.data.message)
+                const response = await deletCategoryIdAPI(id);
+                setCategories(response.data)
+                success(response.message)
             }
     }
     return (
@@ -77,11 +70,11 @@ function AdminCategory() {
                                             onChange={(e) =>
                                                 setNewCate({
                                                     ...newCate,
-                                                    nameCategory:
+                                                    name_category:
                                                         e.target.value,
                                                 })
                                             }
-                                            value={newCate.nameCategory}
+                                            value={newCate.name_category}
                                             name="nameCategory"
                                             placeholder="Category name"
                                             type="text"
@@ -89,10 +82,10 @@ function AdminCategory() {
                                         ></input>
                                         <Button
                                             variant="contained"
-                                            onClick={newCate.categoryId ? handleSave : handleAdd}
+                                            onClick={newCate.id ? handleSave : handleAdd}
                                             className="w-full max-w-[100px] h-[40px] p-[12px] rounded-lg ml-16 border-2 border-blue-600"
                                         >
-                                            {newCate.categoryId
+                                            {newCate.id
                                                 ? "Lưu"
                                                 : "Thêm"}
                                         </Button>
@@ -260,7 +253,7 @@ function AdminCategory() {
                                                         {index + 1}
                                                     </td>
                                                     <td scope="col">
-                                                        {item.nameCategory}
+                                                        {item.name_category}
                                                     </td>
                                                     <td className="flex gap-8 justify-center">
                                                         <Button
