@@ -1,15 +1,9 @@
 import { BiDownArrowAlt } from "react-icons/bi";
 import { GrLinkNext } from "react-icons/gr";
-import { GrLinkPrevious } from "react-icons/gr";
 import React, { useEffect, useState } from "react";
 import Banner from "../banner/banner";
 import Banner3 from "../../../public/images/banner3.png";
 import Banner4 from "../../../public/images/banner4.png";
-import img1 from "../../../public/images/img1.png";
-import img2 from "../../../public/images/img2.png";
-
-import img3 from "../../../public/images/img3.png";
-import img4 from "../../../public/images/img4.png";
 import img5 from "../../../public/images/banner5.png";
 import img6 from "../../../public/images/banner6.png";
 import img7 from "../../../public/images/banner7.png";
@@ -17,36 +11,17 @@ import img8 from "../../../public/images/banner8.png";
 import img9 from "../../../public/images/banner9.png";
 import img10 from "../../../public/images/banner10.png";
 import img11 from "../../../public/images/banner11.png";
-import products1 from "../../../public/images/product1.png";
-import products2 from "../../../public/images/product2.png";
-import products3 from "../../../public/images/product3.png";
-import products4 from "../../../public/images/product4.png";
-import products5 from "../../../public/images/product5.png";
-import products6 from "../../../public/images/product6.png";
-import products7 from "../../../public/images/product7.png";
-import products8 from "../../../public/images/product8.png";
-import products9 from "../../../public/images/product9.png";
-import products10 from "../../../public/images/product10.png";
-import products11 from "../../../public/images/product11.png";
-import products12 from "../../../public/images/product12.png";
-import products13 from "../../../public/images/product13.png";
-import products14 from "../../../public/images/product14.png";
-import products15 from "../../../public/images/product15.png";
-import products16 from "../../../public/images/product16.png";
 import people1 from "../../../public/images/imgpeople1.png";
 import people2 from "../../../public/images/imgpeople2.png";
 import people3 from "../../../public/images/imgpeople3.png";
-
 import Logo1 from "../../../public/images/Logo1.png";
 import Logo2 from "../../../public/images/Logo2.png";
 import Logo3 from "../../../public/images/Logo3.png";
 import Logo4 from "../../../public/images/Logo4.png";
 import Logo5 from "../../../public/images/Logo5.png";
-
 import "../home/Index.scss";
 import Star from "./star/star";
 import { Link } from "react-router-dom";
-import publicAxios from "../../config/PublicAxios";
 import { getAllCateAPI } from "../../apis/category.services";
 import { getProductsAPI } from "../../apis/products.services";
 export default function Index() {
@@ -370,42 +345,33 @@ export default function Index() {
                 width: "125px",
               }}
             />
-            <img
-              src={Logo3}
-              alt=""
-              style={{
-                marginLeft: "20px",
-                backgroundColor: "white",
-                padding: "8px",
-                borderRadius: "15px",
-                width: "135px",
-                height: "80px",
-              }}
-            />
-            <img
-              src={Logo5}
-              alt=""
-              style={{
-                marginLeft: "20px",
-                backgroundColor: "white",
-                padding: "8px",
-                borderRadius: "15px",
-                width: "135px",
-                height: "80px",
-              }}
-            />
-            <img
-              src={Logo4}
-              alt=""
-              style={{
-                marginLeft: "20px",
-                backgroundColor: "white",
-                padding: "8px",
-                borderRadius: "15px",
-                width: "135px",
-                height: "80px",
-              }}
-            />
+            <div className="logo_topbrand_3">
+            
+              <img
+                src={Logo5}
+                alt=""
+                style={{
+                  marginLeft: "20px",
+                  backgroundColor: "white",
+                  padding: "8px",
+                  borderRadius: "15px",
+                  width: "135px",
+                  height: "80px",
+                }}
+              />
+              <img
+                src={Logo4}
+                alt=""
+                style={{
+                  marginLeft: "20px",
+                  backgroundColor: "white",
+                  padding: "8px",
+                  borderRadius: "15px",
+                  width: "135px",
+                  height: "80px",
+                }}
+              />
+            </div>
           </div>
         </div>
         <div className="NewArrivalProducts">

@@ -4,7 +4,7 @@ const successNoti = (type) => {
         message: type,
         style: {
             top: 100,
-            zIndex: 900
+            zIndex: 1000000
         },
     });
 }
@@ -13,7 +13,7 @@ const failedNoti = (type) => {
         message: type,
         style: {
             top: 100,
-            zIndex: 900,
+            zIndex: 1000000,
         },
     });
 }

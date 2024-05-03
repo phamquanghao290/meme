@@ -1,3 +1,11 @@
+.bg-body-tertiary {
+  position: sticky !important;
+
+  top: 0px;
+  background-color: #ffffff;
+  width: 100%;
+}
+
 .container-fluid {
   // display: flex;
   max-width: 1485px;
@@ -8,7 +16,7 @@
   // box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
   position: sticky;
   top: 0;
-  z-index: 100000;
+  z-index: 100;
   //   background-color: white;
 }
 .Logo_Heatder {
@@ -19,18 +27,24 @@
   display: flex;
   align-items: center;
   gap: 40px;
-  h3 {
+  .active {
+    color: rgb(0, 0, 0) !important;
+    font-weight: 300;
+    font-size: 20px;
+  }
+  .header_menu {
     cursor: pointer;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 800;
     font-family: "Montserrat", sans-serif;
-    color: #636262;
+    color: #787575;
     text-decoration: none;
     font-size: 20px;
   }
-  h3:hover {
+ .header_menu:hover {
     color: #000000;
     font-weight: bold;
+    font-weight: 800;
   }
 }
 .Search_Heatder {
@@ -42,7 +56,7 @@
   height: 44px;
   border-radius: 8px;
   img {
-    margin-left: 15px;
+    margin-right: 15px;
     position: relative;
     margin-top: 12px;
     width: 20px;
@@ -61,7 +75,7 @@
   .component {
     cursor: pointer;
     background-color: #f6f6f6;
-    width: 30%;
+    width: 100%;
     height: 90%;
     padding: 12px;
     border-radius: 8px;
@@ -98,9 +112,9 @@
     display: flex;
     align-items: center;
 
-    width: 350px;
+    width: 400px;
     h3 {
-      width: 0px;
+      width: 60px;
 
       cursor: pointer;
       font-style: normal;
@@ -193,11 +207,10 @@
     .component {
       cursor: pointer;
       background-color: #f6f6f6;
-      width: 6%;
+      width: 100%;
       height: 90%;
       padding: 12px;
       border-radius: 8px;
-      margin-top: 20px;
       .icon {
         width: 20px;
         height: 20px;
@@ -216,9 +229,9 @@
     gap: 12px;
   }
 }
-@media (max-width: 375px) {
+@media (max-width: 427px) {
   .bg-body-tertiary {
-    width: 700px;
+    width: 750px;
   }
   .Logo_Heatder {
     width: 100%;
@@ -226,6 +239,7 @@
   }
   .header_nav {
     display: flex;
+
     align-items: center;
     width: 400px;
     gap: 100px;
@@ -271,16 +285,91 @@
     .component {
       cursor: pointer;
       background-color: #f6f6f6;
-      width: 6%;
+      width: 100%;
       height: 90%;
       padding: 12px;
       border-radius: 8px;
-      margin-top: 20px;
+
       .icon {
         width: 20px;
         height: 20px;
+      }
+    }
+    .component:hover {
+      background-color: blueviolet;
+      .icon {
+        color: #ffffff;
+        font-weight: bold;
+      }
+    }
+    display: flex;
+    gap: 12px;
+  }
+}
+@media (max-width: 320px) {
+  .bg-body-tertiary {
+    width: 700px;
+  }
+  .Logo_Heatder {
+    width: 100%;
+    height: 100%;
+  }
+  .header_nav {
+    display: flex;
 
-        margin-top: 3px;
+    align-items: center;
+    width: 400px;
+    gap: 100px;
+    h3 {
+      cursor: pointer;
+      font-style: normal;
+      font-weight: 400;
+      font-family: "Montserrat", sans-serif;
+      color: #636262;
+      text-decoration: none;
+    }
+    h3:hover {
+      color: #000000;
+      font-weight: bold;
+    }
+  }
+  .Search_Heatder {
+    display: flex;
+    cursor: pointer;
+    margin-top: 20px;
+    background-color: #f6f6f6;
+    width: Fixed;
+    height: 44px;
+    border-radius: 8px;
+    img {
+      margin-left: 15px;
+      position: relative;
+      margin-top: 12px;
+      width: 20px;
+      height: 20px;
+    }
+    input {
+      cursor: pointer;
+      width: 100%;
+      border: none;
+      padding: 12px 20px 12px 20px;
+      outline: none;
+      border-radius: 8px;
+      background-color: #f6f6f6;
+    }
+  }
+  .Icon_Heatder {
+    .component {
+      cursor: pointer;
+      background-color: #f6f6f6;
+      width: 100%;
+      height: 90%;
+      padding: 12px;
+      border-radius: 8px;
+
+      .icon {
+        width: 20px;
+        height: 20px;
       }
     }
     .component:hover {

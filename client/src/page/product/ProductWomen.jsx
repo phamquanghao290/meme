@@ -2,24 +2,19 @@ import { AiFillHeart } from "react-icons/ai";
 import { AiOutlineHeart } from "react-icons/ai";
 import { ImMenu2 } from "react-icons/im";
 import React, { useEffect, useState } from "react";
-import { Slider, Switch } from "antd";
-import {
-  AppstoreOutlined,
-  MailOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
-import publicAxios from "../../config/PublicAxios";
 import { Menu, Rate } from "antd";
 import "./product.scss";
-import anh1 from "../../../public/images/product13.png";
 import { Select } from "antd";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { failedNoti, successNoti } from "../../utils/noti";
 import { getProductsAPI } from "../../apis/products.services";
 import { getAllCateAPI } from "../../apis/category.services";
 import { getAllBrandAPI } from "../../apis/brand.services";
-import { AddToWishListAPI } from "../../apis/favorite-product.services";
+import {
+  AddToWishListAPI,
+  getWishListAPIID,
+} from "../../apis/favorite-product.services";
+import ReactLoading from "react-loading";
 
 function ProductWomen() {
   useEffect(() => {
@@ -31,14 +26,13 @@ function ProductWomen() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedBrand, setSelectedBrand] = useState("");
   const userLogin = JSON.parse(localStorage.getItem("userLogin"));
+  const [status, setStatus] = useState(false);
+  const [flag, setFlag] = useState(false);
+  const [listProduct, setListProduct] = useState([]);
   const handleGetProducts = async () => {
     const res = await getProductsAPI();
-    setProduct(res.data)
+    setProduct(res.data);
   };
-
-  useEffect(() => {
-    handleGetProducts();
-  }, []);
 
   const handleChange = (value) => {
     if (value.value == "prices gradually increase") {
@@ -54,7 +48,7 @@ function ProductWomen() {
   const handleGetAllCate = async () => {
     try {
       const response = await getAllCateAPI();
-     
+
       setCategories(response.data);
     } catch (error) {
       console.log(error);
@@ -71,7 +65,7 @@ function ProductWomen() {
     const response = await getAllBrandAPI();
     setBrands(response.data);
   };
- 
+
   const handleClick_category = (id) => {
     setSelectedCategory(id);
   };
@@ -87,6 +81,27 @@ function ProductWomen() {
     const res = await AddToWishListAPI(userLogin.id, item.id);
     successNoti(res.data.message);
   };
+
+  const handleGetWishlist = async () => {
+    const res = await getWishListAPIID(userLogin.id);
+    setFlag(!flag);
+    setListProduct(res.data);
+  };
+  const checkWishList = (item) => {
+    const check = listProduct?.some((i) => i.product.id == item.id);
+    return check;
+  };
+  useEffect(() => {
+    handleGetProducts();
+  }, []);
+  useEffect(() => {
+    handleGetWishlist();
+  }, [flag]);
+  useEffect(() => {
+    setTimeout(() => {
+      setStatus(true);
+    }, 1100);
+  }, [status]);
   return (
     <div style={{ marginTop: "50px", fontFamily: "Montserrat" }}>
       <div className="flex items-start justify-between gap-11 max-w-[1485px] w-full mx-auto px-4 mb-10 sm:px-6 lg:px-8">
@@ -177,50 +192,72 @@ function ProductWomen() {
             </div>
           </div>
         </div>
-        <div>
-          <div className="flex items-center mt-10">
-            <div className="bg-[#8A33FD] w-2 h-8 rounded-lg"></div>
-            <p className="ml-6 font-bold text-xl">Products Clothing</p>
-          </div>
-          <div className="grid grid-cols-4 mt-10 gap-5 drop-shadow-xl">
-            {product
-              ?.filter(
-                (products) =>
-                  products?.category?.id.toString().includes(selectedCategory) &&
-                  products?.brand?.id.toString().includes(selectedBrand)
-              )
-              .map((item, index) => (
-                <div key={index} className="rounded-lg border h-[430px]">
-                  <button
-                    onClick={() => handleAddToWishList(item)}
-                    className="w-8 h-8 relative left-[200px] top-2 cursor-pointer"
-                  >
-                    <AiOutlineHeart className="text-red-500 w-7 h-7 " />
-                  </button>
-                  <Link to={`/product-detail/${item.id}`}>
-                    <img
-                      src={item.image}
-                      alt=""
-                      className="max-w-[220px] m-auto pt-3 h-[260px] hover:scale-105 transition-all duration-300 "
-                    />
+        {status ? (
+          <div>
+            <div className="flex items-center mt-10">
+              <div className="bg-[#8A33FD] w-2 h-8 rounded-lg"></div>
+              <p className="ml-6 font-bold text-xl">Products Clothing</p>
+            </div>
 
-                    {/* <AiFillHeart /> */}
+            <div className="grid grid-cols-4 mt-10 gap-5 drop-shadow-xl">
+              {product
+                ?.filter(
+                  (products) =>
+                    products?.category?.id
+                      .toString()
+                      .includes(selectedCategory) &&
+                    products?.brand?.id.toString().includes(selectedBrand)
+                )
+                .map((item, index) => (
+                  <div key={index} className="rounded-lg border h-[430px]">
+                    <button className="w-8 h-8 relative left-[220px] top-2 cursor-pointer">
+                      {checkWishList(item) ? (
+                        <AiFillHeart
+                          className="text-red-500 w-7 h-7 "
+                          onClick={() => handleAddToWishList(item)}
+                        />
+                      ) : (
+                        <AiOutlineHeart
+                          className="text-red-500 w-7 h-7 "
+                          onClick={() => handleAddToWishList(item)}
+                        />
+                      )}
+                      {/* <AiOutlineHeart className="text-red-500 w-7 h-7 " /> */}
+                      {/* <AiFillHeart className="text-red-500 w-7 h-7 " /> */}
+                    </button>
+                    <Link to={`/product-detail/${item.id}`}>
+                      <img
+                        src={item.image}
+                        alt=""
+                        className="max-w-[240px] m-auto pt-3 h-[260px] hover:scale-105 transition-all duration-300 "
+                      />
 
-                    <br />
-                    <p className="text-[18px] font-bold px-3">
-                      {item.name_product}
-                    </p>
-                    <div className="flex items-end justify-between px-3">
-                      <p className="text-md line-clamp-2 font-bold">
-                        {item.price}
+                      {/* <AiFillHeart /> */}
+
+                      <br />
+                      <p className="text-[18px] font-bold px-3">
+                        {item.name_product}
                       </p>
-                      <Rate disabled defaultValue={item.rating} />
-                    </div>
-                  </Link>
-                </div>
-              ))}
+                      <div className="flex items-end justify-between px-3">
+                        <p className="text-md line-clamp-2 font-bold">
+                          {item.price}
+                        </p>
+                        <Rate disabled defaultValue={item.rating} />
+                      </div>
+                    </Link>
+                  </div>
+                ))}
+            </div>
           </div>
-        </div>
+        ) : (
+          <ReactLoading
+            type={"spin"}
+            color={"#525f7f"}
+            height={"6%"}
+            width={"6%"}
+            className="m-auto pb-[450px]"
+          />
+        )}
       </div>
       <div className="Product_Content" style={{ paddingBottom: "100px" }}>
         <div

@@ -14,7 +14,7 @@ const contentStyle = {
 };
 
 const Banner = () => (
-  <Carousel autoplay>
+  <Carousel autoplay className="textBanner_Container">
     <div>
       <div style={contentStyle} className="img_banner2">
         <img src={banner4} alt="" className="img_banner" />
@@ -34,7 +34,7 @@ const Banner = () => (
 
     <div>
       <div style={contentStyle}>
-        <img src={banner3} alt="" style={{ width: "100%", height: "100%" }} />
+        <img src={banner3} alt="" className="img_banner" />
       </div>
 
       <div className="textBanner_css">
