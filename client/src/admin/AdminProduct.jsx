@@ -3,12 +3,9 @@ import { Button } from "@mui/material";
 import publicAxios from "../config/PublicAxios";
 import { success, failed } from "../components/Modal/NotificationModal";
 import axios from "axios";
-import { Modal } from "antd";
 import { Pagination } from "antd";
-import { Select, Tag } from "antd";
-
+import ReactLoading from "react-loading";
 import "./admin.css";
-import { TbCameraPlus } from "react-icons/tb";
 import { useState } from "react";
 import {
   addProductsAPI,
@@ -18,7 +15,6 @@ import {
 } from "../apis/products.services";
 import { getAllCateAPI } from "../apis/category.services";
 import { getAllBrandAPI } from "../apis/brand.services";
-
 function AdminProduct() {
   const USDollar = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -30,11 +26,11 @@ function AdminProduct() {
   const [brands, setBrands] = React.useState([]);
   const [products, setProducts] = React.useState([]);
   const [searchProduct, setSearchProduct] = React.useState("");
-  // const [oneProduct, setOneProduct] = React.useState([]);
   const [edit, setEdit] = React.useState(false);
-  // const [colors, setColors] = React.useState([]);
   const [flag, setFlag] = React.useState(false);
   const [options, setOptions] = useState([]);
+  const [status, setStatus] = useState(false);
+
   const [newProduct, setNewProduct] = React.useState({
     nameProduct: "",
     price: 0,
@@ -69,6 +65,33 @@ function AdminProduct() {
     reader.readAsDataURL(file);
   };
   const handleSave = async () => {
+    if (newProduct.nameProduct == "") {
+      return failed("Product name cannot be blank");
+    }
+    if (newProduct.price == "") {
+      return failed("Product price cannot be blank");
+    }
+    if (newProduct.category_id == "") {
+      return failed("Product category cannot be blank");
+    }
+    if (newProduct.brand_id == "") {
+      return failed("Product brand cannot be blank");
+    }
+    if (!selectedMedia) {
+      return failed("Product image cannot be blank");
+    }
+    if (newProduct.stock == "") {
+      return failed("Product stock cannot be blank");
+    }
+    const check = products.find(
+      (item) =>
+        item.name_product.toLowerCase() ===
+        newProduct.nameProduct.trim().toLowerCase()
+    );
+    if (check) {
+      failed("Name Products Already Exist");
+      return;
+    }
     try {
       const formData = new FormData();
       formData.append("file", selectedMedia);
@@ -98,9 +121,10 @@ function AdminProduct() {
         rate: 5,
       });
     } catch (error) {
-      failed("Vui lòng điền đầy đủ thông tin");
+      failed("add error");
     }
   };
+
   const handleEdit = async () => {
     try {
       if (!selectedMedia) {
@@ -124,7 +148,6 @@ function AdminProduct() {
       const response = await putProductsAPI(newProduct.id, {
         ...newProduct,
         image: media,
-     
       });
       setFlag(true);
       setProducts(response.data);
@@ -141,7 +164,7 @@ function AdminProduct() {
         rate: 5,
       });
     } catch (error) {
-      failed("Sửa thất bại");
+      failed("Repair failed");
     }
   };
   const handleEditProduct = async (item) => {
@@ -159,13 +182,13 @@ function AdminProduct() {
   };
   const handleDeleteProduct = async (id) => {
     try {
-      if (window.confirm("Bạn có chắc muốn xóa sản phẩm này ?")) {
+      if (window.confirm("Are you sure you want to delete this product?")) {
         const response = await deleteProductsAPI(id);
         setProducts(response.data);
         success(response.message);
       }
     } catch (error) {
-      failed("Xóa sản phẩm thất bại");
+      failed("Delete failed product");
     }
   };
 
@@ -188,7 +211,7 @@ function AdminProduct() {
       return products?.filter((item) => item);
     }
   };
- 
+
   const render = renderProducts();
   const [currentPage, setCurrentPage] = React.useState(1);
   const itemsPerPage = 4;
@@ -203,52 +226,14 @@ function AdminProduct() {
     handleGetCategories();
     handleGetAllBrand();
     handleGetProducts();
-    // handleGetColor();
-    // handleGetOneProduct(1);
     document.title = "Admin - Product";
   }, [flag]);
-  // const [isModalOpen, setIsModalOpen] = React.useState(false);
-  // const showModal = () => {
-  //     setIsModalOpen(!isModalOpen);
-  //     setFlag(!flag);
-  // };
 
-  // const tagRender = (props) => {
-  //     const { label, value, closable, onClose } = props;
-  //     const onPreventMouseDown = (event) => {
-  //         event.preventDefault();
-  //         event.stopPropagation();
-  //     };
-  //     return (
-  //         <Tag
-  //             color={value}
-  //             onMouseDown={onPreventMouseDown}
-  //             closable={closable}
-  //             onClose={onClose}
-  //             style={{
-  //                 marginInlineEnd: 4,
-  //             }}
-  //         >
-  //             {label}
-  //         </Tag>
-  //     );
-  // };
-  // const options2 = options.map((item) => {
-  //     return { value: item };
-  // });
-
-  // const [previewList, setPreviewList] = useState([]);
-  // const [selectedMediaList, setSelectedMediaList] = useState(null);
-
-  // const handleAddMedia = (event) => {
-  //     setSelectedMediaList(event.target.files[0]);
-  //     const file = event.target.files[0];
-  //     const reader = new FileReader();
-  //     reader.onload = function (event) {
-  //         setPreviewList(event.target.result);
-  //     };
-  //     reader.readAsDataURL(file);
-  // };
+  useEffect(() => {
+    setTimeout(() => {
+      setStatus(true);
+    }, 1100);
+  }, [status]);
   return (
     <>
       {/* Dashboard */}
@@ -283,7 +268,7 @@ function AdminProduct() {
               </div>
             </div>
           </header>
-         
+
           {/* Main */}
           <main className="pt-3 bg-surface-secondary ">
             <div className="container-fluid">
@@ -329,14 +314,14 @@ function AdminProduct() {
                       <div className="mb-3 ">
                         <label className="form-label">Category</label>
                         <select
-                          className="form-select form-select-lg "
+                          className="form-select form-select-lg cursor-pointer "
                           aria-label="Large select example"
                           id="category_id"
                           name="category_id"
                           value={newProduct.category_id}
                           onChange={handleGetValue}
                         >
-                          <option>-- Loại sản phẩm --</option>
+                          <option>--Product type--</option>
                           {categories.map((category) => (
                             <option value={category.id}>
                               {category.name_category}
@@ -347,21 +332,24 @@ function AdminProduct() {
                       <div className="mb-3 ">
                         <label className="form-label">Brand</label>
                         <select
-                          className="form-select form-select-lg "
+                          className="form-select form-select-lg cursor-pointer"
                           aria-label="Large select example"
                           id="brand_id"
                           name="brand_id"
                           value={newProduct.brand_id}
                           onChange={handleGetValue}
                         >
-                          <option>-- Chọn Brand --</option>
+                          <option>-- Select Brand --</option>
                           {brands.map((brand) => (
                             <option value={brand.id}>{brand.name_brand}</option>
                           ))}
                         </select>
                       </div>
                       <div className="mb-3">
-                        <label htmlFor="formFileSm" className="form-label">
+                        <label
+                          htmlFor="formFileSm"
+                          className="form-label cursor-pointer"
+                        >
                           Image Product
                         </label>
                         <input
@@ -414,61 +402,75 @@ function AdminProduct() {
                     <div className="card-header">
                       <h5 className="mb-0 title">All Product</h5>
                     </div>
-                    <div className="table-responsive" id="b">
-                      <table className="table table-hover table-nowrap">
-                        <thead className="thead-light ">
-                          <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Image</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col">Acction</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {displayedProducts
-                            .filter((item) =>
-                              item.name_product
-                                .toLowerCase()
-                                .includes(searchProduct)
-                            )
-                            .map((item, index) => (
-                              <tr key={index} className="">
-                                <td>{item.id}</td>
-                                <td>
-                                  <img
-                                    src={item.image}
-                                    alt=""
-                                    className="w-[100px] max-h-[150px] m-auto"
-                                  />
-                                </td>
-                                <td className="max-w-[200px] text-wrap">
-                                  {item.name_product}
-                                </td>
-                                <td>{USDollar.format(item.price)}</td>
-                                <td>{item.stock}</td>
-                                <td className="">
-                                  <Button
-                                    variant="contained"
-                                    onClick={() => handleEditProduct(item)}
-                                  >
-                                    Sửa
-                                  </Button>
-                                  <br />
-                                  <br />
-                                  <Button
-                                    variant="contained"
-                                    onClick={() => handleDeleteProduct(item.id)}
-                                  >
-                                    Xóa
-                                  </Button>
-                                </td>
-                              </tr>
-                            ))}
-                        </tbody>
-                      </table>
-                    </div>
+                    {status ? (
+                      <div className="table-responsive" id="b">
+                        <table className="table table-hover table-nowrap">
+                          <thead className="thead-light ">
+                            <tr>
+                              <th scope="col">ID</th>
+                              <th scope="col">Image</th>
+                              <th scope="col">Name</th>
+                              <th scope="col">Price</th>
+                              <th scope="col">Quantity</th>
+                              <th scope="col">Acction</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {displayedProducts
+                              .filter((item) =>
+                                item.name_product
+                                  .toLowerCase()
+                                  .includes(searchProduct)
+                              )
+                              .map((item, index) => (
+                                <tr key={index} className="">
+                                  <td>{item.id}</td>
+                                  <td>
+                                    <img
+                                      src={item.image}
+                                      alt=""
+                                      className="w-[100px] max-h-[150px] m-auto"
+                                    />
+                                  </td>
+                                  <td className="max-w-[200px] text-wrap">
+                                    {item.name_product}
+                                  </td>
+                                  <td>{USDollar.format(item.price)}</td>
+                                  <td>{item.stock}</td>
+                                  <td className="">
+                                    <Button
+                                      className="w-[100px]"
+                                      variant="contained"
+                                      onClick={() => handleEditProduct(item)}
+                                    >
+                                      Edit
+                                    </Button>
+                                    <br />
+                                    <br />
+                                    <Button
+                                      className="w-[100px]"
+                                      variant="contained"
+                                      onClick={() =>
+                                        handleDeleteProduct(item.id)
+                                      }
+                                    >
+                                      Delete
+                                    </Button>
+                                  </td>
+                                </tr>
+                              ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    ) : (
+                      <ReactLoading
+                        type={"spin"}
+                        color={"#525f7f"}
+                        height={"8%"}
+                        width={"8%"}
+                        className=" m-auto "
+                      />
+                    )}
                     <div id="changePage"></div>
                     <Pagination
                       className="flex m-auto mb-24"

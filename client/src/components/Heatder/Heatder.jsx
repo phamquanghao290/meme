@@ -4,21 +4,21 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { BsCart } from "react-icons/bs";
 import { AiOutlineUser } from "react-icons/ai";
-import { AiFillHeart } from "react-icons/ai";
 import logo from "../../../public/images/Logo.png";
 import search from "../../../public/images/search.png";
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./Heatder.scss";
-import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
+
 
 export default function Heatder() {
   const userLogin = JSON.parse(localStorage.getItem("userLogin"));
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const navigate = useNavigate();
+  const [searchHeatder, setSearchHeatder] = React.useState("");
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -29,22 +29,16 @@ export default function Heatder() {
       return;
     }
   };
-  const navigate = useNavigate();
+  const handleClicksearch = async () => {
+    navigate(`/search/${searchHeatder}`);
+  };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
   return (
     <>
-      <Navbar
-        expand="lg"
-        className="bg-body-tertiary "
-        style={{
-          position: "sticky",
-          top: 0,
-          width: "100%",
-          backgroundColor: "white",
-        }}
-      >
+      <Navbar expand="lg" className="bg-body-tertiary">
         <div className="container-fluid">
           {" "}
           <Link to="/">
@@ -64,39 +58,39 @@ export default function Heatder() {
             >
               <div className="header_nav">
                 {" "}
-                <Link to="/">
-                  <h3>Home</h3>
-                </Link>
+                <NavLink to="/" className="header_menu">
+                  Home
+                </NavLink>
                 {/* <Nav.Link href="#link">
                                     {" "}
                                     <Link to="/product-men">
                                         <h3>Men</h3>
                                     </Link>
                                 </Nav.Link> */}{" "}
-                <Link to="/product-women">
-                  <h3>Product</h3>
-                </Link>{" "}
-                <Link to="*">
-                  <h3>Combos</h3>
-                </Link>{" "}
-                <Link to="*">
-                  <h3>Joggers</h3>
-                </Link>
+                <NavLink to="/product-women" className="header_menu">
+                  Product
+                </NavLink>{" "}
+                <NavLink to="*" className="header_menu">
+                  Combos
+                </NavLink>{" "}
+                <NavLink to="9" className="header_menu">
+                  Joggers
+                </NavLink>
               </div>
 
               <div className="Search_Heatder">
-                <div>
+                <input type="text" placeholder="Search" />
+                <div onClick={handleClicksearch}>
                   <img src={search} alt="" />
                 </div>
-                <input type="text" placeholder="Search" />
               </div>
               {userLogin ? (
                 <div className="Icon_Heatder">
-                  <div className="component">
-                    <Link to="/wishlist">
+                  <Link to="/wishlist">
+                    <div className="component">
                       <AiOutlineHeart className="icon" />
-                    </Link>
-                  </div>
+                    </div>
+                  </Link>
                   <div>
                     <Button
                       // id="basic-button"
@@ -125,12 +119,11 @@ export default function Heatder() {
                       <MenuItem onClick={handleLogout}>Logout</MenuItem>
                     </Menu>
                   </div>
-
-                  <div className="component">
-                    <Link to="/cart">
+                  <Link to="/cart">
+                    <div className="component">
                       <BsCart className="icon" />
-                    </Link>
-                  </div>
+                    </div>
+                  </Link>
                 </div>
               ) : (
                 <div className="flex gap-4 mt-3">

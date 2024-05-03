@@ -179,3 +179,46 @@
     }
   }
 }
+@media (max-width: 427px) {
+    
+.location_2 {
+   display: none;
+  }
+  .footer {
+    width: 750px;
+    .iconTille_footer {
+  
+      .icon_footer {
+      
+      }
+      .icon_footer:hover {
+        background-color: #c6c4c4;
+
+        transition: 0.5s;
+      }
+    }
+
+    
+  }
+}
+@media (max-width: 320px) {
+    
+ 
+  .footer {
+    background-color: #3c4242;
+    width: 700px;
+    .iconTille_footer {
+     
+      .icon_footer {
+      
+      }
+      .icon_footer:hover {
+        background-color: #c6c4c4;
+
+        transition: 0.5s;
+      }
+    }
+
+  
+  }
+}
