@@ -1,42 +1,25 @@
 import { AiOutlineRetweet } from "react-icons/ai";
 import { Rate, Tabs } from "antd";
-import { GiPoloShirt } from "react-icons/gi";
+
 import { FaShippingFast } from "react-icons/fa";
 import { MdPayment } from "react-icons/md";
 import { BsCart } from "react-icons/bs";
-import { GrLinkNext } from "react-icons/gr";
-import { BiCommentDetail } from "react-icons/bi";
 import { GrNext } from "react-icons/gr";
-import { AiFillDownCircle } from "react-icons/ai";
-import { AiFillUpCircle } from "react-icons/ai";
 import React, { useEffect, useState } from "react";
-import products14 from "../../../public/images/product14.png";
-import products15 from "../../../public/images/product15.png";
-import products16 from "../../../public/images/product16.png";
-import products9 from "../../../public/images/product9.png";
-import products10 from "../../../public/images/product10.png";
-import products11 from "../../../public/images/product11.png";
-import products12 from "../../../public/images/product12.png";
-import products13 from "../../../public/images/product13.png";
 import "./Productsdetail.scss";
-import Star from "../home/star/star";
-import Heatder from "../../components/Heatder/Heatder";
-import Footer from "../../components/Foodter/Footer";
 import { Link, useParams } from "react-router-dom";
-import axios from "axios";
-import publicAxios from "../../config/PublicAxios";
-
 import privateAxios from "../../config/PrivateAxios";
 import { failed, success } from "../../components/Modal/NotificationModal";
 import { getProductsAPI, getProductsIDAPI } from "../../apis/products.services";
+import ReactLoading from "react-loading";
 
 export default function Productdetail() {
-    const [product, setProduct] = useState({});
+  const [product, setProduct] = useState({});
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   const userLogin = JSON.parse(localStorage.getItem("userLogin") || "{}");
-
+  const [status, setStatus] = useState(false);
   const [productAll, setProductAll] = useState([]);
   const { id } = useParams();
   const onChange = (key) => {
@@ -74,6 +57,7 @@ export default function Productdetail() {
   const handlCLickAddtoCart = async (product) => {
     if (!(userLogin && userLogin.id)) {
       failed("Login to purchase");
+
       return;
     }
 
@@ -88,14 +72,28 @@ export default function Productdetail() {
     handleGetProduct();
     handleGetProducts();
   }, [product]);
-  
+  useEffect(() => {
+    setTimeout(() => {
+      setStatus(true);
+    }, 1100);
+  }, [status]);
   return (
     <>
       <div className="Product_detail">
         <div className="content_Detail">
-          <div className="img_detail">
-            <img src={product.image} alt="" />
-          </div>
+          {status ? (
+            <div className="img_detail">
+              <img src={product.image} alt="" />
+            </div>
+          ) : (
+            <ReactLoading
+              type={"spin"}
+              color={"#525f7f"}
+              height={"4%"}
+              width={"4%"}
+              className="m-auto pb-[100px]"
+            />
+          )}
           <div className="textProduct_detail">
             <h4 style={{ display: "flex", alignItems: "center", gap: "10px" }}>
               Shop <GrNext />
