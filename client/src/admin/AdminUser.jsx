@@ -3,13 +3,14 @@ import publicAxios from "../config/PublicAxios";
 import { success, failed } from "../components/Modal/NotificationModal";
 import { Button } from "@mui/material";
 import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
+import { getAllUser, changeStatusUser } from "../apis/user.services";
 import { Switch, Space } from "antd";
 import "./admin.css";
 
 function AdminUser() {
     const [dataUser, setDataUser] = React.useState([]);
     const handleGetUsers = async () => {
-        const response = await publicAxios.get("/api/user");
+        const response = await getAllUser();
         setDataUser(response.data);
     };
     const listUser = dataUser.filter((user)=> user.role === 0);
@@ -19,8 +20,8 @@ function AdminUser() {
         } else {
             user.status = 1;
         }
-        await publicAxios.patch(`/api/user/status/${user.id}`, user);
-        success("Thay đổi trạng thái thành công");
+        await changeStatusUser(user.id, user);
+        success("Status change successful");
         handleGetUsers();
     };
 
