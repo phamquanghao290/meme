@@ -70,6 +70,7 @@ function AdminBill() {
       console.log(error);
     }
   };
+  console.log(infoDetail);
   return (
     <div>
       <div className="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary ">
@@ -326,7 +327,7 @@ function AdminBill() {
                 return (
                   <div className="flex p-3 bg-slate-200 rounded-lg mt-2">
                     <div>
-                      <h2>Customer : {item.order.user?.name}</h2>
+                      <h2>Customer : {item.order?.user?.name}</h2>
                       <div className="flex gap-5 mt-2 ">
                         <img
                           className="w-[100px] h-[100px]"
