@@ -112,7 +112,7 @@ export default function Heatder() {
                         "aria-labelledby": "basic-button",
                       }}
                     >
-                      <MenuItem onClick={handleClose}>Profile</MenuItem>
+                      <MenuItem onClick={() => navigate("/forgot-password")}>Forgot</MenuItem>
                       <MenuItem onClick={() => navigate("/order")}>
                         My cart
                       </MenuItem>

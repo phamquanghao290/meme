@@ -6,6 +6,7 @@ export const API_CATEGORY = "/api/category";
 export const API_ORDER = "/api/order";
 export const API_WISHLIST = "/api/wishlist";
 export const API_REGISTER = "/api/register";
+export const API_VERIFY_CHECKMAIL = "/api/send-mail";
 export const API_LOGIN = "/api/login";
 export const API_CART = "/api/cart";
 export const API_PRODUCT = "/api/product";
