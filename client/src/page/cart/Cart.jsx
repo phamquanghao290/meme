@@ -65,6 +65,9 @@ function Cart() {
     handleGetCartByUserId();
     handleGetProduct();
     document.title = "Checkout";
+    return () => {
+      setFlag(false)
+    }
   }, [flag]);
   useEffect(() => {
     handleTotalPrice();

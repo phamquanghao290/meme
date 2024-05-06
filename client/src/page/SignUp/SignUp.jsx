@@ -8,7 +8,7 @@ import publicAxios from "../../config/PublicAxios";
 import { success, failed } from "../../components/Modal/NotificationModal";
 import { registerService } from "../../apis/auth.services";
 import "./SignUp.scss";
-import { API_REGISTER } from "../../apis/patchAPI";
+import { API_REGISTER, API_USER } from "../../apis/patchAPI";
 
 export default function SignUp() {
     const navigate = useNavigate();
@@ -40,6 +40,13 @@ export default function SignUp() {
         role: 0,
         status: 0,
     });
+
+    const [allUser, setAllUser] = useState([]);
+
+    const handleGetAllUser = async () => {
+        const response = await publicAxios.get(API_USER);
+        setAllUser(response.data);
+    };
 
     const [errorInput, setErrorInput] = React.useState({
         errName: "",
@@ -87,6 +94,12 @@ export default function SignUp() {
             err.errConfirm = "Mật khẩu không khớp";
             check = false;
         }
+
+        if (newUser.email == allUser.find((user) => user.email == newUser.email)) {
+            failed("Email already exists");
+            return;
+        }
+
         if (!check) {
             setErrorInput(err);
             return;
@@ -99,7 +112,7 @@ export default function SignUp() {
                 role: 0,
                 status: 0,
             });
-            success("Đăng ký thành công");
+            success("register successfully");
             setNewUser({
                 name: "",
                 email: "",
@@ -113,6 +126,7 @@ export default function SignUp() {
     };
     useEffect(() => {
         document.title = "Sign Up";
+        handleGetAllUser();
         window.scrollTo(0, 0);
     }, []);
     return (

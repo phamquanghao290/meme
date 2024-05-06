@@ -12,6 +12,7 @@ import {
   deleteProductsAPI,
   getProductsAPI,
   putProductsAPI,
+  searchProductsAPI,
 } from "../apis/products.services";
 import { getAllCateAPI } from "../apis/category.services";
 import { getAllBrandAPI } from "../apis/brand.services";
@@ -195,12 +196,10 @@ function AdminProduct() {
   const handleSearch = async (e) => {
     const search = e.target.value.toLowerCase();
     try {
-      const response = await publicAxios.get(
-        `/api/product/search?key=${search}`
-      );
-      setProducts(response.data);
+      const response = await searchProductsAPI(search);
+      setProducts(response);
     } catch (error) {
-      failed(error.response.data.message);
+      failed(error.response.message);
     }
   };
 

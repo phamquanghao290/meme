@@ -5,7 +5,7 @@ import { Menu, Rate } from "antd";
 import "../product/product.scss";
 import { Link } from "react-router-dom";
 import { failedNoti, successNoti } from "../../utils/noti";
-import { getProductsAPI } from "../../apis/products.services";
+import { getProductsAPI, searchProductsAPI } from "../../apis/products.services";
 import {
   AddToWishListAPI,
   getWishListAPIID,
@@ -37,12 +37,10 @@ export default function Searchpd() {
   const handleSearch = async (e) => {
     const search = e.target.value.toLowerCase();
     try {
-      const response = await publicAxios.get(
-        `/api/product/search?key=${search}`
-      );
-      setProduct(response.data);
+      const response = await searchProductsAPI(search);
+      setProduct(response);
     } catch (error) {
-      failed(error.response.data.message);
+      failed(error.response.message);
     }
   };
   const handleGetWishlist = async () => {

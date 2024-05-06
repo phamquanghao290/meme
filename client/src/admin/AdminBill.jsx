@@ -5,6 +5,7 @@ import { success, failed } from "../components/Modal/NotificationModal";
 import Modal from "react-bootstrap/Modal";
 import "./admin.css";
 import axios from "axios";
+import { handleGetOrderDetailAPI } from "../apis/order";
 
 function AdminBill() {
   const [infoDetail, setInfoDetail] = React.useState([]);
@@ -65,9 +66,7 @@ function AdminBill() {
   const handleShow = async (item) => {
     setShow(true);
     try {
-      const res = await axios.get(
-        `http://localhost:8080/order-detail/${item.id}`
-      );
+      const res = await handleGetOrderDetailAPI(item.id)
       setInfoDetail(res.data);
     } catch (error) {
       console.log(error);
