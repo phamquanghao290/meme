@@ -25,5 +25,7 @@ export const API_CREATE_ORDER_DETAIL = "/order-detail/createBillDetails";
 export const APT_DELETE_CART_USER = "/api/cart/all";
 export const API_GET_ORDER = "/order/getOrderById";
 export const API_GET_ORDER_DETAIL = "/order-detail"
+export const API_SEARCHPRODUCTS ="/api/product/search"
 export const API_ADD_TO_CART = "/api/cart/addToCart";
+
 

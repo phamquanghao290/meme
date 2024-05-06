@@ -66,7 +66,6 @@ export default function Productdetail() {
       userId: userLogin.id,
       product,
     };
-    // const response = await privateAxios.post(`/api/cart/addToCart`, cart);
     const response = await handleAddToCartAPI(cart);
     success(response.data.message);
   };
@@ -274,9 +273,7 @@ export default function Productdetail() {
 
           <div className="classProducts_incategory">
             {productAll
-
               .filter((products) => products?.brand?.id == product?.brand?.id)
-
               .map((item, index) => (
                 <Link to={`/product-detail/${item.id}`}>
                   <div className="Limelight max-w-[250px] m-auto pt-3 h-[60px] hover:scale-105 transition-all duration-300">
