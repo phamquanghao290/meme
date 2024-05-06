@@ -1,5 +1,5 @@
 import publicAxios from "../../config/PublicAxios";
-import { API_GET_ORDER, API_GET_ORDER_DETAIL } from "../patchAPI";
+import { API_GET_ORDER, API_GET_ORDER_ADMIN, API_GET_ORDER_DETAIL } from "../patchAPI";
 
 export const handleGetOrderAPI = async (id) => {
     const response = await publicAxios.get(`${API_GET_ORDER}/${id}`);
@@ -8,5 +8,10 @@ export const handleGetOrderAPI = async (id) => {
 
 export const handleGetOrderDetailAPI = async (id) => {
     const response = await publicAxios.get(`${API_GET_ORDER_DETAIL}/${id}`);
+    return response;
+}
+
+export const handleGetBillsAPI = async () => {
+    const response = await publicAxios.get(API_GET_ORDER_ADMIN);
     return response;
 }
