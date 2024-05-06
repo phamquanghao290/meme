@@ -1,8 +1,50 @@
 import React from 'react'
 import ResetPass from '../../../public/images/ResetPass.png'
 import './ResetPassword.scss'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { failed, success } from '../../components/Modal/NotificationModal';
+import { API_VERIFY_CHECKMAIL } from '../../apis/patchAPI';
+import publicAxios from '../../config/PublicAxios';
 export default function ResetPassword() {
+    const navigate = useNavigate()
+    const [emailInput, setEmailInput] = React.useState({
+        email: "",
+    });
+    const [errorInput, setErrorInput] = React.useState({
+        errEmail: "",
+    });
+
+    const handleSendEmail = async () => {
+        const err = {
+            errEmail: "",
+        }
+        let check = true;
+        const regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        if(!regexEmail.test(emailInput.email)){
+            failed("Email is not valid");
+            check = false;
+
+        }
+        if(!check){
+            setErrorInput(err);
+            return;
+        }else{
+            const response = await publicAxios.post(API_VERIFY_CHECKMAIL, {to: emailInput.email});
+            if(response.data.status){
+                localStorage.setItem("token", JSON.stringify(response.data.token));
+                success(response.data.message);
+            }else{
+                failed(response.data.message);
+            }
+        }
+    }
+
+    React.useEffect(() => {
+        document.title = "Reset Password";
+        window.scrollTo(0, 0);
+    }, []);
+
+    
     return (
         <div className='mainBody-resetpass'>
             <div className='mainImage-resetpass'>
@@ -18,12 +60,12 @@ export default function ResetPassword() {
 
                 <div className='mainInput-resetpass'>
                     <p style={{ marginBottom: '10px', fontSize: '18px', fontWeight: '400', color: '#3C4242' }}>Email </p>
-                    <input className='input-resetpass' type="text" placeholder='focus001@gmail.com' />
-                    <p className='error-content-resetpass'>We can not find your email.</p>
+                    <input className='input-resetpass' type="text" placeholder='focus001@gmail.com' name="email" value={emailInput.email} onChange={(e) => setEmailInput({ ...emailInput, [e.target.name]: e.target.value })} />
+                    <p className='error-content-resetpass'>{errorInput.errEmail}</p>
                 </div>
 
                 <div className='main-button-reset'>
-                    <button className='main-button-reset'>Send</button>
+                    <button className='main-button-reset' onClick={handleSendEmail}>Send</button>
                 </div>
 
                 <div className='content-end-resetpass'>

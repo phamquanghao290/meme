@@ -5,7 +5,12 @@ import { success, failed } from "../components/Modal/NotificationModal";
 import Modal from "react-bootstrap/Modal";
 import "./admin.css";
 import axios from "axios";
+
 import { handleGetOrderDetailAPI } from "../apis/order";
+
+import { Link } from "react-router-dom";
+import { formatMoney } from "../utils/formatMoney";
+
 
 function AdminBill() {
   const [infoDetail, setInfoDetail] = React.useState([]);
@@ -27,19 +32,13 @@ function AdminBill() {
     setBill(res.data);
   };
 
-  const handleGetDetailBill = async (id) => {
-    const res = await publicAxios.get(`/api/order-detail/${id}`);
-    console.log(res.data.data);
-    setInforDetail(res.data);
-  };
-
   const handleSuccessBill = async (id, status) => {
     const confirm = window.confirm("Xác nhận đơn cho khách hàng");
     if (confirm) {
-      await publicAxios.patch(`/order/acceptOrder/${id}`, {
+      await publicAxios.put(`/order/acceptOrder/${id}`, {
         status_order: status,
       });
-      success("Đã xác nhận đơn cho khách hàng");
+      success("Order accepted for customer");
     }
 
     await handleGetBills();
@@ -47,10 +46,10 @@ function AdminBill() {
   const handleCancelBill = async (id, status) => {
     const confirm = window.confirm("Hủy đơn hàng này");
     if (confirm) {
-      await publicAxios.patch(`/order/cancelOrder/${id}`, {
+      await publicAxios.put(`/order/cancelOrder/${id}`, {
         status_order: status,
       });
-      success("Đã hủy đơn cho khách hàng");
+      success("Order canceled for customer");
     }
 
     await handleGetBills();
@@ -58,7 +57,6 @@ function AdminBill() {
 
   React.useEffect(() => {
     handleGetBills();
-    handleGetDetailBill(1);
   }, []);
 
 
@@ -72,7 +70,6 @@ function AdminBill() {
       console.log(error);
     }
   };
-  console.log(infoDetail);
   return (
     <div>
       <div className="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary ">
@@ -83,13 +80,10 @@ function AdminBill() {
               <div className="mb-npx">
                 <div className="row align-items-center">
                   <div className="col-sm-6 col-12 mb-4 mb-sm-0">
-                    {/* Title */}
                     <h1 className="h2 mb-0 ls-tight">History order</h1>
                   </div>
-                  {/* Actions */}
                   <div className="col-sm-6 col-12 text-sm-end"></div>
                 </div>
-                {/* Nav */}
                 <ul className="nav nav-tabs mt-4 overflow-x border-0">
                   <li className="nav-item ">
                     <a
@@ -97,20 +91,22 @@ function AdminBill() {
                       className="nav-link active"
                       style={{ color: "red" }}
                       id="choose-infor"
-                      // onClick="returnListOrder()"
+                    // onClick="returnListOrder()"
                     >
                       Information
                     </a>
                   </li>
                   <li className="nav-item ">
-                    <a
-                      href="#"
-                      className="nav-link active"
-                      style={{ color: "blue" }}
-                      id="chooser"
-                    >
-                      Detail Order
-                    </a>
+                    <Link to='/admin-bill-detail'>
+                      <a
+                        href="#"
+                        className="nav-link active"
+                        style={{ color: "blue" }}
+                        id="chooser"
+                      >
+                        Detail Order
+                      </a>
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -118,7 +114,7 @@ function AdminBill() {
           </header>
           {/* Main */}
           <main className="py-6 bg-surface-secondary" id="information">
-            <div className="container-fluid">
+            <div className="container-fluid ">
               {/* Card stats */}
               <div className="row g-6 mb-6">
                 <div className="col-xl-3 col-sm-6 col-12">
@@ -234,39 +230,32 @@ function AdminBill() {
                   </div>
                 </div>
               </div>
-              <div className="card shadow border-0 mb-7 w-screen">
+              <div className="card shadow border-0 mb-7 max-w-[1285px]">
                 <div className="card-header">
                   <h5 className="mb-0">History Order</h5>
                 </div>
-                <div className="table-responsive">
+                <div className="table-responsive text-lg">
                   <table className="table table-hover table-nowrap ">
                     <thead className="thead-light">
                       <tr>
                         <th scope="col">STT</th>
-                        <th scope="col">Phone number</th>
-                        {/* <th scope="col">Id Order</th> */}
-                        <th scope="col">Price</th>
                         <th scope="col">Status</th>
                         <th scope="col">View</th>
+                        <th scope="col">Action</th>
                       </tr>
                     </thead>
                     <tbody>
                       {bill?.map((item, index) => (
                         <tr key={index}>
-                          <th scope="col">{index + 1}</th>
-                          <th scope="col">{item.phone}</th>
-                          {/* <th scope="col">
-                                                            {item.orderId}
-                                                        </th> */}
-                          <th scope="col">{USDollar.format(item.total)}</th>
-                          <th scope="col">
+                          <td scope="col">{index + 1}</td>
+                          <td scope="col">
                             {item.status_order == 0 ? (
                               <span
                                 style={{
                                   color: "green",
                                 }}
                               >
-                                Đang Chờ
+                                Pending
                               </span>
                             ) : item.status_order == 1 ? (
                               <span
@@ -274,7 +263,7 @@ function AdminBill() {
                                   color: "blue",
                                 }}
                               >
-                                Xác nhận
+                                Accepted
                               </span>
                             ) : (
                               <span
@@ -282,11 +271,11 @@ function AdminBill() {
                                   color: "red",
                                 }}
                               >
-                                Từ chối
+                                Canceled
                               </span>
                             )}
-                          </th>
-                          <th
+                          </td>
+                          <td
                             scope="col"
                             onClick={() => {
                               handleShow(item);
@@ -294,31 +283,31 @@ function AdminBill() {
                             className="cursor-pointer"
                           >
                             View
-                          </th>
-                          <th scope="col" className="gap-10">
+                          </td>
+                          <td scope="col" >
                             {item.status_order === 0 ? (
-                              <div className="flex justify-evenly m-auto">
+                              <div className="flex gap-10 justify-center">
                                 <Button
                                   variant="contained"
                                   onClick={() =>
-                                    handleSuccessBill(item.id, "Xác nhận")
+                                    handleSuccessBill(item.id, "Accepted")
                                   }
                                 >
-                                  Xác nhận
+                                  Accept
                                 </Button>
                                 <Button
                                   variant="contained"
                                   onClick={() =>
-                                    handleCancelBill(item.id, "Đã Hủy")
+                                    handleCancelBill(item.id, "Canceled")
                                   }
                                 >
-                                  Hủy
+                                  Cancel
                                 </Button>
                               </div>
                             ) : (
                               <></>
                             )}
-                          </th>
+                          </td>
                         </tr>
                       ))}
                     </tbody>
@@ -335,20 +324,22 @@ function AdminBill() {
             <Modal.Body>
               {infoDetail?.map((item, index) => {
                 return (
-                  <div className="flex  p-5 bg-slate-200 mt-4 rounded-lg">
+                  <div className="flex p-3 bg-slate-200 rounded-lg mt-2">
                     <div>
-                      <div className="flex gap-5 ">
+                      <h2>Customer : {item.order.user?.name}</h2>
+                      <div className="flex gap-5 mt-2 ">
                         <img
-                          className="w-[100px]"
+                          className="w-[100px] h-[100px]"
                           src={item.product.image}
                           alt=""
                         />
-                        <div>
-                          <h3 className="font-bold">
-                            Name : {item.product.nameProduct}
+                        <div className="text-sm">
+                          <h3 >
+                            Product: {item.product.name_product}
                           </h3>
-                          <p>Stock : {item.quantity}</p>
-                          <p>Price : ${item.product.price}</p>
+                          <p>Stock: {item.quantity}</p>
+                          <p>Price: {formatMoney(item.product.price)}</p>
+                          <p className="font-bold">Total: {formatMoney(item.order?.total)}</p>
                         </div>
                       </div>
                     </div>

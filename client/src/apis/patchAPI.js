@@ -6,6 +6,7 @@ export const API_CATEGORY = "/api/category";
 export const API_ORDER = "/api/order";
 export const API_WISHLIST = "/api/wishlist";
 export const API_REGISTER = "/api/register";
+export const API_VERIFY_CHECKMAIL = "/api/send-mail";
 export const API_LOGIN = "/api/login";
 export const API_CART = "/api/cart";
 export const API_PRODUCT = "/api/product";
@@ -22,7 +23,9 @@ export const API_DELETE_CART = "/api/cart";
 export const API_CREATE_ORDER = "/order/createOrder";
 export const API_CREATE_ORDER_DETAIL = "/order-detail/createBillDetails";
 export const APT_DELETE_CART_USER = "/api/cart/all";
-export const API_GET_ORDER = "/order/getorderById";
+export const API_GET_ORDER = "/order/getOrderById";
 export const API_GET_ORDER_DETAIL = "/order-detail"
 export const API_SEARCHPRODUCTS ="/api/product/search"
+export const API_ADD_TO_CART = "/api/cart/addToCart";
+
 

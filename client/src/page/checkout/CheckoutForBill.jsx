@@ -110,9 +110,8 @@ function CheckoutForBill() {
       created_at: new Date(),
     };
     try {
-      // const response = await axios.post("http://localhost:8080/order/createOrder", orders);
       const response = await handleCreateOrderAPI(orders);
-      // console.log(response)
+      console.log(response)
       await Promise.all(
         cart.map(async (item) => {
           const datadetail = {
@@ -121,14 +120,12 @@ function CheckoutForBill() {
             quantity: item.quantity,
           };
 
-          // await axios.post("http://localhost:8080/order-detail/createBillDetails", datadetail);
           await handleCreateOrderDetailAPI(datadetail);
         })
       );
-      // await axios.delete(`http://localhost:8080/api/cart/all/${currentUser.id}`);
       await handleDeleteCartUser(currentUser.id);
       setCart([]);
-      success("Đã Thanh Toán");
+      success("Order Success");
       // dispatch(getCart(currentUser?.id));
       navigate(`/order`);
     } catch (error) {
