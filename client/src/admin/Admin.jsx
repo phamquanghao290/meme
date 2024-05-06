@@ -18,7 +18,7 @@ function Admin() {
   }, []);
 
     const handleLogout = () => {
-        if (window.confirm("Admin muốn đăng xuất?")) {
+        if (window.confirm("Admin wants to log out")) {
             localStorage.removeItem("userLogin");
             localStorage.removeItem("token");
             localStorage.removeItem("admin");
