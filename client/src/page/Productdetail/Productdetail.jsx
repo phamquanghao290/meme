@@ -56,7 +56,8 @@ export default function Productdetail() {
 
   const handlCLickAddtoCart = async (product) => {
     if (!(userLogin && userLogin.id)) {
-      failed("Need to log in to purchase");
+      failed("Login to purchase");
+
       return;
     }
 
