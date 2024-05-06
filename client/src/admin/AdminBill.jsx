@@ -7,7 +7,7 @@ import "./admin.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { formatMoney } from "../utils/formatMoney";
-import { handleGetOrderDetailAPI } from "../apis/order";
+import { handleGetBillsAPI, handleGetOrderDetailAPI } from "../apis/order";
 
 function AdminBill() {
   const [infoDetail, setInfoDetail] = React.useState([]);
@@ -25,12 +25,12 @@ function AdminBill() {
   });
 
   const handleGetBills = async () => {
-    const res = await publicAxios.get("/order");
+    const res = await handleGetBillsAPI()
     setBill(res.data);
   };
 
   const handleSuccessBill = async (id, status) => {
-    const confirm = window.confirm("Xác nhận đơn cho khách hàng");
+    const confirm = window.confirm("Confirm order for customer");
     if (confirm) {
       await publicAxios.put(`/order/acceptOrder/${id}`, {
         status_order: status,
@@ -41,7 +41,7 @@ function AdminBill() {
     await handleGetBills();
   };
   const handleCancelBill = async (id, status) => {
-    const confirm = window.confirm("Hủy đơn hàng này");
+    const confirm = window.confirm("Cancel order for customer");
     if (confirm) {
       await publicAxios.put(`/order/cancelOrder/${id}`, {
         status_order: status,
