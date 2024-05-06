@@ -24,6 +24,7 @@ import Star from "./star/star";
 import { Link } from "react-router-dom";
 import { getAllCateAPI } from "../../apis/category.services";
 import { getProductsAPI } from "../../apis/products.services";
+import { formatMoney } from "../../utils/formatMoney";
 export default function Index() {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -68,7 +69,7 @@ export default function Index() {
           <div className="productsNewArrival">
             {topFourProducts.map((item, index) => (
               <>
-                <div>
+                <div key={index}>
                   <img src={item.image} alt="" />
                   <p>{item.name_product}</p>
                 </div>
@@ -91,7 +92,7 @@ export default function Index() {
                 <p>UPTO 50% OFF</p>
                 <BiDownArrowAlt className="icon" />
                 <div>
-                  <Link to="/product-women">
+                  <Link to="/product-man">
                     <button>Shop Now</button>
                   </Link>{" "}
                 </div>
@@ -109,7 +110,7 @@ export default function Index() {
                 <p>UPTO 40% OFF</p>
                 <BiDownArrowAlt className="icon" />
                 <div>
-                  <Link to="/product-women">
+                  <Link to="/product-man">
                     <button>Shop Now</button>
                   </Link>{" "}
                 </div>
@@ -129,7 +130,7 @@ export default function Index() {
                 <p>UPTO 50% OFF</p>
                 <BiDownArrowAlt className="icon" />
                 <div>
-                  <Link to="/product-women">
+                  <Link to="/product-man">
                     <button>Shop Now</button>
                   </Link>{" "}
                 </div>
@@ -150,7 +151,7 @@ export default function Index() {
                 <p>FLAT 60% OFF</p>
                 <BiDownArrowAlt className="icon" />
                 <div>
-                  <Link to="/product-women">
+                  <Link to="/product-man">
                     <button>Shop Now</button>
                   </Link>{" "}
                 </div>
@@ -169,7 +170,7 @@ export default function Index() {
                 <p>FLAT 60% OFF</p>
                 <BiDownArrowAlt className="icon" />
                 <div>
-                  <Link to="/product-women">
+                  <Link to="/product-man">
                     <button>Shop Now</button>
                   </Link>{" "}
                 </div>
@@ -198,7 +199,7 @@ export default function Index() {
                 </p>
 
                 <div>
-                  <Link to="/product-women">
+                  <Link to="/product-man">
                     <button>Shop Now</button>
                   </Link>{" "}
                 </div>
@@ -346,7 +347,6 @@ export default function Index() {
               }}
             />
             <div className="logo_topbrand_3">
-            
               <img
                 src={Logo5}
                 alt=""
@@ -401,7 +401,7 @@ export default function Index() {
                         height: "40px",
                       }}
                     >
-                      ${product.price}
+                      {formatMoney(product.price)}
                     </div>
                   </div>
                 </Link>

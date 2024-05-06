@@ -24,6 +24,9 @@ import AdminBrand from "./admin/AdminBrand";
 import Verification from "./page/Verification/Verification";
 import ResetPassword from "./page/ResetPassword/ResetPassword";
 import PrivateRouter from "./page/flaguser/PrivateRouter";
+import Searchpd from "./page/Searchproduct/Searchpd";
+import Titlebrand from "./page/titlerbrand/Titlebrand";
+import Bestseller from "./page/Bestseller/Bestseller";
 function App() {
   return (
     <Routes>
@@ -38,7 +41,7 @@ function App() {
         }
       >
         <Route path="/" element={<Index />} />
-        <Route path="/product-women" element={<ProductWomen />} />
+        <Route path="/product-man" element={<ProductWomen />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout/:id" element={<CheckoutForBill />} />
         <Route path="/order" element={<Order />} />
@@ -47,6 +50,9 @@ function App() {
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/myinfo" element={<MyInfo />} />
         <Route path="/delivery-address" element={<DeliveryAddress />} />
+        <Route path="/Search-products" element={<Searchpd></Searchpd>} />
+        <Route path="/Titlebrand" element={<Titlebrand />} />
+        <Route path="/bestseller" element={<Bestseller />} />
       </Route>
 
       <Route path="/sign-up" element={<SignUp />} />

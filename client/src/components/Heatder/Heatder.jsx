@@ -30,7 +30,8 @@ export default function Heatder() {
     }
   };
   const handleClicksearch = async () => {
-    navigate(`/search/${searchHeatder}`);
+    setSearchHeatder(searchHeatder);
+    navigate(`/search-products`);
   };
 
   const handleClose = () => {
@@ -67,19 +68,21 @@ export default function Heatder() {
                                         <h3>Men</h3>
                                     </Link>
                                 </Nav.Link> */}{" "}
-                <NavLink to="/product-women" className="header_menu">
+                <NavLink to="/product-man" className="header_menu">
                   Product
                 </NavLink>{" "}
-                <NavLink to="*" className="header_menu">
-                  Combos
+                <NavLink to="/bestseller" className="header_menu">Best Seller</NavLink>
+                <NavLink to="/Titlebrand" className="header_menu">
+                  News
                 </NavLink>{" "}
-                <NavLink to="9" className="header_menu">
-                  Joggers
-                </NavLink>
               </div>
 
               <div className="Search_Heatder">
-                <input type="text" placeholder="Search" />
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  onChange={(e) => setSearchHeatder(e.target.value)}
+                />
                 <div onClick={handleClicksearch}>
                   <img src={search} alt="" />
                 </div>

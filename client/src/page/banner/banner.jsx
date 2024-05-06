@@ -26,7 +26,7 @@ const Banner = () => (
           Summer <br /> Value Pack
         </h4>
         <p>cool / colorful / comfy</p>
-        <Link to="/product-women">
+        <Link to="/product-man">
           <button className="buttonbaner">Shop Now</button>
         </Link>{" "}
       </div>
@@ -43,7 +43,7 @@ const Banner = () => (
           Summer <br /> Value Pack
         </h4>
         <p>cool / colorful / comfy</p>
-        <Link to="/product-women">
+        <Link to="/product-man">
           <button className="buttonbaner">Shop Now</button>
         </Link>{" "}
       </div>

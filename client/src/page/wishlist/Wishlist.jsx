@@ -178,7 +178,7 @@ export default function Wishlist() {
               lot of interesting products on our Shop page.
             </p>
             <button
-              onClick={() => navigate("/product-women")}
+              onClick={() => navigate("/product-man")}
               className="rounded-sm border p-3 mt-3 bg-[#8A33FD] text-white"
             >
               Continue Shopping
@@ -230,7 +230,7 @@ export default function Wishlist() {
                         <p>
                           Quantity :{" "}
                           <span style={{ color: "#807D7E", fontWeight: "500" }}>
-                            1
+                            {item.quantity}
                           </span>
                         </p>
                       </div>

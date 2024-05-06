@@ -12,6 +12,7 @@ import privateAxios from "../../config/PrivateAxios";
 import { failed, success } from "../../components/Modal/NotificationModal";
 import { getProductsAPI, getProductsIDAPI } from "../../apis/products.services";
 import ReactLoading from "react-loading";
+import { formatMoney } from "../../utils/formatMoney";
 
 export default function Productdetail() {
   const [product, setProduct] = useState({});
@@ -124,7 +125,7 @@ export default function Productdetail() {
                   </h6>
                 </button>
               </button>
-              <p>${product.price}</p>
+              <p>{formatMoney(product.price)}</p>
             </div>
             <hr />
             <div className="payment_detail">
@@ -285,7 +286,9 @@ export default function Productdetail() {
                           {item.brand.name_brand}
                         </p>
                       </div>
-                      <div className="pricebutton">{item.price}</div>
+                      <div className="pricebutton">
+                        {formatMoney(item.price)}
+                      </div>
                     </div>
                   </div>
                 </Link>

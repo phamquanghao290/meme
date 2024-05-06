@@ -30,7 +30,7 @@ function AdminProduct() {
   const [flag, setFlag] = React.useState(false);
   const [options, setOptions] = useState([]);
   const [status, setStatus] = useState(false);
-
+  const [currentPage, setCurrentPage] = React.useState(1);
   const [newProduct, setNewProduct] = React.useState({
     nameProduct: "",
     price: 0,
@@ -213,7 +213,6 @@ function AdminProduct() {
   };
 
   const render = renderProducts();
-  const [currentPage, setCurrentPage] = React.useState(1);
   const itemsPerPage = 4;
   const endIndex = currentPage * itemsPerPage;
   const startIndex = endIndex - itemsPerPage;
@@ -377,7 +376,7 @@ function AdminProduct() {
                           htmlFor="exampleInputPassword1"
                           className="form-label"
                         >
-                          Quantity Product
+                          Stock Product
                         </label>
                         <input
                           type="number"
@@ -411,7 +410,7 @@ function AdminProduct() {
                               <th scope="col">Image</th>
                               <th scope="col">Name</th>
                               <th scope="col">Price</th>
-                              <th scope="col">Quantity</th>
+                              <th scope="col">Stock</th>
                               <th scope="col">Acction</th>
                             </tr>
                           </thead>
