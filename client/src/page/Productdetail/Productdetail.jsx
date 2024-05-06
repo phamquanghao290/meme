@@ -13,6 +13,7 @@ import { failed, success } from "../../components/Modal/NotificationModal";
 import { getProductsAPI, getProductsIDAPI } from "../../apis/products.services";
 import ReactLoading from "react-loading";
 import { formatMoney } from "../../utils/formatMoney";
+import { handleAddToCartAPI } from "../../apis/cart";
 
 export default function Productdetail() {
   const [product, setProduct] = useState({});
@@ -58,7 +59,6 @@ export default function Productdetail() {
   const handlCLickAddtoCart = async (product) => {
     if (!(userLogin && userLogin.id)) {
       failed("Login to purchase");
-
       return;
     }
 
@@ -66,9 +66,11 @@ export default function Productdetail() {
       userId: userLogin.id,
       product,
     };
-    const response = await privateAxios.post(`/api/cart/addToCart`, cart);
+    // const response = await privateAxios.post(`/api/cart/addToCart`, cart);
+    const response = await handleAddToCartAPI(cart);
     success(response.data.message);
   };
+
   useEffect(() => {
     handleGetProduct();
     handleGetProducts();

@@ -32,7 +32,8 @@ function Cart() {
     }
   };
   const handleDeleteCart = async (id) => {
-    if (window.confirm("Are you sure you want to delete this item?")) {
+    const confirm = window.confirm("Are you sure you want to delete this item?")
+    if (confirm) {
       await handleDeleteCartAPI(id);
       setFlag(!flag);
       success("Cart deleted successfully");
@@ -65,6 +66,9 @@ function Cart() {
     handleGetCartByUserId();
     handleGetProduct();
     document.title = "Checkout";
+    return () => {
+      setFlag(false)
+    }
   }, [flag]);
   useEffect(() => {
     handleTotalPrice();

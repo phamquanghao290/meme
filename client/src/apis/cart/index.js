@@ -1,5 +1,5 @@
 import publicAxios from "../../config/PublicAxios";
-import { API_CART_BY_USER, API_DECREASE_CART, API_DELETE_CART, API_GETPRODUCT_CART, API_INCREASE_CART } from "../patchAPI";
+import { API_ADD_TO_CART, API_CART_BY_USER, API_DECREASE_CART, API_DELETE_CART, API_GETPRODUCT_CART, API_INCREASE_CART } from "../patchAPI";
 
 export const handleGetCartAPI = async (id) => {
     const response = await publicAxios.get(`${API_CART_BY_USER}/${id}`);
@@ -25,3 +25,7 @@ export const  handleDeleteCartAPI = async (id) => {
     return response;
 }
 
+export const handleAddToCartAPI = async (item) => {
+    const response = await publicAxios.post(API_ADD_TO_CART, item);
+    return response;
+}
