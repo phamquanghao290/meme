@@ -3,11 +3,14 @@ import { Button } from '@mui/material'
 import { Modal } from 'antd';
 import '../admin/admin.css'
 import publicAxios from '../config/PublicAxios';
+import { editBrandAPI, addBrandAPI, deleteBrandAPI } from '../apis/brand.services';
 import axios from 'axios';
 import { success, failed } from '../components/Modal/NotificationModal';
+import { API_BRAND } from '../apis/patchAPI';
+
 export default function AdminBrand() {
     const [newBrand, setNewBrand] = React.useState({
-        nameBrand: "",
+        name_brand: "",
         image_brand: "",
     });
     const [brands, setBrands] = React.useState([]);
@@ -15,7 +18,7 @@ export default function AdminBrand() {
     const [selectedMedia, setSelectedMedia] = React.useState(null);
     const [flag, setFlag] = React.useState(false);
     const handleGetBrands = async () => {
-        const response = await publicAxios.get("/api/brand");
+        const response = await publicAxios.get(API_BRAND);
         setBrands(response.data);
     }
 
@@ -36,10 +39,10 @@ export default function AdminBrand() {
         setIsModalOpenEdit(false);
         try {
             if(!selectedMedia){
-                const response = await publicAxios.patch(`/api/brand/${newBrand.id}`, newBrand);
+                const response = await editBrandAPI(newBrand.id, newBrand);
                 setFlag(true);
                 setNewBrand({
-                    nameBrand: "",
+                    name_brand: "",
                     image_brand: "",
                 })
                 setPreview(null || "");
@@ -52,14 +55,14 @@ export default function AdminBrand() {
                 axios.post("https://api.cloudinary.com/v1_1/dixzrnjbq/image/upload", formData),
             ])
             const media = uploadMedia.data.secure_url;
-            const response = await publicAxios.patch(`/api/brand/${newBrand.id}`, {
+            const response = await editBrandAPI(newBrand.id, {
                 ...newBrand,
                 image_brand: media
             })
             setFlag(true);
             success(response.data.message);
             setNewBrand({
-                nameBrand: "",
+                name_brand: "",
                 image_brand: "",
             })
             setPreview(null || "");
@@ -73,7 +76,7 @@ export default function AdminBrand() {
     const [isModalOpenDelete, setIsModalOpenDelete] = useState(false);
     const showModalDelete = () => {setIsModalOpenDelete(!isModalOpenDelete)};  
     const handleOkDelete = async (id) => {
-        const response = await publicAxios.delete(`/api/brand/${id}`);
+        const response = await deleteBrandAPI(id);
         setFlag(!flag);
         success(response.data.message);
         setIsModalOpenDelete(false);
@@ -95,6 +98,16 @@ export default function AdminBrand() {
     }
 
     const handleAddBrand = async () => {
+        if(!selectedMedia){
+            failed("Please select an image");
+            return
+        }
+        if(!newBrand.name_brand){
+            failed("Please enter the brand name");
+            return
+        }
+        // điều kiện nếu không điền đủ thông tin
+
         try {
             const formData = new FormData();
             formData.append("file", selectedMedia);
@@ -102,20 +115,20 @@ export default function AdminBrand() {
             const [uploadMedia] = await Promise.all([
                 axios.post("https://api.cloudinary.com/v1_1/dixzrnjbq/image/upload", formData),
             ]);
-            const response = await publicAxios.post("/api/brand", {
+            const response = await addBrandAPI({
                 ...newBrand,
-                image_brand: uploadMedia.data.secure_url,
-            });
+                image_brand: uploadMedia.data.secure_url
+            })
             setFlag(!flag);
             success(response.data.message);
             setPreview("");
             setNewBrand({   
-                nameBrand: "",
+                name_brand: "",
                 image_brand: "",
             })
             setIsModalOpen(false);
         } catch (error) {
-            failed("Vui lòng điền đầy đủ thông tin");
+            failed("Please fill in the information");
         }
     }
 
@@ -158,8 +171,8 @@ export default function AdminBrand() {
                                         >
                                             <p className="text-[#575757] text-[14px] font-[700]">
                                                 Brand Image
-                                            </p>
-                                            <label htmlFor="formFileSm">Upload</label>
+                                            </p><br />
+                                            <label htmlFor="formFileSm" className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer'>Upload</label>
                                             <input
                                                 id="formFileSm"
                                                 type="file"
@@ -169,7 +182,9 @@ export default function AdminBrand() {
                                                 value={newBrand.image_brand}
                                                 hidden
                                             />
+                                            <br /><br />
                                             <img
+                                                className='max-w-[250px] max-h-[150px] object-cover'
                                                 id="image"
                                                 src={preview}
                                                 alt="preview"
@@ -181,8 +196,8 @@ export default function AdminBrand() {
                                                 className="mt-2 rounded px-2 py-4 bg-[#eeeded] outline-none w-full"
                                                 type="text"
                                                 placeholder="Brand Name"
-                                                value={newBrand.nameBrand}
-                                                name="nameBrand"
+                                                value={newBrand.name_brand}
+                                                name="name_brand"
                                                 onChange={handleGetValue}
                                             />
                                         </Modal>
@@ -361,7 +376,7 @@ export default function AdminBrand() {
                                                         />
                                                     </td>
                                                     <td scope="col">
-                                                        {brand.nameBrand}
+                                                        {brand.name_brand}
                                                     </td>
                                                     <td className="">
                                                         <Button
@@ -392,9 +407,9 @@ export default function AdminBrand() {
                                                                     className="mt-2 rounded px-2 py-4 bg-[#eeeded] outline-none w-full"
                                                                     type="text"
                                                                     placeholder="Brand Name"
-                                                                    name="nameBrand"
+                                                                    name="name_brand"
                                                                     value={
-                                                                        newBrand.nameBrand
+                                                                        newBrand.name_brand
                                                                     }
                                                                     onChange={
                                                                         handleGetValue

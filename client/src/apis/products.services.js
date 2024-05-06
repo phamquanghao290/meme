@@ -1,5 +1,5 @@
 import publicAxios from "../config/PublicAxios";
-import { API_PRODUCT, API_PRODUCTID } from "./patchAPI";
+import { API_PRODUCT, API_PRODUCTID, API_SEARCHPRODUCTS } from "./patchAPI";
 
 
 export const getProductsAPI = async () => {
@@ -22,3 +22,8 @@ export const addProductsAPI = async (data) => {
     const response = await publicAxios.post(API_PRODUCT, data);
     return response.data;
 }
+export const searchProductsAPI = async (data) => {
+    const response = await publicAxios.get(API_SEARCHPRODUCTS+`?key=${data}`);
+    return response.data;
+}
+

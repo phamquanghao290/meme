@@ -68,7 +68,7 @@ export default function Bestseller() {
             <div className="flex items-center mt-10 justify-center">
               <div className="bg-[#8A33FD] w-2 h-8 rounded-lg ml-7"></div>
               <p className="ml-6 font-bold text-xl">Products Bestseller</p>
-              <div className="bg-[#8A33FD] w-2 h-8 rounded-lg ml-7 mb-[20px]"></div>
+              <div className="bg-[#8A33FD] w-2 h-8 rounded-lg ml-7 "></div>
             </div>
 
             <div className="grid grid-cols-4 mt-10 gap-5 drop-shadow-xl mb-[200px] pl-10 pr-10 ">

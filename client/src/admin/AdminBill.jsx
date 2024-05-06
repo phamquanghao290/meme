@@ -5,9 +5,13 @@ import { success, failed } from "../components/Modal/NotificationModal";
 import Modal from "react-bootstrap/Modal";
 import "./admin.css";
 import axios from "axios";
+
+import { handleGetOrderDetailAPI } from "../apis/order";
+
 import { Link } from "react-router-dom";
 import { formatMoney } from "../utils/formatMoney";
 import { handleGetBillsAPI, handleGetOrderDetailAPI } from "../apis/order";
+
 
 function AdminBill() {
   const [infoDetail, setInfoDetail] = React.useState([]);
@@ -61,12 +65,15 @@ function AdminBill() {
   const handleShow = async (item) => {
     setShow(true);
     try {
+
       const res = await handleGetOrderDetailAPI(item.id);
+
       setInfoDetail(res.data);
     } catch (error) {
       console.log(error);
     }
   };
+  console.log(infoDetail);
   return (
     <div>
       <div className="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary ">
@@ -323,7 +330,7 @@ function AdminBill() {
                 return (
                   <div className="flex p-3 bg-slate-200 rounded-lg mt-2">
                     <div>
-                      <h2>Customer : {item.order.user?.name}</h2>
+                      <h2>Customer : {item.order?.user?.name}</h2>
                       <div className="flex gap-5 mt-2 ">
                         <img
                           className="w-[100px] h-[100px]"
