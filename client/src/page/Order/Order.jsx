@@ -37,6 +37,7 @@ function Order() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleGetOrder = async () => {
     const response = await handleGetOrderAPI(currentUser.id);
+    console.log(response)
     setOrder(response.data);
   };
   useEffect(() => {
@@ -69,7 +70,7 @@ function Order() {
     );
     if (confirm) {
       try {
-        const res = await axios.patch(
+        const res = await axios.put(
           `http://localhost:8080/order/cancelOrder/${id}`,
           {
             status_order: status,
@@ -260,7 +261,7 @@ function Order() {
                 <div className="w-100 h-[180px] p-7 bg-slate-100 rounded-lg drop-shadow-lg mt-5">
                   <div className="flex justify-between items-center">
                     <h3 className="text-lg font-semibold">
-                      Username : {currentUser.name}
+                      Customer : {currentUser.name}
                     </h3>
                     <button
                       className="text-white bg-[#8A33FD] rounded-lg px-[40px] py-2"
@@ -269,11 +270,11 @@ function Order() {
                       View Detail
                     </button>
                   </div>
-                  <div className="flex items-center mt-2">
-                    <p>Address : {item.address},</p>
-                    <p>{item.address_city}</p>
+                  <div className="flex items-center ">
+                    <p>Address: {item.address}, </p>
+                    <p> {item.address_city}</p>
                   </div>
-                  <div className="flex justify-between items-center mt-2">
+                  <div className="flex justify-between items-center">
                     <p>Phone Number: {item.phone}</p>
                     <div className="flex items-center gap-3">
                       <div>
@@ -289,7 +290,7 @@ function Order() {
 
                         ) : item.status_order === 1 ? (
                           <p className="text-[#5b45eb] rounded-lg px-4 py-2">
-                            Confirm
+                            Accepted
                           </p>
                         ) : (
                           <p className="text-[red] rounded-lg px-4 py-2">
