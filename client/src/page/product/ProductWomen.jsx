@@ -15,6 +15,7 @@ import {
   getWishListAPIID,
 } from "../../apis/favorite-product.services";
 import ReactLoading from "react-loading";
+import { formatMoney } from "../../utils/formatMoney";
 
 function ProductWomen() {
   useEffect(() => {
@@ -73,6 +74,7 @@ function ProductWomen() {
   const handleClick_brand = (id) => {
     setSelectedBrand(id);
   };
+
   const handleAddToWishList = async (item) => {
     if (!userLogin) {
       failedNoti("Please login to add product to wish list");
@@ -196,7 +198,7 @@ function ProductWomen() {
           <div>
             <div className="flex items-center mt-10">
               <div className="bg-[#8A33FD] w-2 h-8 rounded-lg"></div>
-              <p className="ml-6 font-bold text-xl">Products Clothing</p>
+              <p className="ml-6 font-bold text-xl">Products</p>
             </div>
 
             <div className="grid grid-cols-4 mt-10 gap-5 drop-shadow-xl">
@@ -222,8 +224,6 @@ function ProductWomen() {
                           onClick={() => handleAddToWishList(item)}
                         />
                       )}
-                      {/* <AiOutlineHeart className="text-red-500 w-7 h-7 " /> */}
-                      {/* <AiFillHeart className="text-red-500 w-7 h-7 " /> */}
                     </button>
                     <Link to={`/product-detail/${item.id}`}>
                       <img
@@ -231,16 +231,13 @@ function ProductWomen() {
                         alt=""
                         className="max-w-[240px] m-auto pt-3 h-[260px] hover:scale-105 transition-all duration-300 "
                       />
-
-                      {/* <AiFillHeart /> */}
-
                       <br />
                       <p className="text-[18px] font-bold px-3">
                         {item.name_product}
                       </p>
                       <div className="flex items-end justify-between px-3">
                         <p className="text-md line-clamp-2 font-bold">
-                          {item.price}
+                          {formatMoney(item.price)}
                         </p>
                         <Rate disabled defaultValue={item.rating} />
                       </div>
