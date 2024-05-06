@@ -104,13 +104,11 @@ function Admin() {
                                 </a>
                             </li>
                             <li
-                                className="nav-item"
+                                className="nav-item nav-link cursor-pointer"
                                 onClick={() => handleLogout()}
                             >
-                                <Link to="/sign-in" className="nav-link">
                                     <i className="bi bi-box-arrow-left" />{" "}
-                                    Logout
-                                </Link>
+                                    Logout       
                             </li>
                         </ul>
                     </div>
